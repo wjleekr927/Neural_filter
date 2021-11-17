@@ -1,0 +1,1 @@
+python symbol_make.py --mod_scheme "QPSK" --seq_len 20
