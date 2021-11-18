@@ -20,6 +20,8 @@ from data.custom_set import CustomDataset
 from models.NN import NF 
 from models.Linear import LF
 
+from models.Channel_taps import channel_gen
+
 if __name__ == '__main__':
     # Parse args (from ./utils/options.py)
     args = args_parser()
@@ -65,10 +67,20 @@ if __name__ == '__main__':
     # To save a best model
     best_test_loss = float('inf')
 
+    #channel_taps: shape = (18,1)
+    channel_taps = channel_gen(args.total_taps, args.decay_factor, args.rand_seed)
+
+    # Channel_taps should be reversed
+
     import ipdb; ipdb.set_trace()
 
     # Channel taps apply args.total_taps
 
+    if args.filter_type == 'NN':
+        for epoch in range(args.epochs):
+            pass
+    else:
+        pass
 
     # np.load( '' + '/symb_len_{}_mod_{}_S_{}'.format(str(symb_len), args.mod_scheme, args.rand_seed) +'.npy')   
     
