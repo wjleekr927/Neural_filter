@@ -1,1 +1,1 @@
-python main.py
+python main.py --seq_len 1000

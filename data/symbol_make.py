@@ -38,7 +38,10 @@ if __name__ == '__main__':
     symb_np = np.array(symb_list).reshape(-1,1)
     symb_IQ_np = np.concatenate((np.real(symb_np), np.imag(symb_np)),axis = 1)
     
-    data_name = "./symbol_tensor" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+    if args.data_gen_type == 'train':
+        data_name = "./symbol_tensor/train_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+    else:
+        data_name = "./symbol_tensor/test_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
     np.save(data_name, symb_IQ_np)
 
     filter_input_list = []
@@ -55,7 +58,10 @@ if __name__ == '__main__':
     filter_input_IQ_np = np.concatenate((np.expand_dims(np.real(filter_input_np),axis=1),\
     np.expand_dims(np.imag(filter_input_np), axis=1)),axis = 1)
 
-    data_name = "./symbol_tensor" + "/filter_input_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+    if args.data_gen_type == 'train':
+        data_name = "./symbol_tensor/train_data" + "/filter_input_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+    else:
+        data_name = "./symbol_tensor/test_data" + "/filter_input_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
     np.save(data_name, filter_input_IQ_np)
     
-    print("Symbol tensor data generation success!")
+    print("Symbol tensor {} data generation success!".format(args.data_gen_type))
