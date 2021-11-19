@@ -47,18 +47,21 @@ if __name__ == '__main__':
 
     train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last=True, shuffle = True )
     test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last=True, shuffle = True)
+    
+    # channel_taps: shape = (18,1)
+    channel_taps = channel_gen(args.total_taps, args.decay_factor, args.rand_seed)
 
     if args.filter_type == 'NN':
         print("\n-------------------------------")
         print("Neural filter is used")
-        model = NF().to(args.device)
+        # Parameters are needed to be revised
+        model = NF(channel_taps).to(args.device)
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
         print("Linear filter is used")
         model = LF()
     else:
         raise Exception("Filter type should be 'NN' or 'Linear'")
-
 
     # Loss and optimizer setting
     loss_fn = nn.MSELoss()
@@ -67,20 +70,30 @@ if __name__ == '__main__':
     # To save a best model
     best_test_loss = float('inf')
 
-    #channel_taps: shape = (18,1)
-    channel_taps = channel_gen(args.total_taps, args.decay_factor, args.rand_seed)
-
-    # Channel_taps should be reversed
-
-    import ipdb; ipdb.set_trace()
-
-    # Channel taps apply args.total_taps
-
+    # Training part
     if args.filter_type == 'NN':
         for epoch in range(args.epochs):
-            pass
+            model.train()
+            epoch_loss = 0
+
+            for batch, (X,y) in enumerate(train_dataloader):
+                X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
+                pred = model(X)
+                loss = loss_fn(pred,y)
+
+                # Backpropagation
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                epoch_loss += loss.item()
+
+            epoch_loss = epoch_loss / (batch+1)
+            print("Average loss / epoch = {}".format(epoch_loss)) 
     else:
         pass
+
+    # Testing part
 
     # np.load( '' + '/symb_len_{}_mod_{}_S_{}'.format(str(symb_len), args.mod_scheme, args.rand_seed) +'.npy')   
     
