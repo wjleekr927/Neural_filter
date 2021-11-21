@@ -3,9 +3,9 @@ import torch
 from torch import nn
 
 class NF(nn.Module):
-    def __init__(self, channel_taps):
+    def __init__(self, channel_taps, device):
         super(NF,self).__init__()
-        self.channel_taps = channel_taps
+        self.channel_taps = torch.from_numpy(channel_taps).to(device)
         self.CNN_stacks = nn.Sequential(
             nn.Conv1d(in_channels = 2, out_channels = 1, kernel_size = 1),
             nn.ELU(),
@@ -14,9 +14,16 @@ class NF(nn.Module):
         )
 
     def forward(self, x):
-        import ipdb; ipdb.set_trace()
         rst = self.CNN_stacks(x)
-        # channel_taps: shape = (18,1)
-        # Channel_taps should be reversed
-        # (8,2,1) 이 되도록 구성
-        return rst
+
+        # Reverse the tensor to be applied (multiplied) and reshape it
+        channel_taps = torch.flip(self.channel_taps, dims = [0]).reshape(-1,1)
+        
+        # e.g., a+bj * c+dj = (ac-bd) + (ad+bc)j
+        rst_real = torch.mm(rst[:,0,:], channel_taps.real.float()) - torch.mm(rst[:,1,:], channel_taps.imag.float())
+        rst_imag = torch.mm(rst[:,0,:], channel_taps.imag.float()) + torch.mm(rst[:,1,:], channel_taps.real.float())
+
+        # Stack to represent complex value
+        rst_fin = torch.stack((rst_real,rst_imag), dim = 1)
+
+        return rst_fin

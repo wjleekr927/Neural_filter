@@ -55,7 +55,7 @@ if __name__ == '__main__':
         print("\n-------------------------------")
         print("Neural filter is used")
         # Parameters are needed to be revised
-        model = NF(channel_taps).to(args.device)
+        model = NF(channel_taps,args.device).to(args.device)
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
         print("Linear filter is used")
@@ -78,6 +78,7 @@ if __name__ == '__main__':
 
             for batch, (X,y) in enumerate(train_dataloader):
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
+                # Channel taps already applied to pred
                 pred = model(X)
                 loss = loss_fn(pred,y)
 
@@ -89,7 +90,7 @@ if __name__ == '__main__':
                 epoch_loss += loss.item()
 
             epoch_loss = epoch_loss / (batch+1)
-            print("Average loss / epoch = {}".format(epoch_loss)) 
+            print("[Epoch {}] Average loss per epoch = {}".format(epoch, epoch_loss)) 
     else:
         pass
 
