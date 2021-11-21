@@ -4,7 +4,7 @@ import argparse
 def args_parser():
     parser = argparse.ArgumentParser()
     
-    # Model setting arguments
+    # Model setting arguments, following should be satisfied L <= M
     parser.add_argument('--seq_len', type=int, default=40000, help="Length of data sequence")
     parser.add_argument('--filter_type', type=str, default='NN', help = "Filter type: NN or Linear")
     parser.add_argument('--filter_size', type=int, default=18, help = "Size of filter")
@@ -19,7 +19,7 @@ def args_parser():
     
     # Training arguments
     parser.add_argument('--epochs', type=int, default=3, help="Number of epochs")
-    parser.add_argument('--bs', type=int, default=8, help="Size of batch")
+    parser.add_argument('--bs', type=int, default=128, help="Size of batch")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
 
     # parser.add_argument('--output_dir', type=str, default='./output')

@@ -55,7 +55,7 @@ if __name__ == '__main__':
         print("\n-------------------------------")
         print("Neural filter is used")
         # Parameters are needed to be revised
-        model = NF(channel_taps,args.device).to(args.device)
+        model = NF(args.filter_size, channel_taps, args.device).to(args.device)
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
         print("Linear filter is used")
@@ -72,8 +72,8 @@ if __name__ == '__main__':
 
     # Training part
     if args.filter_type == 'NN':
+        model.train()
         for epoch in range(args.epochs):
-            model.train()
             epoch_loss = 0
 
             for batch, (X,y) in enumerate(train_dataloader):
@@ -90,12 +90,26 @@ if __name__ == '__main__':
                 epoch_loss += loss.item()
 
             epoch_loss = epoch_loss / (batch+1)
-            print("[Epoch {}] Average loss per epoch = {}".format(epoch, epoch_loss)) 
+            print("[Epoch {}] Average loss per epoch = {}".format(epoch+1, np.round(epoch_loss,4))) 
     else:
         pass
 
     # Testing part
+    if args.filter_type == 'NN':
+        model.eval()
+        test_loss = 0
+        with torch.no_grad():
+            for batch, (X,y) in enumerate(test_dataloader):
+                X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
+                pred = model(X)
+                loss = loss_fn(pred,y)
+                test_loss += (loss.item() / X.shape[0])
+        test_loss = test_loss / (batch+1)
+        print("\nAverage test loss (per symbol) = {}".format(np.round(test_loss,4)))
 
+    else:
+        pass
+        
     # np.load( '' + '/symb_len_{}_mod_{}_S_{}'.format(str(symb_len), args.mod_scheme, args.rand_seed) +'.npy')   
     
     # tensorboard --logdir=runs

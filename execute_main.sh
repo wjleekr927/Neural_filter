@@ -1,1 +1,1 @@
-python main.py --seq_len 1000
+python main.py --seq_len 40000 --epochs 100
