@@ -48,8 +48,8 @@ if __name__ == '__main__':
         pass
         
     # Build custom dataset (for train and test)
-    train_dataset = CustomDataset(symb_len, args.mod_scheme, args.rand_seed)
-    test_dataset = CustomDataset(symb_len, args.mod_scheme, args.rand_seed, test = True)
+    train_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed)
+    test_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed, test = True)
 
     train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last=True, shuffle = True )
     test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last=True, shuffle = True)
@@ -103,7 +103,7 @@ if __name__ == '__main__':
         # After complete the code, change the form as 'model = LF()' 
         import cvxpy as cp
         LF_weight = cp.Variable((args.filter_size, 1), complex = True)
-        input_file_name = 'filter_input_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
         target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed)
@@ -125,12 +125,11 @@ if __name__ == '__main__':
             else:
                 channel_matrix[:,idx][(idx+1)-args.total_taps : idx+1] = np.flip(channel_taps).reshape(-1)
 
-        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T @ channel_matrix - target_symb.reshape(1,-1)) / total_symb_num)
+        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T @ channel_matrix - target_symb.reshape(1,-1)))
         prob = cp.Problem(objective)
         # MSE for a single symbol
-        opt_MSE_value = prob.solve()
-        print("Optimal value: {:.4f}".format(opt_MSE_value))
-        import ipdb; ipdb.set_trace()
+        opt_MSE_value = prob.solve() / total_symb_num
+        print("Optimal train MSE value: {:.4f}".format(opt_MSE_value))
 
     # Testing part
     if args.filter_type == 'NN':
@@ -146,10 +145,26 @@ if __name__ == '__main__':
         print("\nAverage test loss (per {} symbols) = {}".format(X.shape[0], np.round(test_loss,4)))
 
     else:
-        pass
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed)
+        input_file_PATH = './data/symbol_tensor/test_data/' + input_file_name + '.npy'
+
+        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed)
+        target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
         
-    # np.load( '' + '/symb_len_{}_mod_{}_S_{}'.format(str(symb_len), args.mod_scheme, args.rand_seed) +'.npy')   
-    
+        if os.path.isfile(input_file_PATH):
+            TX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+
+        if os.path.isfile(target_file_PATH):
+            target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
+
+        total_symb_num = TX_test_symb.shape[0]
+        LF_weight = LF_weight.value
+
+        opt_test_MSE = np.square(np.abs(np.matmul(np.matmul(TX_test_symb, LF_weight).T, channel_matrix) - target_symb.reshape(1,-1))).mean()
+
+        # MSE for a single symbol
+        print("Optimal test MSE value: {:.4f}".format(opt_test_MSE))
+        
     # tensorboard --logdir=runs
     # tensorboard --inspect --event_file=myevents.out --tag=loss
     print("\nDone!\n")

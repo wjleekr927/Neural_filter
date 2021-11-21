@@ -9,18 +9,18 @@ from torch.utils.data import Dataset, dataloader
 from torch.utils.data import DataLoader
 
 class CustomDataset(Dataset):
-    def __init__(self, data_length, mod_scheme, seed, test = False):
+    def __init__(self, data_length, filter_size, mod_scheme, seed, test = False):
         # Set the tensor name using arg values
 
         if test != True:
-            input_np_name = 'filter_input_len_{}_mod_{}_S_{}'.format(data_length, mod_scheme, seed)
+            input_np_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(data_length, filter_size, mod_scheme, seed)
             target_np_name = 'symb_len_{}_mod_{}_S_{}'.format(data_length, mod_scheme, seed)
             
             input_np_PATH = './data/symbol_tensor/train_data/' + input_np_name + '.npy'
             target_np_PATH = './data/symbol_tensor/train_data/' + target_np_name + '.npy'
 
         else:
-            input_np_name = 'filter_input_len_{}_mod_{}_S_{}'.format(data_length, mod_scheme, seed)
+            input_np_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(data_length, filter_size, mod_scheme, seed)
             target_np_name = 'symb_len_{}_mod_{}_S_{}'.format(data_length, mod_scheme, seed)
             
             input_np_PATH = './data/symbol_tensor/test_data/' + input_np_name + '.npy'

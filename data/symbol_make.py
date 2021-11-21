@@ -59,9 +59,9 @@ if __name__ == '__main__':
     np.expand_dims(np.imag(filter_input_np), axis=1)),axis = 1)
 
     if args.data_gen_type == 'train':
-        data_name = "./symbol_tensor/train_data" + "/filter_input_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+        data_name = "./symbol_tensor/train_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}".format(str(symb_len), args.filter_size, args.mod_scheme, args.rand_seed)
     else:
-        data_name = "./symbol_tensor/test_data" + "/filter_input_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+        data_name = "./symbol_tensor/test_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}".format(str(symb_len), args.filter_size, args.mod_scheme, args.rand_seed)
     np.save(data_name, filter_input_IQ_np)
     
     print("Symbol tensor {} data generation success!".format(args.data_gen_type))
