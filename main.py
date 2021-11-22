@@ -1,5 +1,6 @@
 # Import packages
 import sys
+import time
 import torch
 import numpy as np
 import os
@@ -34,7 +35,7 @@ if __name__ == '__main__':
     # Print about current option
     print("\nTraining under the following settings:")
     if args.filter_type == 'NN':
-        print("\t[Epoch {}], [Batch size {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
+        print("\t[Epochs {}], [Batch size {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
         format(args.epochs, args.bs, args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test, args.device))
     elif args.filter_type == 'Linear':
         print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
@@ -98,7 +99,7 @@ if __name__ == '__main__':
                 epoch_loss += loss.item()
 
             epoch_loss = epoch_loss / (batch+1)
-            print("[Epoch {}] Average loss per epoch = {}".format(epoch+1, np.round(epoch_loss,4))) 
+            print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, epoch_loss))
     else:
         # After complete the code, change the form as 'model = LF()' 
         import cvxpy as cp
@@ -142,7 +143,10 @@ if __name__ == '__main__':
                 loss = loss_fn(pred,y)
                 test_loss += loss.item()
         test_loss = test_loss / (batch+1)
-        print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss,4))
+        print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss))
+        with open('./results/MSE_test_results.txt','a') as f:
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [Seq length {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
 
     else:
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
@@ -163,8 +167,12 @@ if __name__ == '__main__':
         opt_test_MSE = np.square(np.abs(np.matmul(np.matmul(TX_test_symb, LF_weight).T, channel_matrix) - target_symb.reshape(1,-1))).mean()
 
         # MSE for a single symbol
-        print("Optimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
+        print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
+
+        with open('./results/MSE_test_results.txt','a') as f:
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Filter size {}], [Total taps {}], [Seq length {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, args.filter_size, args.total_taps, args.seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
         
     # tensorboard --logdir=runs
     # tensorboard --inspect --event_file=myevents.out --tag=loss
-    print("\nDone!\n")
+    print("\n{} filter simulation is DONE!\n".format(args.filter_type))
