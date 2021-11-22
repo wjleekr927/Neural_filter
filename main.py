@@ -34,11 +34,11 @@ if __name__ == '__main__':
     # Print about current option
     print("\nTraining under the following settings:")
     if args.filter_type == 'NN':
-        print("\t[Epoch {}], [Filter type {}], [Filter size {}], [Random seed {}], [Device {}]".\
-        format(args.epochs, args.filter_type, args.filter_size, args.rand_seed, args.device))
+        print("\t[Epoch {}], [Batch size {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
+        format(args.epochs, args.bs, args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test, args.device))
     elif args.filter_type == 'Linear':
-        print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed {}]".\
-        format("CVXPY", args.filter_type, args.filter_size, args.rand_seed))
+        print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
+        format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
 
     if args.mod_scheme == 'QPSK':
         # 2 bits for one symbol in QPSK
@@ -48,14 +48,14 @@ if __name__ == '__main__':
         pass
         
     # Build custom dataset (for train and test)
-    train_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed)
-    test_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed, test = True)
+    train_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+    test_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
 
     train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last=True, shuffle = True )
     test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last=True, shuffle = True)
     
-    # channel_taps: shape = (L,1)
-    channel_taps = channel_gen(args.total_taps, args.decay_factor, args.rand_seed)
+    # channel_taps: shape = (L,1) => Follows train random seed
+    channel_taps = channel_gen(args.total_taps, args.decay_factor, args.rand_seed_train)
 
     if args.filter_type == 'NN':
         print("\n-------------------------------")
@@ -103,10 +103,10 @@ if __name__ == '__main__':
         # After complete the code, change the form as 'model = LF()' 
         import cvxpy as cp
         LF_weight = cp.Variable((args.filter_size, 1), complex = True)
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
-        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed)
+        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed_train)
         target_file_PATH = './data/symbol_tensor/train_data/' + target_file_name + '.npy'        
         
         if os.path.isfile(input_file_PATH):
@@ -142,13 +142,13 @@ if __name__ == '__main__':
                 loss = loss_fn(pred,y)
                 test_loss += loss.item()
         test_loss = test_loss / (batch+1)
-        print("\nAverage test loss (per {} symbols) = {}".format(X.shape[0], np.round(test_loss,4)))
+        print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss,4))
 
     else:
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
         input_file_PATH = './data/symbol_tensor/test_data/' + input_file_name + '.npy'
 
-        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed)
+        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed_test)
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
         
         if os.path.isfile(input_file_PATH):
@@ -163,7 +163,7 @@ if __name__ == '__main__':
         opt_test_MSE = np.square(np.abs(np.matmul(np.matmul(TX_test_symb, LF_weight).T, channel_matrix) - target_symb.reshape(1,-1))).mean()
 
         # MSE for a single symbol
-        print("Optimal test MSE value: {:.4f}".format(opt_test_MSE))
+        print("Optimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
         
     # tensorboard --logdir=runs
     # tensorboard --inspect --event_file=myevents.out --tag=loss

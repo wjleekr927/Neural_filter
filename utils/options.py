@@ -13,12 +13,13 @@ def args_parser():
     parser.add_argument('--mod_scheme', type= str, default= 'QPSK', help="Modulation scheme")
     # parser.add_argument('--train_ratio', type= float, default= .7, help="Ratio of training set (0<=R<=1)")
 
-    parser.add_argument('--rand_seed', type= int, default= 9999, help="Random seed setting")
+    parser.add_argument('--rand_seed_train', type= int, default= 9999, help="Random seed setting for training set")
+    parser.add_argument('--rand_seed_test', type= int, default= 4999, help="Random seed setting for test set")
     parser.add_argument('--data_gen_type', type= str, default= 'train', help="Type of data to be generated: 'train' or 'test'")
     parser.add_argument('--gpu', type=int, default=0, help="GPU index setting, -1 for CPU")
     
     # Training arguments
-    parser.add_argument('--epochs', type=int, default=3, help="Number of epochs")
+    parser.add_argument('--epochs', type=int, default=20, help="Number of epochs")
     parser.add_argument('--bs', type=int, default=128, help="Size of batch")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
 

@@ -15,7 +15,13 @@ if __name__ == '__main__':
     # From options.py
     args = args_parser()
 
-    np.random.seed(args.rand_seed)
+    if args.data_gen_type == 'train':
+        np.random.seed(args.rand_seed_train)
+    elif args.data_gen_type == 'test':
+        np.random.seed(args.rand_seed_test)
+    else:
+        raise Exception("Data generation type should be 'train' or 'test'")
+
     rand_seq = np.round(np.random.random_sample(args.seq_len)).astype(int)
 
     symb_list = []
@@ -39,9 +45,9 @@ if __name__ == '__main__':
     symb_IQ_np = np.concatenate((np.real(symb_np), np.imag(symb_np)),axis = 1)
     
     if args.data_gen_type == 'train':
-        data_name = "./symbol_tensor/train_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+        data_name = "./symbol_tensor/train_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed_train)
     else:
-        data_name = "./symbol_tensor/test_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed)
+        data_name = "./symbol_tensor/test_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed_test)
     np.save(data_name, symb_IQ_np)
 
     filter_input_list = []
@@ -59,9 +65,11 @@ if __name__ == '__main__':
     np.expand_dims(np.imag(filter_input_np), axis=1)),axis = 1)
 
     if args.data_gen_type == 'train':
-        data_name = "./symbol_tensor/train_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}".format(str(symb_len), args.filter_size, args.mod_scheme, args.rand_seed)
+        data_name = "./symbol_tensor/train_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}"\
+        .format(str(symb_len), args.filter_size, args.mod_scheme, args.rand_seed_train)
     else:
-        data_name = "./symbol_tensor/test_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}".format(str(symb_len), args.filter_size, args.mod_scheme, args.rand_seed)
+        data_name = "./symbol_tensor/test_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}"\
+        .format(str(symb_len), args.filter_size, args.mod_scheme, args.rand_seed_test)
     np.save(data_name, filter_input_IQ_np)
     
     print("Symbol tensor {} data generation success!".format(args.data_gen_type))
