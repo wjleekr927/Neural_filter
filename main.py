@@ -144,9 +144,14 @@ if __name__ == '__main__':
                 test_loss += loss.item()
         test_loss = test_loss / (batch+1)
         print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss))
+
         with open('./results/MSE_test_results.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [Seq length {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
             .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            
+        with open('./results/channel_MSE.txt','a') as f:
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, channel_taps.T[0], args.filter_size, args.total_taps, time.ctime()))
 
     else:
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
@@ -172,6 +177,10 @@ if __name__ == '__main__':
         with open('./results/MSE_test_results.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [Filter size {}], [Total taps {}], [Seq length {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
             .format(args.filter_type, opt_test_MSE, args.filter_size, args.total_taps, args.seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            
+        with open('./results/channel_MSE.txt','a') as f:
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, channel_taps.T[0] ,args.filter_size, args.total_taps, time.ctime()))
         
     # tensorboard --logdir=runs
     # tensorboard --inspect --event_file=myevents.out --tag=loss

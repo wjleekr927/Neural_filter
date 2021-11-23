@@ -20,7 +20,7 @@ def args_parser():
     
     # Training arguments
     parser.add_argument('--epochs', type=int, default=20, help="Number of epochs")
-    parser.add_argument('--bs', type=int, default=128, help="Size of batch")
+    parser.add_argument('--bs', type=int, default=256, help="Size of batch")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
 
     # parser.add_argument('--output_dir', type=str, default='./output')

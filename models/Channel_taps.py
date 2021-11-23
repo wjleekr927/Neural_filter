@@ -8,6 +8,6 @@ def channel_gen(total_taps, decay_factor, seed):
 
     for idx in range(total_taps):
         rnd_complex = np.random.randn() + np.random.randn() * 1j
-        channel_vec[idx] = exp_decay * rnd_complex
-
+        channel_vec[idx] = np.sqrt(exp_decay**idx / 2) * rnd_complex
+    
     return channel_vec
