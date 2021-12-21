@@ -120,15 +120,17 @@ if __name__ == '__main__':
 
         total_symb_num = TX_symb.shape[0]
 
-        channel_matrix = np.zeros((total_symb_num,total_symb_num), dtype = 'complex_')
+        channel_matrix_train = np.zeros((total_symb_num,total_symb_num), dtype = 'complex_')
 
-        for idx in range(total_symb_num):
-            if idx < args.total_taps:
-                channel_matrix[:,idx][:idx+1] = np.flip(channel_taps[: idx+1]).reshape(-1)
-            else:
-                channel_matrix[:,idx][(idx+1)-args.total_taps : idx+1] = np.flip(channel_taps).reshape(-1)
+        for idx in range(args.total_taps):
+            channel_matrix_train += np.eye(total_symb_num, k=idx) * channel_taps[idx]
+        # for idx in range(total_symb_num):
+        #     if idx < args.total_taps:
+        #         channel_matrix_train[:,idx][:idx+1] = np.flip(channel_taps[: idx+1]).reshape(-1)
+        #     else:
+        #         channel_matrix_train[:,idx][(idx+1)-args.total_taps : idx+1] = np.flip(channel_taps).reshape(-1)
 
-        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T @ channel_matrix - target_symb.reshape(1,-1)))
+        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T @ channel_matrix_train - target_symb.reshape(1,-1)))
         prob = cp.Problem(objective)
         # MSE for a single symbol
         opt_MSE_value = prob.solve() / total_symb_num
@@ -170,8 +172,14 @@ if __name__ == '__main__':
 
         total_symb_num = TX_test_symb.shape[0]
         LF_weight = LF_weight.value
+        
+        channel_matrix_test = np.zeros((total_symb_num,total_symb_num), dtype = 'complex_')
 
-        opt_test_MSE = np.square(np.abs(np.matmul(np.matmul(TX_test_symb, LF_weight).T, channel_matrix) - target_symb.reshape(1,-1))).mean()
+        # Channel matrix for test
+        for idx in range(args.total_taps):
+            channel_matrix_test += np.eye(total_symb_num, k=idx) * channel_taps[idx]
+
+        opt_test_MSE = np.square(np.abs(np.matmul(np.matmul(TX_test_symb, LF_weight).T, channel_matrix_test) - target_symb.reshape(1,-1))).mean()
 
         # MSE for a single symbol
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
