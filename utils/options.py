@@ -9,8 +9,9 @@ def args_parser():
     parser.add_argument('--train_seq_len', type=int, default=40000, help="Length of train data sequence")
     parser.add_argument('--test_seq_len', type=int, default=40000, help="Length of test data sequence")
     parser.add_argument('--filter_type', type=str, default='NN', help = "Filter type: NN or Linear")
-    parser.add_argument('--filter_size', type=int, default=18, help = "Size of filter")
-    parser.add_argument('--total_taps', type=int, default= 18, help = "Number of channel taps")
+    # (18,18) was default, changed to (25,10) 
+    parser.add_argument('--filter_size', type=int, default=25, help = "Size of filter")
+    parser.add_argument('--total_taps', type=int, default= 10, help = "Number of channel taps")
     parser.add_argument('--decay_factor', type=float, default=0.9, help="Exponential tap decay factor k: exp(-k)")
     parser.add_argument('--mod_scheme', type= str, default= 'QPSK', help="Modulation scheme")
     # parser.add_argument('--train_ratio', type= float, default= .7, help="Ratio of training set (0<=R<=1)")
@@ -21,7 +22,7 @@ def args_parser():
     parser.add_argument('--gpu', type=int, default=0, help="GPU index setting, -1 for CPU")
     
     # Training arguments
-    parser.add_argument('--epochs', type=int, default=20, help="Number of epochs")
+    parser.add_argument('--epochs', type=int, default=30, help="Number of epochs")
     parser.add_argument('--bs', type=int, default=256, help="Size of batch")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
 
