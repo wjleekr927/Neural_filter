@@ -22,7 +22,7 @@ if __name__ == '__main__':
     else:
         raise Exception("Data generation type should be 'train' or 'test'")
 
-    rand_seq = np.round(np.random.random_sample(args.seq_len)).astype(int)
+    rand_seq = np.round(np.random.random_sample(args.gen_seq_len)).astype(int)
 
     symb_list = []
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
         # 2 bits for one symbol in QPSK
         bits_per_symb = 2
-        symb_len = args.seq_len // bits_per_symb
+        symb_len = args.gen_seq_len // bits_per_symb
 
     # Append a corresponding symbol to the list
     for idx in range(symb_len):

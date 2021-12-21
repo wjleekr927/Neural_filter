@@ -5,11 +5,13 @@ def args_parser():
     parser = argparse.ArgumentParser()
     
     # Model setting arguments, following should be satisfied L <= M
-    parser.add_argument('--seq_len', type=int, default=40000, help="Length of data sequence")
+    parser.add_argument('--gen_seq_len', type=int, default=40000, help="Length of data sequence to be generated")
+    parser.add_argument('--train_seq_len', type=int, default=40000, help="Length of train data sequence")
+    parser.add_argument('--test_seq_len', type=int, default=40000, help="Length of test data sequence")
     parser.add_argument('--filter_type', type=str, default='NN', help = "Filter type: NN or Linear")
     parser.add_argument('--filter_size', type=int, default=18, help = "Size of filter")
     parser.add_argument('--total_taps', type=int, default= 18, help = "Number of channel taps")
-    parser.add_argument('--decay_factor', type=float, default=0.95, help="Exponential tap decay factor k: exp(-k)")
+    parser.add_argument('--decay_factor', type=float, default=0.9, help="Exponential tap decay factor k: exp(-k)")
     parser.add_argument('--mod_scheme', type= str, default= 'QPSK', help="Modulation scheme")
     # parser.add_argument('--train_ratio', type= float, default= .7, help="Ratio of training set (0<=R<=1)")
 

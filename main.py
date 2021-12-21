@@ -44,19 +44,20 @@ if __name__ == '__main__':
     if args.mod_scheme == 'QPSK':
         # 2 bits for one symbol in QPSK
         bits_per_symb = 2
-        symb_len = args.seq_len // bits_per_symb
+        train_symb_len = args.train_seq_len // bits_per_symb
+        test_symb_len = args.test_seq_len // bits_per_symb
     else:
         pass
         
     # Build custom dataset (for train and test)
-    train_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
-    test_dataset = CustomDataset(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
+    train_dataset = CustomDataset(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+    test_dataset = CustomDataset(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
 
     train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last=True, shuffle = True )
     test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last=True, shuffle = True)
     
-    # channel_taps: shape = (L,1) => Follows train random seed
-    channel_taps = channel_gen(args.total_taps, args.decay_factor, args.rand_seed_train)
+    # channel_taps: shape = (L,1) => Follows fixed random seed
+    channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = 2077)
 
     if args.filter_type == 'NN':
         print("\n-------------------------------")
@@ -67,7 +68,8 @@ if __name__ == '__main__':
         
         # Loss and optimizer setting
         loss_fn = nn.MSELoss()
-        optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
+        #optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
+        optimizer = torch.optim.Adam(model.parameters(), lr = args.lr)
     
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
@@ -104,10 +106,10 @@ if __name__ == '__main__':
         # After complete the code, change the form as 'model = LF()' 
         import cvxpy as cp
         LF_weight = cp.Variable((args.filter_size, 1), complex = True)
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
-        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed_train)
+        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
         target_file_PATH = './data/symbol_tensor/train_data/' + target_file_name + '.npy'        
         
         if os.path.isfile(input_file_PATH):
@@ -146,18 +148,18 @@ if __name__ == '__main__':
         print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [Seq length {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, channel_taps.T[0], args.filter_size, args.total_taps, time.ctime()))
+            .format(args.filter_type, test_loss, channel_taps.T[0], args.filter_size, args.total_taps, time.ctime()))
 
     else:
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
         input_file_PATH = './data/symbol_tensor/test_data/' + input_file_name + '.npy'
 
-        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(symb_len, args.mod_scheme, args.rand_seed_test)
+        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
         
         if os.path.isfile(input_file_PATH):
@@ -175,8 +177,8 @@ if __name__ == '__main__':
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Filter size {}], [Total taps {}], [Seq length {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, args.filter_size, args.total_taps, args.seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Filter size {}], [Total taps {}], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, args.filter_size, args.total_taps, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
