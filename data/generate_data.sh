@@ -4,6 +4,7 @@ python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 1000 --data_gen_type 'tr
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 2000 --data_gen_type 'train' --rand_seed_train 9997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 4000 --data_gen_type 'train' --rand_seed_train 9997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 8000 --data_gen_type 'train' --rand_seed_train 9997
+python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 12000 --data_gen_type 'train' --rand_seed_train 9997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 16000 --data_gen_type 'train' --rand_seed_train 9997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 20000 --data_gen_type 'train' --rand_seed_train 9997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 24000 --data_gen_type 'train' --rand_seed_train 9997
@@ -17,6 +18,7 @@ python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 1000 --data_gen_type 'te
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 2000 --data_gen_type 'test' --rand_seed_test 4997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 4000 --data_gen_type 'test' --rand_seed_test 4997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 8000 --data_gen_type 'test' --rand_seed_test 4997
+python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 12000 --data_gen_type 'test' --rand_seed_test 4997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 16000 --data_gen_type 'test' --rand_seed_test 4997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 20000 --data_gen_type 'test' --rand_seed_test 4997
 python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 24000 --data_gen_type 'test' --rand_seed_test 4997
