@@ -22,7 +22,7 @@ def args_parser():
     parser.add_argument('--gpu', type=int, default=0, help="GPU index setting, -1 for CPU")
     
     # Training arguments
-    parser.add_argument('--epochs', type=int, default=30, help="Number of epochs")
+    parser.add_argument('--epochs', type=int, default=80, help="Number of epochs")
     parser.add_argument('--bs', type=int, default=256, help="Size of batch")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
 

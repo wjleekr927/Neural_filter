@@ -8,10 +8,11 @@ class NF(nn.Module):
         self.filter_size = filter_size
         self.channel_taps = torch.from_numpy(channel_taps).to(device)
         self.device = device
+        # Filter size에 따라 CNN 구조를 바꿔야하는 것이 문제임
         self.CNN_stacks = nn.Sequential(
-            nn.Conv1d(in_channels = 2, out_channels = 2, kernel_size = filter_size // 6, stride = filter_size // 6),
+            nn.Conv1d(in_channels = 2, out_channels = 2, kernel_size = filter_size // 8, stride = filter_size // 8),
             nn.ELU(),
-            nn.Conv1d(2,2,kernel_size = 6),
+            nn.Conv1d(2,2,kernel_size = 8),
             nn.ELU()
         )
 
