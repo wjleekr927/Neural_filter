@@ -23,7 +23,8 @@ from data.custom_set import CustomDataset
 from models.NN import NF 
 from models.Linear import LF
 
-from models.Channel_taps import channel_gen
+from models.Channel import channel_gen
+from models.Channel import apply_channel
 
 if __name__ == '__main__':
     # Parse args (from ./utils/options.py)
@@ -49,15 +50,32 @@ if __name__ == '__main__':
     else:
         pass
         
+    # channel_taps: shape = (L,1) => Follows fixed random seed
+    channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = 2077)
+    
+    train_target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
+    train_target_file_PATH = './data/symbol_tensor/train_data/' + train_target_file_name + '.npy'        
+
+    test_target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
+    test_target_file_PATH = './data/symbol_tensor/test_data/' + test_target_file_name + '.npy'       
+    
+    if os.path.isfile(train_target_file_PATH):
+        train_target_symb = np.load(train_target_file_PATH)[:,0] + 1j * np.load(train_target_file_PATH)[:,1]
+    
+    if os.path.isfile(test_target_file_PATH):
+        test_target_symb = np.load(test_target_file_PATH)[:,0] + 1j * np.load(test_target_file_PATH)[:,1]
+
+    # Data generation for NF and LF
+    apply_channel(channel_taps, args.filter_size, train_target_symb, test_target_symb)
+
+    import ipdb; ipdb.set_trace()
+    
     # Build custom dataset (for train and test)
     train_dataset = CustomDataset(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
     test_dataset = CustomDataset(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
 
     train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last=True, shuffle = True )
     test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last=True, shuffle = True)
-    
-    # channel_taps: shape = (L,1) => Follows fixed random seed
-    channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = 2077)
 
     if args.filter_type == 'NN':
         print("\n-------------------------------")
@@ -120,17 +138,7 @@ if __name__ == '__main__':
 
         total_symb_num = TX_symb.shape[0]
 
-        channel_matrix_train = np.zeros((total_symb_num,total_symb_num), dtype = 'complex_')
-
-        for idx in range(args.total_taps):
-            channel_matrix_train += np.eye(total_symb_num, k=idx) * channel_taps[idx]
-        # for idx in range(total_symb_num):
-        #     if idx < args.total_taps:
-        #         channel_matrix_train[:,idx][:idx+1] = np.flip(channel_taps[: idx+1]).reshape(-1)
-        #     else:
-        #         channel_matrix_train[:,idx][(idx+1)-args.total_taps : idx+1] = np.flip(channel_taps).reshape(-1)
-
-        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T @ channel_matrix_train - target_symb.reshape(1,-1)))
+        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T - target_symb.reshape(1,-1)))
         prob = cp.Problem(objective)
         # MSE for a single symbol
         opt_MSE_value = prob.solve() / total_symb_num
