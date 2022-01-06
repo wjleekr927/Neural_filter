@@ -10,5 +10,6 @@ def channel_gen(total_taps, decay_factor, seed):
         # Std to variance
         rnd_complex = np.random.randn(scale=1/(2*total_taps)**.5) + np.random.randn(scale=1/(2*total_taps)**.5) * 1j
         channel_vec[idx] = rnd_complex
+        # Test
     
     return channel_vec
