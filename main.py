@@ -1,4 +1,5 @@
 # Import packages
+import errno # Package to raise an error message
 import sys
 import time
 import torch
@@ -59,30 +60,40 @@ if __name__ == '__main__':
     test_target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
     test_target_file_PATH = './data/symbol_tensor/test_data/' + test_target_file_name + '.npy'       
     
+    # Symbol shape: (n,)
     if os.path.isfile(train_target_file_PATH):
         train_target_symb = np.load(train_target_file_PATH)[:,0] + 1j * np.load(train_target_file_PATH)[:,1]
+    else:
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), train_target_file_name)
     
     if os.path.isfile(test_target_file_PATH):
         test_target_symb = np.load(test_target_file_PATH)[:,0] + 1j * np.load(test_target_file_PATH)[:,1]
+    else:
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_target_file_name)
 
-    # Data generation for NF and LF
-    apply_channel(channel_taps, args.filter_size, train_target_symb, test_target_symb)
+    train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+    train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
-    import ipdb; ipdb.set_trace()
-    
+    test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+    test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
+
+    if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH):
+        # Data generation for NF and LF
+        apply_channel(channel_taps, args.filter_size, train_target_symb, test_target_symb)
+
     # Build custom dataset (for train and test)
     train_dataset = CustomDataset(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
     test_dataset = CustomDataset(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
 
-    train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last=True, shuffle = True )
-    test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last=True, shuffle = True)
+    train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last = True, shuffle = True )
+    test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last = True, shuffle = True)
 
     if args.filter_type == 'NN':
         print("\n-------------------------------")
         print("Neural filter is used")
         
         # Parameters are needed to be revised
-        model = NF(args.filter_size, channel_taps, args.device).to(args.device)
+        model = NF(args.filter_size).to(args.device)
         
         # Loss and optimizer setting
         loss_fn = nn.MSELoss()

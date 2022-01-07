@@ -25,7 +25,7 @@
 # python main.py --total_taps 10 --filter_size 5 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 2000 --test_seq_len 40000 --bs 64 
 # python main.py --total_taps 10 --filter_size 5 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 4000 --test_seq_len 40000 --bs 64 
 # python main.py --total_taps 10 --filter_size 5 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 8000 --test_seq_len 40000 --bs 64 
-python main.py --total_taps 10 --filter_size 24 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 200 --test_seq_len 200 --bs 64 
+python main.py --epochs 80 --lr 8e-4 --total_taps 10 --filter_size 24 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 20000 --test_seq_len 20000 --bs 64 
 # python main.py --total_taps 10 --filter_size 24 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 16000 --test_seq_len 40000 --bs 64
 # python main.py --total_taps 10 --filter_size 5 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 20000 --test_seq_len 40000 --bs 256 
 # python main.py --total_taps 10 --filter_size 5 --filter_type "NN" --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 24000 --test_seq_len 40000 --bs 256 

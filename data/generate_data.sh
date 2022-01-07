@@ -1,5 +1,5 @@
-python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 200 --data_gen_type 'train' --rand_seed_train 9997
-python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 200 --data_gen_type 'test' --rand_seed_test 4997
+python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 20000 --data_gen_type 'train' --rand_seed_train 9997
+python symbol_make.py --mod_scheme "QPSK" --gen_seq_len 20000 --data_gen_type 'test' --rand_seed_test 4997
 
 # python symbol_make.py --total_taps 10 --filter_size 5 --mod_scheme "QPSK" --gen_seq_len 400 --data_gen_type 'train' --rand_seed_train 9997
 # python symbol_make.py --total_taps 10 --filter_size 5 --mod_scheme "QPSK" --gen_seq_len 1000 --data_gen_type 'train' --rand_seed_train 9997
