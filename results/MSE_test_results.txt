@@ -168,3 +168,7 @@
 [Filter type NN], [MSE 0.5201], [Epochs 80], [Batch size 64], [Filter size 24], [Total taps 10], [Train/test seq length 200/200], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Fri Jan  7 16:05:02 2022]
 [Filter type NN], [MSE 0.4793], [Epochs 80], [Batch size 64], [Filter size 24], [Total taps 10], [Train/test seq length 200/200], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Fri Jan  7 16:06:15 2022]
 [Filter type NN], [MSE 0.4777], [Epochs 80], [Batch size 64], [Filter size 24], [Total taps 10], [Train/test seq length 20000/20000], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Fri Jan  7 16:56:33 2022]
+[Filter type Linear], [MSE 0.9392], [Filter size 24], [Total taps 10], [Train/test seq length 20000/20000], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Mon Jan 10 13:42:47 2022]
+[Filter type NN], [MSE 0.5104], [Epochs 80], [Batch size 64], [Filter size 24], [Total taps 10], [Train/test seq length 200/20000], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Mon Jan 10 14:12:07 2022]
+[Filter type Linear], [MSE 1.1535], [Filter size 24], [Total taps 10], [Train/test seq length 200/20000], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Mon Jan 10 14:12:09 2022]
+[Filter type NN], [MSE 0.5061], [Epochs 80], [Batch size 64], [Filter size 24], [Total taps 10], [Train/test seq length 200/20000], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Mon Jan 10 14:15:19 2022]

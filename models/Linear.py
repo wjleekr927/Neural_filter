@@ -1,14 +1,20 @@
 # LF
+import cvxpy as cp
 import torch
 from torch import nn
 
-### Correct later ###
-class LF(nn.Module):
-    def __init__(self):
-        super(LF,self).__init__()
-        self.CNN_stacks = nn.Sequential(
-        )
+# Base class definition
+class LF:
+    def __init__(self, RX_symb, target_symb, filter_size):
+        self.RX_symb = RX_symb
+        self.target_symb = target_symb
+        self.total_symb_num = RX_symb.shape[0]
+        self.filter_size = filter_size
 
-    def forward(self, x):
-        rst = self.CNN_stacks
-        return rst
+    def optimize(self):
+        LF_weight = cp.Variable((self.filter_size, 1), complex = True)
+        objective = cp.Minimize(cp.sum_squares((self.RX_symb @ LF_weight).T - self.target_symb.reshape(1,-1)))
+        prob = cp.Problem(objective)
+        rst = prob.solve()
+        # LF_weight is for test phase
+        return LF_weight.value, rst

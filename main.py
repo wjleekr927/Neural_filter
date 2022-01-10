@@ -132,27 +132,24 @@ if __name__ == '__main__':
             epoch_loss = epoch_loss / (batch+1)
             print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, epoch_loss))
     else:
-        # After complete the code, change the form as 'model = LF()' 
-        import cvxpy as cp
-        LF_weight = cp.Variable((args.filter_size, 1), complex = True)
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
         target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
         target_file_PATH = './data/symbol_tensor/train_data/' + target_file_name + '.npy'        
-        
+
         if os.path.isfile(input_file_PATH):
-            TX_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            RX_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
 
         if os.path.isfile(target_file_PATH):
             target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
 
-        total_symb_num = TX_symb.shape[0]
+        model = LF(RX_symb, target_symb, args.filter_size)
+        LF_weight, optimized_rst = model.optimize()
 
-        objective = cp.Minimize(cp.sum_squares((TX_symb @ LF_weight).T - target_symb.reshape(1,-1)))
-        prob = cp.Problem(objective)
         # MSE for a single symbol
-        opt_MSE_value = prob.solve() / total_symb_num
+        total_symb_num = RX_symb.shape[0]
+        opt_MSE_value = optimized_rst / total_symb_num
         print("Optimal train MSE value: {:.4f}".format(opt_MSE_value))
 
     # Testing part
@@ -184,21 +181,14 @@ if __name__ == '__main__':
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
         
         if os.path.isfile(input_file_PATH):
-            TX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
 
         if os.path.isfile(target_file_PATH):
             target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
 
-        total_symb_num = TX_test_symb.shape[0]
-        LF_weight = LF_weight.value
-        
-        channel_matrix_test = np.zeros((total_symb_num,total_symb_num), dtype = 'complex_')
+        total_symb_num = RX_test_symb.shape[0]
 
-        # Channel matrix for test
-        for idx in range(args.total_taps):
-            channel_matrix_test += np.eye(total_symb_num, k=idx) * channel_taps[idx]
-
-        opt_test_MSE = np.square(np.abs(np.matmul(np.matmul(TX_test_symb, LF_weight).T, channel_matrix_test) - target_symb.reshape(1,-1))).mean()
+        opt_test_MSE = np.square(np.abs(np.matmul(RX_test_symb, LF_weight).T - target_symb.reshape(1,-1))).mean()
 
         # MSE for a single symbol
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
