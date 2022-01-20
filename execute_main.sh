@@ -11,7 +11,7 @@
 # python main.py --filter_type "Linear" --filter_size 10 --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 200 --test_seq_len 48000
 # python main.py --filter_type "Linear" --filter_size 10 --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 1000 --test_seq_len 48000
 # python main.py --filter_type "Linear" --filter_size 10 --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 5000 --test_seq_len 48000
-python main.py --filter_type "Optimal_Linear" --filter_size 16 --rand_seed_train 9993 --rand_seed_test 4993 --train_seq_len 200 --test_seq_len 48000
+python main.py --filter_type "Optimal_Linear" --filter_size 10000 --rand_seed_train 9993 --rand_seed_test 4993 --train_seq_len 200 --test_seq_len 48000
 #python main.py --filter_type "Optimal_Linear" --filter_size 16 --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 20000 --test_seq_len 48000
 # python main.py --filter_type "Optimal_Linear" --filter_size 16 --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 30000 --test_seq_len 48000
 # python main.py --filter_type "Linear" --filter_size 10 --rand_seed_train 9997 --rand_seed_test 4997 --train_seq_len 36000 --test_seq_len 48000
