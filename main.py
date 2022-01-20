@@ -42,6 +42,9 @@ if __name__ == '__main__':
     elif args.filter_type == 'Linear':
         print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
+    elif args.filter_type == 'Optimal_Linear':
+        print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
+        format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
 
     if args.mod_scheme == 'QPSK':
         # 2 bits for one symbol in QPSK
@@ -71,24 +74,31 @@ if __name__ == '__main__':
     else:
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_target_file_name)
 
-    train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
-    train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
+    if args.filter_type == "NN" or args.filter_type == "Linear":
+        train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
-    test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
-    test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
+        test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
+
+    elif args.filter_type == "Optimal_Linear":
+        train_input_file_name = '/opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
+
+        test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        test_input_file_PATH = './opt_data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
 
     if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH):
         # Data generation for NF and LF
-        apply_channel(channel_taps, args.filter_size, train_target_symb, test_target_symb)
-
-    # Build custom dataset (for train and test)
-    train_dataset = CustomDataset(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
-    test_dataset = CustomDataset(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
-
-    train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last = True, shuffle = True )
-    test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last = True, shuffle = True)
+        apply_channel(channel_taps, args.filter_size, args.filter_type, train_target_symb, test_target_symb)
 
     if args.filter_type == 'NN':
+        # Build custom dataset (for train and test)
+        train_dataset = CustomDataset(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        test_dataset = CustomDataset(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
+
+        train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last = True, shuffle = True )
+        test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last = True, shuffle = True)
         print("\n-------------------------------")
         print("Neural filter is used")
         
@@ -103,9 +113,13 @@ if __name__ == '__main__':
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
         print("Linear filter is used")
-        # model = LF()
+
+    elif args.filter_type == 'Optimal_Linear':
+        print("\n-------------------------------")
+        print("Optimal linear filter is used")
+
     else:
-        raise Exception("Filter type should be 'NN' or 'Linear'")
+        raise Exception("Filter type should be 'NN' or 'Linear' or 'Optimal_Linear'")
 
     # To save a best model
     best_test_loss = float('inf')
@@ -132,23 +146,30 @@ if __name__ == '__main__':
             epoch_loss = epoch_loss / (batch+1)
             print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, epoch_loss))
     else:
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        if args.filter_type == 'Linear':
+            input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        elif args.filter_type == 'Optimal_Linear':
+            input_file_name = 'opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train) 
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
         target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
         target_file_PATH = './data/symbol_tensor/train_data/' + target_file_name + '.npy'        
 
-        if os.path.isfile(input_file_PATH):
+        if os.path.isfile(input_file_PATH) and args.filter_type == 'Linear':
             RX_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            total_symb_num = RX_symb.shape[0]
+
+        elif os.path.isfile(input_file_PATH) and args.filter_type == 'Optimal_Linear':
+            RX_symb = np.load(input_file_PATH)
+            total_symb_num = RX_symb.size
 
         if os.path.isfile(target_file_PATH):
             target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
 
-        model = LF(RX_symb, target_symb, args.filter_size)
+        model = LF(RX_symb, target_symb, args.filter_size, args.filter_type)
         LF_weight, optimized_rst = model.optimize()
 
         # MSE for a single symbol
-        total_symb_num = RX_symb.shape[0]
         opt_MSE_value = optimized_rst / total_symb_num
         print("Optimal train MSE value: {:.4f}".format(opt_MSE_value))
 
@@ -174,21 +195,27 @@ if __name__ == '__main__':
             .format(args.filter_type, test_loss, channel_taps.T[0], args.filter_size, args.total_taps, time.ctime()))
 
     else:
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        if args.filter_type == 'Linear':
+            input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        elif args.filter_type == 'Optimal_Linear':
+            input_file_name = 'opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
         input_file_PATH = './data/symbol_tensor/test_data/' + input_file_name + '.npy'
 
         target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
-        
-        if os.path.isfile(input_file_PATH):
-            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
 
         if os.path.isfile(target_file_PATH):
             target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
 
-        total_symb_num = RX_test_symb.shape[0]
-
-        opt_test_MSE = np.square(np.abs(np.matmul(RX_test_symb, LF_weight).T - target_symb.reshape(1,-1))).mean()
+        if os.path.isfile(input_file_PATH) and args.filter_type == 'Linear':
+            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            total_symb_num = RX_test_symb.shape[0]
+            opt_test_MSE = np.square(np.abs(np.matmul(RX_test_symb, LF_weight).T - target_symb.reshape(1,-1))).mean()
+        
+        elif os.path.isfile(input_file_PATH) and args.filter_type == 'Optimal_Linear':
+            RX_test_symb = np.load(input_file_PATH)
+            total_symb_num = RX_test_symb.size
+            opt_test_MSE = np.square(np.abs(np.matmul(LF_weight,RX_test_symb).reshape(1,-1,order = 'F') - target_symb.reshape(1,-1))).mean()
 
         # MSE for a single symbol
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
