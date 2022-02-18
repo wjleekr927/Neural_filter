@@ -250,3 +250,4 @@
 [Filter type Optimal_Linear], [MSE 0.9969], [Filter size 16], [Total taps 10], [Train/test seq length 200/48000], [Random seed (Train) 9997], [Random seed (Test) 4997], [Date Fri Jan 21 00:41:20 2022]
 [Filter type Optimal_Linear], [MSE 0.9903], [Filter size 16], [Total taps 10], [Train/test seq length 200/48000], [Random seed (Train) 9993], [Random seed (Test) 4993], [Date Fri Jan 21 00:45:40 2022]
 [Filter type Optimal_Linear], [MSE 1.0258], [Filter size 10000], [Total taps 10], [Train/test seq length 200/48000], [Random seed (Train) 9993], [Random seed (Test) 4993], [Date Fri Jan 21 01:13:25 2022]
+[Filter type Optimal_Linear], [MSE 1.0258], [Filter size 10000], [Total taps 10], [Train/test seq length 200/48000], [Random seed (Train) 9993], [Random seed (Test) 4993], [Date Fri Feb 18 13:27:18 2022]
