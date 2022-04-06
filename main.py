@@ -54,25 +54,26 @@ if __name__ == '__main__':
     else:
         pass
         
-    # channel_taps: shape = (L,1) => Follows fixed random seed
+    # channel_taps: shape = (Nc,1) => Follows fixed random seed
+    L = args.filter_size + args.total_taps - 1
     channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = 2077)
     
-    train_target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
-    train_target_file_PATH = './data/symbol_tensor/train_data/' + train_target_file_name + '.npy'        
+    train_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
+    train_original_file_PATH = './data/symbol_tensor/train_data/' + train_original_file_name + '.npy'        
 
-    test_target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
-    test_target_file_PATH = './data/symbol_tensor/test_data/' + test_target_file_name + '.npy'       
+    test_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
+    test_original_file_PATH = './data/symbol_tensor/test_data/' + test_original_file_name + '.npy'       
     
     # Symbol shape: (n,)
-    if os.path.isfile(train_target_file_PATH):
-        train_target_symb = np.load(train_target_file_PATH)[:,0] + 1j * np.load(train_target_file_PATH)[:,1]
+    if os.path.isfile(train_original_file_PATH):
+        train_original_symb = np.load(train_original_file_PATH)[:,0] + 1j * np.load(train_original_file_PATH)[:,1]
     else:
-        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), train_target_file_name)
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), train_original_file_name)
     
-    if os.path.isfile(test_target_file_PATH):
-        test_target_symb = np.load(test_target_file_PATH)[:,0] + 1j * np.load(test_target_file_PATH)[:,1]
+    if os.path.isfile(test_original_file_PATH):
+        test_original_symb = np.load(test_original_file_PATH)[:,0] + 1j * np.load(test_original_file_PATH)[:,1]
     else:
-        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_target_file_name)
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_original_file_name)
 
     if args.filter_type == "NN" or args.filter_type == "Linear":
         train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
@@ -90,15 +91,15 @@ if __name__ == '__main__':
 
     if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH):
         # Data generation for NF and LF
-        apply_channel(channel_taps, args.filter_size, args.filter_type, train_target_symb, test_target_symb)
+        apply_channel(channel_taps, args.filter_size, args.filter_type, train_original_symb, test_original_symb)
 
     if args.filter_type == 'NN':
         # Build custom dataset (for train and test)
-        train_dataset = CustomDataset(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
-        test_dataset = CustomDataset(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
+        train_dataset = CustomDataset(train_symb_len, L, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        test_dataset = CustomDataset(test_symb_len, L, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
 
-        train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last = True, shuffle = True )
-        test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last = True, shuffle = True)
+        train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last = True, shuffle = False )
+        test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last = True, shuffle = False)
         print("\n-------------------------------")
         print("Neural filter is used")
         
@@ -108,7 +109,7 @@ if __name__ == '__main__':
         # Loss and optimizer setting
         loss_fn = nn.MSELoss()
         #optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
-        optimizer = torch.optim.Adam(model.parameters(), lr = args.lr)
+        optimizer = torch.optim.AdamW(model.parameters(), lr = args.lr)
     
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")

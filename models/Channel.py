@@ -1,5 +1,7 @@
 import numpy as np 
 import sys 
+import os
+import os.path
 sys.path.insert(1,'..')
 from utils.options import args_parser
 
@@ -13,43 +15,45 @@ def channel_gen(total_taps, decay_factor, seed):
         rnd_complex = np.random.normal(scale=1/(2*total_taps)**.5) + np.random.normal(scale=1/(2*total_taps)**.5) * 1j
         channel_vec[idx] = rnd_complex
     
+    # Save the channel vector
+    channel_tap_name = 'channel_{}_taps_S_{}'.format(total_taps, seed)
+    channel_tap_PATH = './models/channel_tap_vector/' + channel_tap_name + '.npy'
+
+    if not os.path.isfile(channel_tap_PATH):
+        np.save(channel_tap_PATH, channel_vec)
+
+    print("\n{} channel taps with seed {} are used".format(total_taps, seed))
+
     return channel_vec
 
 # symbol_tensor shape => (n,)
 def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, test_symbol_tensor):
     args = args_parser()
+
+    L = len(channel_taps) + filter_size - 1
     
-    train_symbol_tensor, train_symbol_num = train_symbol_tensor.reshape(1,-1), train_symbol_tensor.shape[-1]
-    test_symbol_tensor, test_symbol_num  = test_symbol_tensor.reshape(1,-1), test_symbol_tensor.shape[-1]
+    # Shape of 'symbol_tensor' is (n,) with complex form 
+    train_symbol_tensor, train_symbol_num = train_symbol_tensor.reshape(-1,1), train_symbol_tensor.shape[-1]
+    test_symbol_tensor, test_symbol_num  = test_symbol_tensor.reshape(-1,1), test_symbol_tensor.shape[-1]
     
-    channel_for_train = np.zeros((train_symbol_num,train_symbol_num), dtype = 'complex_')
-    channel_for_test = np.zeros((test_symbol_num,test_symbol_num), dtype = 'complex_')
+    channel_matrix = np.zeros((filter_size, L), dtype = 'complex_')
 
     for idx in range(len(channel_taps)):
-        channel_for_train += np.eye(train_symbol_num, k=idx) * channel_taps[idx]
-        channel_for_test += np.eye(test_symbol_num, k=idx) * channel_taps[idx]
+        channel_matrix += np.eye(filter_size, L, k=idx) * channel_taps[idx]
 
-    # Shape: (n,1)
-    train_applied = (train_symbol_tensor @ channel_for_train).T
-    test_applied = (test_symbol_tensor @ channel_for_test).T
+    train_applied, test_applied = [], []
 
+    # Apply to every L symbols
+    # Applied variable shape: (Number of set, filter_size, 1)
+    for set_idx in range(train_symbol_num // L):
+        train_applied.append(channel_matrix @ train_symbol_tensor[set_idx*L : (set_idx+1)*L])
+
+    for set_idx in range(test_symbol_num // L):
+        test_applied.append(channel_matrix @ test_symbol_tensor[set_idx*L : (set_idx+1)*L])
+
+    # Implement filter train / test data
     if args.filter_type == 'NN' or args.filter_type == 'Linear':
-        train_filter_input_list, test_filter_input_list = [], []
-        train_filter_window, test_filter_window  = [0] * filter_size, [0] * filter_size
-        
-        # Implement filter train data
-        for idx in range(train_symbol_num):
-            train_filter_window = train_filter_window[1:]
-            train_filter_window.append(train_applied[idx].item())
-            train_filter_input_list.append(train_filter_window)
-        
-        # Implement filter test data
-        for idx in range(test_symbol_num):
-            test_filter_window = test_filter_window[1:]
-            test_filter_window.append(test_applied[idx].item())
-            test_filter_input_list.append(test_filter_window)
-
-        train_filter_input_np, test_filter_input_np = np.array(train_filter_input_list), np.array(test_filter_input_list)
+        train_filter_input_np, test_filter_input_np = np.asarray(train_applied).squeeze(-1), np.asarray(test_applied).squeeze(-1)
 
         # To make two channels, expand the dimensions
         train_filter_input_IQ_np = np.concatenate((np.expand_dims(np.real(train_filter_input_np),axis=1),\
@@ -65,6 +69,7 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
         .format(str(test_symbol_num), filter_size, args.mod_scheme, args.rand_seed_test)
 
         # Save to numpy
+        # Data shape? (set of data, 2, filter_size)
         np.save(train_data_name, train_filter_input_IQ_np)
         np.save(test_data_name, test_filter_input_IQ_np)
     

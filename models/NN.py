@@ -8,9 +8,9 @@ class NF(nn.Module):
         self.filter_size = filter_size
         self.FC_stacks = nn.Sequential(
             nn.Linear(filter_size, filter_size //2),
-            nn.ELU(),
+            nn.GELU(),
             nn.Linear(filter_size //2, 1),
-            nn.ELU()
+            nn.GELU()
         )
 
     def forward(self, x):
