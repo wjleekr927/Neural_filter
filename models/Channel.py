@@ -43,13 +43,22 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
 
     train_applied, test_applied = [], []
 
+    # Recall the symbol energy is 1
+    # Then, complex noise variance = 1/SNR 
+    SNR_ratio = 10**(args.SNR / 10)
+    noise_var = 1/SNR_ratio
+
     # Apply to every L symbols
     # Applied variable shape: (Number of set, filter_size, 1)
     for set_idx in range(train_symbol_num // L):
-        train_applied.append(channel_matrix @ train_symbol_tensor[set_idx*L : (set_idx+1)*L])
+        noise_vec = np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) \
+        + np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) * 1j
+        train_applied.append(channel_matrix @ train_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
 
     for set_idx in range(test_symbol_num // L):
-        test_applied.append(channel_matrix @ test_symbol_tensor[set_idx*L : (set_idx+1)*L])
+        noise_vec = np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) \
+        + np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) * 1j
+        test_applied.append(channel_matrix @ test_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
 
     # Implement filter train / test data
     if args.filter_type == 'NN' or args.filter_type == 'Linear':

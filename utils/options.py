@@ -12,6 +12,7 @@ def args_parser():
     # (18,18) was default, changed to (24,10) 
     parser.add_argument('--filter_size', type=int, default=24, help = "Size of filter")
     parser.add_argument('--total_taps', type=int, default= 10, help = "Number of channel taps")
+    parser.add_argument('--SNR', type=float, default= 10, help = "Signal to noise ratio (dB scale)")
     parser.add_argument('--decision_delay', type=int, default= 0, help = "Decision delay tau")
     parser.add_argument('--decay_factor', type=float, default=1, help="Exponential tap decay factor k: exp(-k)")
     parser.add_argument('--mod_scheme', type= str, default= 'QPSK', help="Modulation scheme")

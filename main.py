@@ -37,8 +37,8 @@ if __name__ == '__main__':
     # Print about current option
     print("\nTraining under the following settings:")
     if args.filter_type == 'NN':
-        print("\t[Epochs {}], [Batch size {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
-        format(args.epochs, args.bs, args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test, args.device))
+        print("\t[Epochs {}], [Batch size {}], [Filter type {}], [Filter size {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
+        format(args.epochs, args.bs, args.filter_type, args.filter_size, args.SNR, args.rand_seed_train, args.rand_seed_test, args.device))
     elif args.filter_type == 'Linear':
         print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
@@ -89,7 +89,8 @@ if __name__ == '__main__':
         test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
         test_input_file_PATH = './opt_data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
 
-    if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH):
+    # 1 지우고 다시 원상복구 하세요!
+    if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH) or 1:
         # Data generation for NF and LF
         apply_channel(channel_taps, args.filter_size, args.filter_type, train_original_symb, test_original_symb)
 
@@ -188,8 +189,8 @@ if __name__ == '__main__':
         print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
