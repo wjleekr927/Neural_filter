@@ -8,7 +8,7 @@ def args_parser():
     parser.add_argument('--gen_seq_len', type=int, default=40000, help="Length of data sequence to be generated")
     parser.add_argument('--train_seq_len', type=int, default=40000, help="Length of train data sequence")
     parser.add_argument('--test_seq_len', type=int, default=40000, help="Length of test data sequence")
-    parser.add_argument('--filter_type', type=str, default='NN', help = "Filter type: NN or Linear")
+    parser.add_argument('--filter_type', type=str, default='NN', help = "Filter type: NN or Linear or LMMSE")
     # (18,18) was default, changed to (24,10) 
     parser.add_argument('--filter_size', type=int, default=24, help = "Size of filter")
     parser.add_argument('--total_taps', type=int, default= 10, help = "Number of channel taps")

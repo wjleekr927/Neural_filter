@@ -42,9 +42,9 @@ if __name__ == '__main__':
     elif args.filter_type == 'Linear':
         print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
-    elif args.filter_type == 'Optimal_Linear':
-        print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
-        format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
+    elif args.filter_type == 'LMMSE':
+        print("\t[Filter type {}], [Filter size {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
+        format(args.filter_type, args.filter_size, args.SNR, args.rand_seed_train, args.rand_seed_test))
 
     if args.mod_scheme == 'QPSK':
         # 2 bits for one symbol in QPSK
@@ -56,7 +56,9 @@ if __name__ == '__main__':
         
     # channel_taps: shape = (Nc,1) => Follows fixed random seed
     L = args.filter_size + args.total_taps - 1
-    channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = 2077)
+
+    channel_seed = 2077
+    channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = channel_seed)
     
     train_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
     train_original_file_PATH = './data/symbol_tensor/train_data/' + train_original_file_name + '.npy'        
@@ -80,19 +82,15 @@ if __name__ == '__main__':
         train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
         test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
-        test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
+        test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy' 
+        
+        if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH):
+            # Data generation for NF and LF
+            apply_channel(channel_taps, args.filter_size, args.filter_type, train_original_symb, test_original_symb, seed = channel_seed)
 
-    elif args.filter_type == "Optimal_Linear":
-        train_input_file_name = '/opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
-        train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
-
-        test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
-        test_input_file_PATH = './opt_data/symbol_tensor/test_data/' + test_input_file_name + '.npy'   
-
-    # 1 지우고 다시 원상복구 하세요!
-    if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH) or 1:
-        # Data generation for NF and LF
-        apply_channel(channel_taps, args.filter_size, args.filter_type, train_original_symb, test_original_symb)
+    # Load the saved channel matrix 
+    channel_tap_matrix_PATH = './models/channel_tap_matrix/' + 'channel_matrix_{}_taps_S_{}'.format(args.total_taps, channel_seed) + '.npy'
+    channel_matrix = np.load(channel_tap_matrix_PATH)
 
     if args.filter_type == 'NN':
         # Build custom dataset (for train and test)
@@ -116,17 +114,19 @@ if __name__ == '__main__':
         print("\n-------------------------------")
         print("Linear filter is used")
 
-    elif args.filter_type == 'Optimal_Linear':
+    elif args.filter_type == 'LMMSE':
         print("\n-------------------------------")
-        print("Optimal linear filter is used")
+        print("LMMSE filter is used")
 
     else:
-        raise Exception("Filter type should be 'NN' or 'Linear' or 'Optimal_Linear'")
+        raise Exception("Filter type should be 'NN' or 'Linear' or 'LMMSE'")
 
     # To save a best model
     best_test_loss = float('inf')
 
-    # Training part
+    #################
+    # Training part #
+    ################# 
     if args.filter_type == 'NN':
         model.train()
         for epoch in range(args.epochs):
@@ -147,11 +147,9 @@ if __name__ == '__main__':
 
             epoch_loss = epoch_loss / (batch+1)
             print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, epoch_loss))
-    else:
-        if args.filter_type == 'Linear':
-            input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
-        elif args.filter_type == 'Optimal_Linear':
-            input_file_name = 'opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train) 
+
+    elif args.filter_type == 'Linear':
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
         target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
@@ -160,10 +158,6 @@ if __name__ == '__main__':
         if os.path.isfile(input_file_PATH) and args.filter_type == 'Linear':
             RX_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
             total_symb_num = RX_symb.shape[0]
-
-        elif os.path.isfile(input_file_PATH) and args.filter_type == 'Optimal_Linear':
-            RX_symb = np.load(input_file_PATH)
-            total_symb_num = RX_symb.size
 
         if os.path.isfile(target_file_PATH):
             target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
@@ -175,7 +169,10 @@ if __name__ == '__main__':
         opt_MSE_value = optimized_rst / total_symb_num
         print("Optimal train MSE value: {:.4f}".format(opt_MSE_value))
 
-    # Testing part
+    ################
+    # Testing part # LMMSE is only applied here
+    ################
+
     if args.filter_type == 'NN':
         model.eval()
         test_loss = 0
@@ -197,13 +194,14 @@ if __name__ == '__main__':
             .format(args.filter_type, test_loss, channel_taps.T[0], args.filter_size, args.total_taps, time.ctime()))
 
     else:
-        if args.filter_type == 'Linear':
-            input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
-        elif args.filter_type == 'Optimal_Linear':
-            input_file_name = 'opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
         input_file_PATH = './data/symbol_tensor/test_data/' + input_file_name + '.npy'
 
-        target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
+        if args.filter_type == 'Linear':
+            target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
+        elif args.filter_type == 'LMMSE':
+            target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.rand_seed_test)
+
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
 
         if os.path.isfile(target_file_PATH):
@@ -214,10 +212,24 @@ if __name__ == '__main__':
             total_symb_num = RX_test_symb.shape[0]
             opt_test_MSE = np.square(np.abs(np.matmul(RX_test_symb, LF_weight).T - target_symb.reshape(1,-1))).mean()
         
-        elif os.path.isfile(input_file_PATH) and args.filter_type == 'Optimal_Linear':
-            RX_test_symb = np.load(input_file_PATH)
-            total_symb_num = RX_test_symb.size
-            opt_test_MSE = np.square(np.abs(np.matmul(LF_weight,RX_test_symb).reshape(1,-1,order = 'F') - target_symb.reshape(1,-1))).mean()
+        elif os.path.isfile(input_file_PATH) and args.filter_type == 'LMMSE':
+            SNR_ratio = 10**(args.SNR / 10)
+            # Solve by matrix calculation
+            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            channel_col = channel_matrix[:,args.decision_delay].reshape(-1,1)
+
+            # LMMSE weight vector // C @ np.conj(C).T = Hermitian & np.linalg.inv(C) = inverse matrix
+            # w_LMMSE.shape is (filter_size, 1)
+            w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T + 1/SNR_ratio * np.eye(args.filter_size)) @ channel_col
+            
+            opt_test_MSE = 0
+
+            for set_idx in range(RX_test_symb.shape[0]):
+                pred_symb = RX_test_symb[set_idx].reshape(1,-1) @ np.conj(w_LMMSE) 
+                # import ipdb; ipdb.set_trace()
+                opt_test_MSE += np.square(np.abs(target_symb[set_idx] - pred_symb)).mean()
+
+            opt_test_MSE /= RX_test_symb.shape[0]
 
         # MSE for a single symbol
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))

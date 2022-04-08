@@ -16,18 +16,18 @@ def channel_gen(total_taps, decay_factor, seed):
         channel_vec[idx] = rnd_complex
     
     # Save the channel vector
-    channel_tap_name = 'channel_{}_taps_S_{}'.format(total_taps, seed)
-    channel_tap_PATH = './models/channel_tap_vector/' + channel_tap_name + '.npy'
+    channel_tap_vector_name = 'channel_{}_taps_S_{}'.format(total_taps, seed)
+    channel_tap_vector_PATH = './models/channel_tap_vector/' + channel_tap_vector_name + '.npy'
 
-    if not os.path.isfile(channel_tap_PATH):
-        np.save(channel_tap_PATH, channel_vec)
+    if not os.path.isfile(channel_tap_vector_PATH):
+        np.save(channel_tap_vector_PATH, channel_vec)
 
     print("\n{} channel taps with seed {} are used".format(total_taps, seed))
 
     return channel_vec
 
 # symbol_tensor shape => (n,)
-def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, test_symbol_tensor):
+def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, test_symbol_tensor, seed):
     args = args_parser()
 
     L = len(channel_taps) + filter_size - 1
@@ -41,6 +41,13 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
     for idx in range(len(channel_taps)):
         channel_matrix += np.eye(filter_size, L, k=idx) * channel_taps[idx]
 
+    # Save the channel matrix
+    channel_tap_matrix_name = 'channel_matrix_{}_taps_S_{}'.format(len(channel_taps), seed)
+    channel_tap_matrix_PATH = './models/channel_tap_matrix/' + channel_tap_matrix_name + '.npy'
+
+    if not os.path.isfile(channel_tap_matrix_PATH):
+        np.save(channel_tap_matrix_PATH, channel_matrix)
+    
     train_applied, test_applied = [], []
 
     # Recall the symbol energy is 1
