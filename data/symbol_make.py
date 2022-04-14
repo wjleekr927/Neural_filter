@@ -67,7 +67,10 @@ if __name__ == '__main__':
     # Maybe Dataloader handle it automatically
 
     # Stride: L
-    symb_IQ_np_sampled = symb_IQ_np[L-1:symb_len:L][:]
+    # (04/09) x[0]를 x[L]처럼 처리하는 것 같아서 일단 얘만 바꿔보겠습니다 
+    # => 시도해봤는데 안되네요
+    # symb_IQ_np_sampled = symb_IQ_np[L-1:symb_len:L][:]
+    symb_IQ_np_sampled = symb_IQ_np[::L][:]
 
     np.save(data_name, symb_IQ_np)
     np.save(output_file_name, symb_IQ_np_sampled)

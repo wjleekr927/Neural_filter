@@ -14,13 +14,16 @@ def channel_gen(total_taps, decay_factor, seed):
         # Std to variance
         rnd_complex = np.random.normal(scale=1/(2*total_taps)**.5) + np.random.normal(scale=1/(2*total_taps)**.5) * 1j
         channel_vec[idx] = rnd_complex
-    
+        # if idx == 0:
+        #     channel_vec[idx] = 0.3 + 0.3*1j
+
     # Save the channel vector
     channel_tap_vector_name = 'channel_{}_taps_S_{}'.format(total_taps, seed)
     channel_tap_vector_PATH = './models/channel_tap_vector/' + channel_tap_vector_name + '.npy'
 
-    if not os.path.isfile(channel_tap_vector_PATH):
-        np.save(channel_tap_vector_PATH, channel_vec)
+    # If you don't want to overwrite the file, activate the below line
+    # if not os.path.isfile(channel_tap_vector_PATH):
+    np.save(channel_tap_vector_PATH, channel_vec)
 
     print("\n{} channel taps with seed {} are used".format(total_taps, seed))
 
@@ -45,8 +48,9 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
     channel_tap_matrix_name = 'channel_matrix_{}_taps_S_{}'.format(len(channel_taps), seed)
     channel_tap_matrix_PATH = './models/channel_tap_matrix/' + channel_tap_matrix_name + '.npy'
 
-    if not os.path.isfile(channel_tap_matrix_PATH):
-        np.save(channel_tap_matrix_PATH, channel_matrix)
+    # If you don't want to overwrite the file, activate the below line
+    # if not os.path.isfile(channel_tap_matrix_PATH) or 1:
+    np.save(channel_tap_matrix_PATH, channel_matrix)
     
     train_applied, test_applied = [], []
 
@@ -57,12 +61,15 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
 
     # Apply to every L symbols
     # Applied variable shape: (Number of set, filter_size, 1)
+
     for set_idx in range(train_symbol_num // L):
+        #noise_vec = np.zeros((filter_size,1))
         noise_vec = np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) \
         + np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) * 1j
         train_applied.append(channel_matrix @ train_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
 
     for set_idx in range(test_symbol_num // L):
+        #noise_vec = np.zeros((filter_size,1))
         noise_vec = np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) \
         + np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) * 1j
         test_applied.append(channel_matrix @ test_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
@@ -89,19 +96,4 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
         np.save(train_data_name, train_filter_input_IQ_np)
         np.save(test_data_name, test_filter_input_IQ_np)
     
-    # Doesn't need to be divided into two channels (real, imag)
-    elif args.filter_type == 'Optimal_Linear':
-        train_filter_input_np = train_applied.reshape(int(args.filter_size**(0.5)), -1, order='F')
-        test_filter_input_np = test_applied.reshape(int(args.filter_size**(0.5)), -1, order='F')
-        
-        train_data_name = "./data/symbol_tensor/train_data" + "/opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}"\
-        .format(str(train_symbol_num), filter_size, args.mod_scheme, args.rand_seed_train)
-
-        test_data_name = "./data/symbol_tensor/test_data" + "/opt_filter_input_len_{}_filter_size_{}_mod_{}_S_{}"\
-        .format(str(test_symbol_num), filter_size, args.mod_scheme, args.rand_seed_test)
-        
-        # Save to numpy
-        np.save(train_data_name, train_filter_input_np)
-        np.save(test_data_name, test_filter_input_np)
-
     return None

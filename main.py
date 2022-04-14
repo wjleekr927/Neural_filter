@@ -57,7 +57,8 @@ if __name__ == '__main__':
     # channel_taps: shape = (Nc,1) => Follows fixed random seed
     L = args.filter_size + args.total_taps - 1
 
-    channel_seed = 2077
+    # Seed 1111 => easy case, 2077 => default
+    channel_seed = 1111
     channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = channel_seed)
     
     train_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
@@ -77,17 +78,23 @@ if __name__ == '__main__':
     else:
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_original_file_name)
 
-    if args.filter_type == "NN" or args.filter_type == "Linear":
+    # Revised to be applied for all cases
+    if args.filter_type == "NN" or args.filter_type == "Linear" or args.filter_type == "LMMSE":
         train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
         train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
         test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
         test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy' 
-        
-        if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH):
+
+        # For unseen channel seed
+        channel_tap_vector_name = 'channel_{}_taps_S_{}'.format(args.total_taps, channel_seed)
+        channel_tap_vector_PATH = './models/channel_tap_vector/' + channel_tap_vector_name + '.npy'
+
+        # 일단 무조건 겪도록 
+        if not os.path.isfile(train_input_file_PATH) or not os.path.isfile(test_input_file_PATH) or not os.path.isfile(channel_tap_vector_PATH) or 1:
             # Data generation for NF and LF
             apply_channel(channel_taps, args.filter_size, args.filter_type, train_original_symb, test_original_symb, seed = channel_seed)
-
+    
     # Load the saved channel matrix 
     channel_tap_matrix_PATH = './models/channel_tap_matrix/' + 'channel_matrix_{}_taps_S_{}'.format(args.total_taps, channel_seed) + '.npy'
     channel_matrix = np.load(channel_tap_matrix_PATH)
@@ -172,7 +179,7 @@ if __name__ == '__main__':
     ################
     # Testing part # LMMSE is only applied here
     ################
-
+    
     if args.filter_type == 'NN':
         model.eval()
         test_loss = 0
@@ -220,15 +227,22 @@ if __name__ == '__main__':
 
             # LMMSE weight vector // C @ np.conj(C).T = Hermitian & np.linalg.inv(C) = inverse matrix
             # w_LMMSE.shape is (filter_size, 1)
+            #w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T) @ channel_col
             w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T + 1/SNR_ratio * np.eye(args.filter_size)) @ channel_col
             
             opt_test_MSE = 0
 
+            correct = 0
+
             for set_idx in range(RX_test_symb.shape[0]):
-                pred_symb = RX_test_symb[set_idx].reshape(1,-1) @ np.conj(w_LMMSE) 
-                # import ipdb; ipdb.set_trace()
+                pred_symb = np.conj(w_LMMSE).T @ RX_test_symb[set_idx].reshape(-1,1)  
+                if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):
+                    correct += 1
                 opt_test_MSE += np.square(np.abs(target_symb[set_idx] - pred_symb)).mean()
 
+            SER = (RX_test_symb.shape[0] - correct) / RX_test_symb.shape[0] 
+            print("\nSymbol error rate (SER): {:.2f} %".format(100 * SER))
+            
             opt_test_MSE /= RX_test_symb.shape[0]
 
         # MSE for a single symbol
