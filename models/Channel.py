@@ -67,13 +67,13 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
         #noise_vec = np.zeros((filter_size,1))
         noise_vec = np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) \
         + np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) * 1j
-        train_applied.append(channel_matrix @ train_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
+        train_applied.append(channel_matrix @ np.flip(train_symbol_tensor[set_idx*L : (set_idx+1)*L]) + noise_vec)
 
     for set_idx in range(test_symbol_num // L):
         #noise_vec = np.zeros((filter_size,1))
         noise_vec = np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) \
         + np.random.normal(0, np.sqrt(noise_var / 2), size = (filter_size, 1)) * 1j
-        test_applied.append(channel_matrix @ test_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
+        test_applied.append(channel_matrix @ np.flip(test_symbol_tensor[set_idx*L : (set_idx+1)*L]) + noise_vec)
 
     # Implement filter train / test data
     if args.filter_type == 'NN' or args.filter_type == 'Linear' or args.filter_type == 'LMMSE':
@@ -86,11 +86,11 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
         test_filter_input_IQ_np = np.concatenate((np.expand_dims(np.real(test_filter_input_np),axis=1),\
         np.expand_dims(np.imag(test_filter_input_np), axis=1)),axis = 1)
 
-        train_data_name = "./data/symbol_tensor/train_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}"\
-        .format(str(train_symbol_num), filter_size, args.mod_scheme, args.rand_seed_train)
+        train_data_name = "./data/symbol_tensor/train_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}"\
+        .format(str(train_symbol_num), filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
 
-        test_data_name = "./data/symbol_tensor/test_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_S_{}"\
-        .format(str(test_symbol_num), filter_size, args.mod_scheme, args.rand_seed_test)
+        test_data_name = "./data/symbol_tensor/test_data" + "/filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}"\
+        .format(str(test_symbol_num), filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
 
         # Save to numpy
         # Data shape? (set of data, 2, filter_size)

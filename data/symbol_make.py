@@ -56,22 +56,21 @@ if __name__ == '__main__':
     
     if args.data_gen_type == 'train':
         data_name = "./symbol_tensor/train_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed_train)
-        output_file_name = "./symbol_tensor/train_data" + "/filter_target_len_{}_filter_size_{}_mod_{}_S_{}"\
-        .format(symb_len // L, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        output_file_name = "./symbol_tensor/train_data" + "/filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}"\
+        .format(symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
     else:
         data_name = "./symbol_tensor/test_data" + "/symb_len_{}_mod_{}_S_{}".format(str(symb_len), args.mod_scheme, args.rand_seed_test)
-        output_file_name = "./symbol_tensor/test_data" + "/filter_target_len_{}_filter_size_{}_mod_{}_S_{}"\
-        .format(symb_len // L, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        output_file_name = "./symbol_tensor/test_data" + "/filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}"\
+        .format(symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
     
     # symb_IQ_np.shape => (number of symbol, 2)
     # Maybe Dataloader handle it automatically
 
     # Stride: L
-    # (04/09) x[0]를 x[L]처럼 처리하는 것 같아서 일단 얘만 바꿔보겠습니다 
-    # => 시도해봤는데 안되네요
-    # symb_IQ_np_sampled = symb_IQ_np[L-1:symb_len:L][:]
-    symb_IQ_np_sampled = symb_IQ_np[::L][:]
-
+    # symb_IQ_np_sampled = symb_IQ_np[::L][:]
+    
+    symb_IQ_np_sampled = symb_IQ_np[L-1-args.decision_delay : symb_len-args.decision_delay : L][:]
+    
     np.save(data_name, symb_IQ_np)
     np.save(output_file_name, symb_IQ_np_sampled)
     

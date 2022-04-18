@@ -37,14 +37,14 @@ if __name__ == '__main__':
     # Print about current option
     print("\nTraining under the following settings:")
     if args.filter_type == 'NN':
-        print("\t[Epochs {}], [Batch size {}], [Filter type {}], [Filter size {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
-        format(args.epochs, args.bs, args.filter_type, args.filter_size, args.SNR, args.rand_seed_train, args.rand_seed_test, args.device))
+        print("\t[Epochs {}], [Batch size {}], [Filter type {}], [Filter size {}], [Decision delay {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}], [Device {}]".\
+        format(args.epochs, args.bs, args.filter_type, args.filter_size, args.decision_delay, args.SNR, args.rand_seed_train, args.rand_seed_test, args.device))
     elif args.filter_type == 'Linear':
         print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
     elif args.filter_type == 'LMMSE':
-        print("\t[Filter type {}], [Filter size {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
-        format(args.filter_type, args.filter_size, args.SNR, args.rand_seed_train, args.rand_seed_test))
+        print("\t[Filter type {}], [Filter size {}], [Decision delay {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
+        format(args.filter_type, args.filter_size, args.decision_delay, args.SNR, args.rand_seed_train, args.rand_seed_test))
 
     if args.mod_scheme == 'QPSK':
         # 2 bits for one symbol in QPSK
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     L = args.filter_size + args.total_taps - 1
 
     # Seed 1111 => easy case, 2077 => default
-    channel_seed = 1111
+    channel_seed = 2077
     channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = channel_seed)
     
     train_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
@@ -80,10 +80,10 @@ if __name__ == '__main__':
 
     # Revised to be applied for all cases
     if args.filter_type == "NN" or args.filter_type == "Linear" or args.filter_type == "LMMSE":
-        train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
         train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
-        test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        test_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
         test_input_file_PATH = './data/symbol_tensor/test_data/' + test_input_file_name + '.npy' 
 
         # For unseen channel seed
@@ -156,7 +156,7 @@ if __name__ == '__main__':
             print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, 2 * epoch_loss))
 
     elif args.filter_type == 'Linear':
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.decision_delay ,args.rand_seed_train)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
         target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
@@ -204,21 +204,21 @@ if __name__ == '__main__':
         print("\nAverage test loss (per single symbol) = {:.4f}".format(2*test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, test_loss, args.epochs, args.bs, args.filter_size, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Epochs {}], [Batch size {}], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, 2*test_loss, 100*SER, args.epochs, args.bs, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
-            .format(args.filter_type, test_loss, channel_taps.T[0], args.filter_size, args.total_taps, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
+            .format(args.filter_type, 2*test_loss, 100*SER, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
 
     else:
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_test)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
         input_file_PATH = './data/symbol_tensor/test_data/' + input_file_name + '.npy'
 
         if args.filter_type == 'Linear':
             target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
         elif args.filter_type == 'LMMSE':
-            target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.rand_seed_test)
+            target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
 
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
 
@@ -239,16 +239,6 @@ if __name__ == '__main__':
             # LMMSE weight vector // C @ np.conj(C).T = Hermitian & np.linalg.inv(C) = inverse matrix
             # w_LMMSE.shape is (filter_size, 1)
             # w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T) @ channel_col
-
-            ###
-            # rank_check = np.conj(channel_matrix).T @ channel_matrix
-            # rank = np.linalg.matrix_rank(rank_check)
-            # print("\nRank: ",rank)
-
-            # rank_check_2 =  channel_matrix @ np.conj(channel_matrix).T
-            # rank_2 = np.linalg.matrix_rank(rank_check_2)
-            # print("\nRank2: ",rank_2)
-            ###
 
             w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T + 1/SNR_ratio * np.eye(args.filter_size)) @ channel_col
             
@@ -271,12 +261,12 @@ if __name__ == '__main__':
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Filter size {}], [Total taps {}], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, args.filter_size, args.total_taps, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Filter size {}], [Decision delay {}], [Total taps {}], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.total_taps, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [Channel {}], [Filter size {}], [Total taps {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, channel_taps.T[0] ,args.filter_size, args.total_taps, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, 100 * SER, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
         
     # tensorboard --logdir=runs
     # tensorboard --inspect --event_file=myevents.out --tag=loss
