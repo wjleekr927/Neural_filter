@@ -14,7 +14,7 @@ def args_parser():
     parser.add_argument('--total_taps', type=int, default= 10, help = "Number of channel taps")
     parser.add_argument('--SNR', type=float, default= 10, help = "Signal to noise ratio (dB scale)")
     parser.add_argument('--decision_delay', type=int, default= 0, help = "Decision delay tau")
-    parser.add_argument('--decay_factor', type=float, default=1, help="Exponential tap decay factor k: exp(-k)")
+    parser.add_argument('--decay_factor', type=float, default= .9, help="Exponential tap decay factor k: exp(-k)")
     parser.add_argument('--mod_scheme', type= str, default= 'QPSK', help="Modulation scheme")
     # parser.add_argument('--train_ratio', type= float, default= .7, help="Ratio of training set (0<=R<=1)")
 

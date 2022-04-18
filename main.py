@@ -11,7 +11,7 @@ from utils.options import args_parser
 
 from torch import nn
 from torch.utils.data import DataLoader
-from torch.utils.tensorboard import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter 
 from torchvision import datasets
 from torchvision.transforms import ToTensor
 
@@ -153,7 +153,7 @@ if __name__ == '__main__':
                 epoch_loss += loss.item()
 
             epoch_loss = epoch_loss / (batch+1)
-            print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, epoch_loss))
+            print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, 2 * epoch_loss))
 
     elif args.filter_type == 'Linear':
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.rand_seed_train)
@@ -177,20 +177,31 @@ if __name__ == '__main__':
         print("Optimal train MSE value: {:.4f}".format(opt_MSE_value))
 
     ################
-    # Testing part # LMMSE is only applied here
+    # Testing part # 
+    # LMMSE is implemented only here
     ################
     
     if args.filter_type == 'NN':
         model.eval()
         test_loss = 0
+        correct = 0
         with torch.no_grad():
             for batch, (X,y) in enumerate(test_dataloader):
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 pred = model(X)
                 loss = loss_fn(pred,y)
+                # Complex sign is equal => 1 + 1 = 2, and count this
+                correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
                 test_loss += loss.item()
+        
+        # y.shape[0] is batch size
+        correct_rate = correct / ((batch+1) * y.shape[0])
+        SER = 1 - correct_rate
+        print("\nSymbol error rate (SER): {:.2f} %".format(100 * SER))
+        
         test_loss = test_loss / (batch+1)
-        print("\nAverage test loss (per single symbol) = {:.4f}".format(test_loss))
+        # Consider that this is complex loss (multiply 2)
+        print("\nAverage test loss (per single symbol) = {:.4f}".format(2*test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [Epochs {}], [Batch size {}], [Filter size {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
@@ -227,13 +238,24 @@ if __name__ == '__main__':
 
             # LMMSE weight vector // C @ np.conj(C).T = Hermitian & np.linalg.inv(C) = inverse matrix
             # w_LMMSE.shape is (filter_size, 1)
-            #w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T) @ channel_col
+            # w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T) @ channel_col
+
+            ###
+            # rank_check = np.conj(channel_matrix).T @ channel_matrix
+            # rank = np.linalg.matrix_rank(rank_check)
+            # print("\nRank: ",rank)
+
+            # rank_check_2 =  channel_matrix @ np.conj(channel_matrix).T
+            # rank_2 = np.linalg.matrix_rank(rank_check_2)
+            # print("\nRank2: ",rank_2)
+            ###
+
             w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T + 1/SNR_ratio * np.eye(args.filter_size)) @ channel_col
             
             opt_test_MSE = 0
 
             correct = 0
-
+            
             for set_idx in range(RX_test_symb.shape[0]):
                 pred_symb = np.conj(w_LMMSE).T @ RX_test_symb[set_idx].reshape(-1,1)  
                 if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):

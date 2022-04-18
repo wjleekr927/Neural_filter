@@ -8,14 +8,15 @@ from utils.options import args_parser
 def channel_gen(total_taps, decay_factor, seed):
     np.random.seed(seed)
     channel_vec = np.zeros((total_taps,1), dtype = 'complex_')
+    # import ipdb; ipdb.set_trace()
     # Not use exponential here
-    # exp_decay = np.round(np.exp(-decay_factor), 4)
+    exp_decay = np.round(np.exp(-decay_factor), 4)
     for idx in range(total_taps):
         # Std to variance
-        rnd_complex = np.random.normal(scale=1/(2*total_taps)**.5) + np.random.normal(scale=1/(2*total_taps)**.5) * 1j
+        rnd_complex = exp_decay**idx * (np.random.normal(scale=1/(2*total_taps)**.5) + np.random.normal(scale=1/(2*total_taps)**.5) * 1j)
         channel_vec[idx] = rnd_complex
-        # if idx == 0:
-        #     channel_vec[idx] = 0.3 + 0.3*1j
+        #if idx == 0:
+        #    channel_vec[idx] = 0.5 + 0.5*1j
 
     # Save the channel vector
     channel_tap_vector_name = 'channel_{}_taps_S_{}'.format(total_taps, seed)
@@ -75,7 +76,7 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
         test_applied.append(channel_matrix @ test_symbol_tensor[set_idx*L : (set_idx+1)*L] + noise_vec)
 
     # Implement filter train / test data
-    if args.filter_type == 'NN' or args.filter_type == 'Linear':
+    if args.filter_type == 'NN' or args.filter_type == 'Linear' or args.filter_type == 'LMMSE':
         train_filter_input_np, test_filter_input_np = np.asarray(train_applied).squeeze(-1), np.asarray(test_applied).squeeze(-1)
 
         # To make two channels, expand the dimensions
