@@ -29,3 +29,787 @@
 [Filter type LMMSE], [MSE 0.0221], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
   0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
   0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 24], [Total taps 8], [Date Tue Apr 19 01:49:37 2022]
+[Filter type LMMSE], [MSE 0.5637], [SER 38.98 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:07:11 2022]
+[Filter type NN], [MSE 1.0611], [SER 74.86 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:11:52 2022]
+[Filter type NN], [MSE 1.0489], [SER 75.40 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:12:02 2022]
+[Filter type NN], [MSE 0.9518], [SER 65.20 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:12:13 2022]
+[Filter type NN], [MSE 0.8667], [SER 52.84 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:12:25 2022]
+[Filter type NN], [MSE 0.9279], [SER 57.24 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:12:36 2022]
+[Filter type NN], [MSE 0.8249], [SER 51.20 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:12:48 2022]
+[Filter type NN], [MSE 0.8322], [SER 52.20 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:00 2022]
+[Filter type LMMSE], [MSE 0.5637], [SER 38.98 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:01 2022]
+[Filter type LMMSE], [MSE 0.3055], [SER 13.28 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 1], [Total taps 2], [Date Tue Apr 19 14:13:03 2022]
+[Filter type LMMSE], [MSE 0.1880], [SER 3.24 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:13:04 2022]
+[Filter type LMMSE], [MSE 0.5167], [SER 32.62 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:05 2022]
+[Filter type LMMSE], [MSE 0.2783], [SER 10.28 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 1], [Total taps 2], [Date Tue Apr 19 14:13:07 2022]
+[Filter type LMMSE], [MSE 0.1676], [SER 2.12 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:13:08 2022]
+[Filter type LMMSE], [MSE 0.5001], [SER 31.44 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:09 2022]
+[Filter type LMMSE], [MSE 0.1589], [SER 1.66 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:13:11 2022]
+[Filter type LMMSE], [MSE 0.0786], [SER 0.02 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 5], [Total taps 2], [Date Tue Apr 19 14:13:12 2022]
+[Filter type LMMSE], [MSE 0.5052], [SER 31.98 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:13 2022]
+[Filter type LMMSE], [MSE 0.0779], [SER 0.00 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 5], [Total taps 2], [Date Tue Apr 19 14:13:15 2022]
+[Filter type LMMSE], [MSE 0.0711], [SER 0.02 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 10], [Total taps 2], [Date Tue Apr 19 14:13:16 2022]
+[Filter type LMMSE], [MSE 0.5118], [SER 32.34 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:17 2022]
+[Filter type LMMSE], [MSE 0.0708], [SER 0.04 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 10], [Total taps 2], [Date Tue Apr 19 14:13:19 2022]
+[Filter type LMMSE], [MSE 0.0694], [SER 0.00 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 20], [Total taps 2], [Date Tue Apr 19 14:13:20 2022]
+[Filter type LMMSE], [MSE 0.5068], [SER 31.92 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:22 2022]
+[Filter type LMMSE], [MSE 0.0706], [SER 0.02 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 25], [Total taps 2], [Date Tue Apr 19 14:13:23 2022]
+[Filter type LMMSE], [MSE 0.0692], [SER 0.02 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 50], [Total taps 2], [Date Tue Apr 19 14:13:25 2022]
+[Filter type LMMSE], [MSE 0.5076], [SER 31.54 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 0], [Total taps 2], [Date Tue Apr 19 14:13:27 2022]
+[Filter type LMMSE], [MSE 0.0693], [SER 0.02 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 50], [Total taps 2], [Date Tue Apr 19 14:13:29 2022]
+[Filter type LMMSE], [MSE 0.0697], [SER 0.04 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 100], [Total taps 2], [Date Tue Apr 19 14:13:31 2022]
+[Filter type NN], [MSE 1.0050], [SER 76.64 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:49:40 2022]
+[Filter type NN], [MSE 0.8155], [SER 31.28 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:49:50 2022]
+[Filter type NN], [MSE 0.7950], [SER 50.76 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 5], [Total taps 2], [Date Tue Apr 19 14:49:58 2022]
+[Filter type NN], [MSE 0.7906], [SER 37.08 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 10], [Total taps 2], [Date Tue Apr 19 14:50:07 2022]
+[Filter type NN], [MSE 0.6635], [SER 31.54 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 20], [Total taps 2], [Date Tue Apr 19 14:50:16 2022]
+[Filter type NN], [MSE 0.5970], [SER 25.38 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 50], [Total taps 2], [Date Tue Apr 19 14:50:25 2022]
+[Filter type NN], [MSE 0.5650], [SER 20.96 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 100], [Total taps 2], [Date Tue Apr 19 14:50:34 2022]
+[Filter type NN], [MSE 1.1181], [SER 74.24 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 1], [Total taps 2], [Date Tue Apr 19 14:52:37 2022]
+[Filter type NN], [MSE 0.9502], [SER 67.10 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 2], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:52:46 2022]
+[Filter type NN], [MSE 0.7839], [SER 32.64 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 1], [Total taps 2], [Date Tue Apr 19 14:52:55 2022]
+[Filter type NN], [MSE 0.7784], [SER 31.70 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 4], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:53:04 2022]
+[Filter type NN], [MSE 0.9132], [SER 69.44 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 2], [Total taps 2], [Date Tue Apr 19 14:53:12 2022]
+[Filter type NN], [MSE 0.8490], [SER 65.08 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 10], [Decision delay 5], [Total taps 2], [Date Tue Apr 19 14:53:21 2022]
+[Filter type NN], [MSE 0.9111], [SER 52.90 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 5], [Total taps 2], [Date Tue Apr 19 14:53:30 2022]
+[Filter type NN], [MSE 0.7894], [SER 34.98 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 20], [Decision delay 10], [Total taps 2], [Date Tue Apr 19 14:53:38 2022]
+[Filter type NN], [MSE 0.6208], [SER 24.30 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 10], [Total taps 2], [Date Tue Apr 19 14:53:47 2022]
+[Filter type NN], [MSE 0.6696], [SER 29.02 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 40], [Decision delay 20], [Total taps 2], [Date Tue Apr 19 14:53:56 2022]
+[Filter type NN], [MSE 0.5886], [SER 25.76 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 25], [Total taps 2], [Date Tue Apr 19 14:54:05 2022]
+[Filter type NN], [MSE 0.5912], [SER 24.06 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 100], [Decision delay 50], [Total taps 2], [Date Tue Apr 19 14:54:14 2022]
+[Filter type NN], [MSE 0.5691], [SER 22.18 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 50], [Total taps 2], [Date Tue Apr 19 14:54:23 2022]
+[Filter type NN], [MSE 0.5631], [SER 20.92 (%)], [Channel [-0.36150918+0.00972566j -0.44882313+0.20684045j]], [Filter size 200], [Decision delay 100], [Total taps 2], [Date Tue Apr 19 14:54:32 2022]
+[Filter type NN], [MSE 1.0182], [SER 74.52 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 4], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:16:15 2022]
+[Filter type NN], [MSE 0.9653], [SER 60.74 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 8], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:16:23 2022]
+[Filter type NN], [MSE 0.9710], [SER 65.42 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 20], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:16:31 2022]
+[Filter type NN], [MSE 0.9607], [SER 63.22 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 40], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:16:40 2022]
+[Filter type NN], [MSE 0.9481], [SER 65.30 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 80], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:16:48 2022]
+[Filter type NN], [MSE 0.9577], [SER 64.26 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 200], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:00 2022]
+[Filter type NN], [MSE 1.0389], [SER 64.22 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 400], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:14 2022]
+[Filter type LMMSE], [MSE 0.7845], [SER 53.20 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 4], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:15 2022]
+[Filter type LMMSE], [MSE 0.7611], [SER 50.16 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 8], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:17 2022]
+[Filter type LMMSE], [MSE 0.7492], [SER 49.06 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 20], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:18 2022]
+[Filter type LMMSE], [MSE 0.7577], [SER 50.76 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 40], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:19 2022]
+[Filter type LMMSE], [MSE 0.7425], [SER 49.70 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 80], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:21 2022]
+[Filter type LMMSE], [MSE 0.7586], [SER 50.56 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 200], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:23 2022]
+[Filter type LMMSE], [MSE 0.7608], [SER 50.96 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 400], [Decision delay 0], [Total taps 4], [Date Wed Apr 20 01:17:26 2022]
+[Filter type LMMSE], [MSE 0.5099], [SER 31.10 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 4], [Decision delay 1], [Total taps 4], [Date Wed Apr 20 01:17:28 2022]
+[Filter type LMMSE], [MSE 0.2418], [SER 7.72 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 8], [Decision delay 2], [Total taps 4], [Date Wed Apr 20 01:17:29 2022]
+[Filter type LMMSE], [MSE 0.1096], [SER 0.46 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 20], [Decision delay 5], [Total taps 4], [Date Wed Apr 20 01:17:30 2022]
+[Filter type LMMSE], [MSE 0.0813], [SER 0.06 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 40], [Decision delay 10], [Total taps 4], [Date Wed Apr 20 01:17:32 2022]
+[Filter type LMMSE], [MSE 0.0662], [SER 0.02 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 80], [Decision delay 20], [Total taps 4], [Date Wed Apr 20 01:17:33 2022]
+[Filter type LMMSE], [MSE 0.0665], [SER 0.02 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 200], [Decision delay 50], [Total taps 4], [Date Wed Apr 20 01:17:35 2022]
+[Filter type LMMSE], [MSE 0.0659], [SER 0.02 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 400], [Decision delay 100], [Total taps 4], [Date Wed Apr 20 01:17:39 2022]
+[Filter type LMMSE], [MSE 0.2456], [SER 7.58 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 4], [Decision delay 3], [Total taps 4], [Date Wed Apr 20 01:17:40 2022]
+[Filter type LMMSE], [MSE 0.1358], [SER 0.94 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 8], [Decision delay 5], [Total taps 4], [Date Wed Apr 20 01:17:41 2022]
+[Filter type LMMSE], [MSE 0.0804], [SER 0.06 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 20], [Decision delay 11], [Total taps 4], [Date Wed Apr 20 01:17:43 2022]
+[Filter type LMMSE], [MSE 0.0689], [SER 0.02 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 40], [Decision delay 21], [Total taps 4], [Date Wed Apr 20 01:17:44 2022]
+[Filter type LMMSE], [MSE 0.0671], [SER 0.04 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 80], [Decision delay 41], [Total taps 4], [Date Wed Apr 20 01:17:46 2022]
+[Filter type LMMSE], [MSE 0.0662], [SER 0.06 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 200], [Decision delay 101], [Total taps 4], [Date Wed Apr 20 01:17:48 2022]
+[Filter type LMMSE], [MSE 0.0667], [SER 0.04 (%)], [Channel [-0.25562559+0.00687708j -0.31736588+0.14625829j  0.27715842+0.06471599j
+  0.24085311+0.25118155j]], [Filter size 400], [Decision delay 201], [Total taps 4], [Date Wed Apr 20 01:17:51 2022]
+[Filter type NN], [MSE 0.9856], [SER 70.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:55:26 2022]
+[Filter type NN], [MSE 1.0005], [SER 73.48 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:55:35 2022]
+[Filter type NN], [MSE 0.9887], [SER 70.66 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:55:43 2022]
+[Filter type NN], [MSE 0.9919], [SER 70.92 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:55:55 2022]
+[Filter type NN], [MSE 1.0061], [SER 70.02 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:04 2022]
+[Filter type NN], [MSE 1.1627], [SER 72.14 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:17 2022]
+[Filter type NN], [MSE 1.2641], [SER 73.30 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:33 2022]
+[Filter type LMMSE], [MSE 0.9398], [SER 64.68 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:34 2022]
+[Filter type LMMSE], [MSE 0.9406], [SER 64.32 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:35 2022]
+[Filter type LMMSE], [MSE 0.9334], [SER 63.84 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:37 2022]
+[Filter type LMMSE], [MSE 0.9318], [SER 63.66 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:38 2022]
+[Filter type LMMSE], [MSE 0.9259], [SER 63.20 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:40 2022]
+[Filter type LMMSE], [MSE 0.9415], [SER 63.74 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:44 2022]
+[Filter type LMMSE], [MSE 0.9331], [SER 63.84 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Wed Apr 20 01:56:52 2022]
+[Filter type LMMSE], [MSE 0.6430], [SER 40.54 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 3], [Total taps 8], [Date Wed Apr 20 01:56:53 2022]
+[Filter type LMMSE], [MSE 0.3686], [SER 18.10 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 5], [Total taps 8], [Date Wed Apr 20 01:56:54 2022]
+[Filter type LMMSE], [MSE 0.1027], [SER 0.32 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 11], [Total taps 8], [Date Wed Apr 20 01:56:56 2022]
+[Filter type LMMSE], [MSE 0.0604], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 21], [Total taps 8], [Date Wed Apr 20 01:56:57 2022]
+[Filter type LMMSE], [MSE 0.0424], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 41], [Total taps 8], [Date Wed Apr 20 01:56:59 2022]
+[Filter type LMMSE], [MSE 0.0407], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 101], [Total taps 8], [Date Wed Apr 20 01:57:03 2022]
+[Filter type LMMSE], [MSE 0.0416], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 201], [Total taps 8], [Date Wed Apr 20 01:57:11 2022]
+[Filter type LMMSE], [MSE 0.2388], [SER 7.04 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 7], [Total taps 8], [Date Wed Apr 20 01:57:12 2022]
+[Filter type LMMSE], [MSE 0.1405], [SER 1.32 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 11], [Total taps 8], [Date Wed Apr 20 01:57:14 2022]
+[Filter type LMMSE], [MSE 0.0602], [SER 0.02 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 23], [Total taps 8], [Date Wed Apr 20 01:57:15 2022]
+[Filter type LMMSE], [MSE 0.0438], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 43], [Total taps 8], [Date Wed Apr 20 01:57:17 2022]
+[Filter type LMMSE], [MSE 0.0414], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 83], [Total taps 8], [Date Wed Apr 20 01:57:19 2022]
+[Filter type LMMSE], [MSE 0.0412], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 203], [Total taps 8], [Date Wed Apr 20 01:57:22 2022]
+[Filter type LMMSE], [MSE 0.0407], [SER 0.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 403], [Total taps 8], [Date Wed Apr 20 01:57:30 2022]
+[Filter type NN], [MSE 0.9955], [SER 72.50 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:50:55 2022]
+[Filter type NN], [MSE 1.0023], [SER 74.36 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:51:03 2022]
+[Filter type NN], [MSE 0.9893], [SER 70.68 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:51:12 2022]
+[Filter type NN], [MSE 1.0443], [SER 70.40 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:51:21 2022]
+[Filter type NN], [MSE 0.9747], [SER 67.46 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:55:14 2022]
+[Filter type NN], [MSE 0.9813], [SER 69.34 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:55:27 2022]
+[Filter type NN], [MSE 1.0057], [SER 69.26 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:55:38 2022]
+[Filter type NN], [MSE 1.1132], [SER 72.08 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:55:49 2022]
+[Filter type NN], [MSE 1.1912], [SER 71.36 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:56:03 2022]
+[Filter type NN], [MSE 1.2398], [SER 72.44 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:56:17 2022]
+[Filter type NN], [MSE 1.2165], [SER 73.40 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 12:56:36 2022]
+[Filter type NN], [MSE 0.9726], [SER 67.28 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:01:29 2022]
+[Filter type NN], [MSE 0.9803], [SER 69.48 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:01:43 2022]
+[Filter type NN], [MSE 0.9828], [SER 68.78 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:01:55 2022]
+[Filter type NN], [MSE 1.0343], [SER 70.66 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:02:09 2022]
+[Filter type NN], [MSE 1.1553], [SER 70.76 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:02:24 2022]
+[Filter type NN], [MSE 1.2424], [SER 72.76 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:02:40 2022]
+[Filter type NN], [MSE 1.2090], [SER 74.24 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:03:00 2022]
+[Filter type NN], [MSE 0.9875], [SER 68.08 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:03:56 2022]
+[Filter type NN], [MSE 0.9900], [SER 70.46 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:04:07 2022]
+[Filter type NN], [MSE 0.9878], [SER 70.52 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:04:18 2022]
+[Filter type NN], [MSE 0.9997], [SER 70.16 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:04:29 2022]
+[Filter type NN], [MSE 1.1496], [SER 70.58 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:04:45 2022]
+[Filter type NN], [MSE 1.2360], [SER 72.54 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:05:05 2022]
+[Filter type NN], [MSE 1.1902], [SER 73.02 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:05:27 2022]
+[Filter type NN], [MSE 0.9906], [SER 69.40 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:06:28 2022]
+[Filter type NN], [MSE 0.9827], [SER 69.22 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:06:42 2022]
+[Filter type NN], [MSE 0.9822], [SER 68.84 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:06:57 2022]
+[Filter type NN], [MSE 1.0286], [SER 71.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:07:14 2022]
+[Filter type NN], [MSE 1.1230], [SER 70.80 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:07:33 2022]
+[Filter type NN], [MSE 1.2248], [SER 72.34 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:07:52 2022]
+[Filter type NN], [MSE 1.2382], [SER 73.60 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:08:15 2022]
+[Filter type NN], [MSE 0.9982], [SER 73.46 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:11:09 2022]
+[Filter type NN], [MSE 0.9980], [SER 72.82 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:11:23 2022]
+[Filter type NN], [MSE 1.0117], [SER 73.12 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:11:39 2022]
+[Filter type NN], [MSE 1.0589], [SER 73.40 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:11:57 2022]
+[Filter type NN], [MSE 1.1654], [SER 73.76 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:12:13 2022]
+[Filter type NN], [MSE 1.1873], [SER 73.16 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:12:30 2022]
+[Filter type NN], [MSE 1.1851], [SER 73.32 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:12:52 2022]
+[Filter type NN], [MSE 0.9603], [SER 67.44 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:21:04 2022]
+[Filter type NN], [MSE 0.9758], [SER 68.56 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:21:18 2022]
+[Filter type NN], [MSE 0.9883], [SER 68.68 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:21:28 2022]
+[Filter type NN], [MSE 1.0643], [SER 70.52 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:21:40 2022]
+[Filter type NN], [MSE 1.1848], [SER 71.08 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:21:50 2022]
+[Filter type NN], [MSE 1.3194], [SER 71.96 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:22:01 2022]
+[Filter type NN], [MSE 1.3371], [SER 72.76 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:22:22 2022]
+[Filter type NN], [MSE 0.9606], [SER 67.40 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:32:26 2022]
+[Filter type NN], [MSE 0.9652], [SER 68.58 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:32:35 2022]
+[Filter type NN], [MSE 0.9720], [SER 67.64 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:32:43 2022]
+[Filter type NN], [MSE 0.9942], [SER 68.24 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:32:53 2022]
+[Filter type NN], [MSE 1.0843], [SER 69.76 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:33:03 2022]
+[Filter type NN], [MSE 1.2522], [SER 71.34 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:33:12 2022]
+[Filter type NN], [MSE 1.2982], [SER 71.12 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:33:29 2022]
+[Filter type NN], [MSE 0.9647], [SER 67.42 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:41:51 2022]
+[Filter type NN], [MSE 0.9672], [SER 68.12 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:41:59 2022]
+[Filter type NN], [MSE 0.9715], [SER 67.92 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:42:08 2022]
+[Filter type NN], [MSE 0.9831], [SER 68.06 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:42:17 2022]
+[Filter type NN], [MSE 1.0537], [SER 69.08 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:42:26 2022]
+[Filter type NN], [MSE 1.2366], [SER 71.26 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:42:36 2022]
+[Filter type NN], [MSE 1.3029], [SER 71.46 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:42:52 2022]
+[Filter type NN], [MSE 0.9768], [SER 67.54 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:44:36 2022]
+[Filter type NN], [MSE 0.9730], [SER 68.86 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:44:43 2022]
+[Filter type NN], [MSE 0.9738], [SER 67.72 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:44:52 2022]
+[Filter type NN], [MSE 0.9906], [SER 68.70 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:45:01 2022]
+[Filter type NN], [MSE 1.0822], [SER 69.84 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:45:11 2022]
+[Filter type NN], [MSE 1.2487], [SER 71.46 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:45:23 2022]
+[Filter type NN], [MSE 1.2869], [SER 71.42 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:45:41 2022]
+[Filter type NN], [MSE 0.9890], [SER 66.74 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:49:44 2022]
+[Filter type NN], [MSE 0.9830], [SER 69.00 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:49:53 2022]
+[Filter type NN], [MSE 0.9704], [SER 68.42 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:50:03 2022]
+[Filter type NN], [MSE 0.9785], [SER 68.76 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:50:13 2022]
+[Filter type NN], [MSE 1.0324], [SER 69.30 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:50:22 2022]
+[Filter type NN], [MSE 1.1936], [SER 71.56 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:50:34 2022]
+[Filter type NN], [MSE 1.2215], [SER 71.24 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:50:51 2022]
+[Filter type NN], [MSE 0.9975], [SER 68.98 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:51:12 2022]
+[Filter type NN], [MSE 0.9891], [SER 68.22 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:51:21 2022]
+[Filter type NN], [MSE 0.9743], [SER 68.52 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:51:30 2022]
+[Filter type NN], [MSE 0.9769], [SER 68.88 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:51:38 2022]
+[Filter type NN], [MSE 1.0082], [SER 68.48 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:51:47 2022]
+[Filter type NN], [MSE 1.1537], [SER 70.74 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:51:59 2022]
+[Filter type NN], [MSE 1.1868], [SER 71.60 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:52:17 2022]
+[Filter type NN], [MSE 1.0033], [SER 74.78 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 13:59:19 2022]
+[Filter type NN], [MSE 1.0041], [SER 75.04 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:01:36 2022]
+[Filter type NN], [MSE 0.9963], [SER 72.20 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:02:19 2022]
+[Filter type NN], [MSE 1.0271], [SER 70.94 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:02:57 2022]
+[Filter type NN], [MSE 0.9970], [SER 71.70 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:03:39 2022]
+[Filter type NN], [MSE 1.0237], [SER 75.18 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:04:44 2022]
+[Filter type NN], [MSE 1.0044], [SER 75.78 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:05:05 2022]
+[Filter type NN], [MSE 1.0038], [SER 75.68 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:14:42 2022]
+[Filter type NN], [MSE 1.0258], [SER 70.66 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:23:55 2022]
+[Filter type NN], [MSE 1.0383], [SER 73.10 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:26:19 2022]
+[Filter type NN], [MSE 0.9719], [SER 67.18 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:27:39 2022]
+[Filter type NN], [MSE 0.9950], [SER 69.50 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:27:51 2022]
+[Filter type NN], [MSE 1.0003], [SER 71.58 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:28:03 2022]
+[Filter type NN], [MSE 1.0192], [SER 72.62 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:28:15 2022]
+[Filter type NN], [MSE 1.0661], [SER 72.88 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:28:28 2022]
+[Filter type NN], [MSE 1.1807], [SER 74.06 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:28:42 2022]
+[Filter type NN], [MSE 1.2808], [SER 73.38 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:29:00 2022]
+[Filter type NN], [MSE 0.9953], [SER 72.92 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 8], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:29:38 2022]
+[Filter type NN], [MSE 1.0011], [SER 73.48 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 16], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:29:51 2022]
+[Filter type NN], [MSE 0.9986], [SER 72.14 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 40], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:30:03 2022]
+[Filter type NN], [MSE 1.0017], [SER 74.28 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:30:15 2022]
+[Filter type NN], [MSE 1.0089], [SER 75.72 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 160], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:30:28 2022]
+[Filter type NN], [MSE 1.0100], [SER 76.02 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 400], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:30:41 2022]
+[Filter type NN], [MSE 1.0139], [SER 74.82 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 800], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:31:01 2022]
+[Filter type NN], [MSE 1.0598], [SER 74.64 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:33:10 2022]
+[Filter type NN], [MSE 1.0409], [SER 74.08 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:35:22 2022]
+[Filter type NN], [MSE 1.0826], [SER 74.94 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:35:48 2022]
+[Filter type NN], [MSE 1.0648], [SER 74.2000 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:37:32 2022]
+[Filter type NN], [MSE 1.0388], [SER 75.0200 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:39:31 2022]
+[Filter type NN], [MSE 1.0206], [SER 74.7600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Thu Apr 21 14:40:36 2022]
+[Filter type NN], [MSE 1.0092], [SER 72.9600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:26:04 2022]
+[Filter type NN], [MSE 1.0354], [SER 75.4400 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:26:34 2022]
+[Filter type NN], [MSE 1.0275], [SER 74.0600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:27:22 2022]
+[Filter type NN], [MSE 1.0405], [SER 75.6200 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:29:10 2022]
+[Filter type NN], [MSE 1.0235], [SER 74.7400 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:29:43 2022]
+[Filter type NN], [MSE 1.0384], [SER 75.3400 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:51:54 2022]
+[Filter type NN], [MSE 1.0242], [SER 70.4800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:53:36 2022]
+[Filter type NN], [MSE 1.0401], [SER 70.4600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:54:07 2022]
+[Filter type NN], [MSE 1.0491], [SER 75.7000 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:56:28 2022]
+[Filter type NN], [MSE 1.0193], [SER 70.8400 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:57:28 2022]
+[Filter type NN], [MSE 1.0107], [SER 69.8200 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:59:17 2022]
+[Filter type NN], [MSE 0.9990], [SER 69.2600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 11:59:48 2022]
+[Filter type NN], [MSE 1.0013], [SER 69.6600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:02:11 2022]
+[Filter type NN], [MSE 0.9989], [SER 69.9800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:02:40 2022]
+[Filter type NN], [MSE 0.9979], [SER 70.0200 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:03:03 2022]
+[Filter type NN], [MSE 0.9881], [SER 69.2200 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:37:27 2022]
+[Filter type NN], [MSE 0.9828], [SER 68.6800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:38:57 2022]
+[Filter type NN], [MSE 1.0480], [SER 73.0600 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:40:25 2022]
+[Filter type NN], [MSE 1.0443], [SER 72.4800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:40:51 2022]
+[Filter type NN], [MSE 1.0407], [SER 73.2800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:43:26 2022]
+[Filter type NN], [MSE 1.0409], [SER 73.2800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 12:43:54 2022]
+[Filter type NN], [MSE 1.0456], [SER 73.0000 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:06:05 2022]
+[Filter type NN], [MSE 1.0381], [SER 72.4800 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:09:57 2022]
+[Filter type NN], [MSE 1.0171], [SER 71.1000 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:10:29 2022]
+[Filter type NN], [MSE 1.0310], [SER 73.6779 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:14:56 2022]
+[Filter type NN], [MSE 1.0403], [SER 74.4992 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:16:20 2022]
+[Filter type NN], [MSE 1.0521], [SER 74.4992 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:17:10 2022]
+[Filter type NN], [MSE 1.0436], [SER 71.8750 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:19:33 2022]
+[Filter type NN], [MSE 1.0485], [SER 73.9984 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:44:12 2022]
+[Filter type NN], [MSE 1.0132], [SER 75.5809 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:48:10 2022]
+[Filter type NN], [MSE 1.0093], [SER 69.9920 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:48:36 2022]
+[Filter type NN], [MSE 1.0345], [SER 73.2772 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:48:59 2022]
+[Filter type NN], [MSE 1.0446], [SER 74.7396 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:50:00 2022]
+[Filter type NN], [MSE 1.0307], [SER 72.2155 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:51:17 2022]
+[Filter type NN], [MSE 0.9636], [SER 66.4463 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:52:08 2022]
+[Filter type NN], [MSE 0.9664], [SER 67.2476 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:53:14 2022]
+[Filter type NN], [MSE 0.9653], [SER 66.5064 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:54:43 2022]
+[Filter type NN], [MSE 0.9679], [SER 67.0873 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:55:50 2022]
+[Filter type NN], [MSE 0.9661], [SER 66.7468 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:57:19 2022]
+[Filter type NN], [MSE 0.9910], [SER 68.7099 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:58:01 2022]
+[Filter type NN], [MSE 0.9951], [SER 68.7700 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 13:58:39 2022]
+[Filter type NN], [MSE 0.9932], [SER 68.7300 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:01:17 2022]
+[Filter type NN], [MSE 0.9857], [SER 68.2091 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:01:32 2022]
+[Filter type NN], [MSE 0.9979], [SER 68.7700 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:02:32 2022]
+[Filter type NN], [MSE 1.0618], [SER 70.5929 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:06:12 2022]
+[Filter type NN], [MSE 0.9914], [SER 68.7700 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:06:51 2022]
+[Filter type NN], [MSE 0.9903], [SER 68.3494 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:09:10 2022]
+[Filter type NN], [MSE 0.9873], [SER 68.8301 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:10:02 2022]
+[Filter type NN], [MSE 1.0007], [SER 68.8301 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:10:36 2022]
+[Filter type NN], [MSE 0.9875], [SER 68.4896 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:11:06 2022]
+[Filter type NN], [MSE 0.9892], [SER 68.7901 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:11:35 2022]
+[Filter type NN], [MSE 0.9922], [SER 68.5296 (%)], [Channel [-0.18075459+0.00486283j -0.22441156+0.10342023j  0.1959806 +0.04576112j
+  0.17030887+0.17761217j -0.30147781+0.04717597j -0.03795917+0.10794918j
+  0.09248595-0.58716601j -0.00114994-0.21335718j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:11:59 2022]
+[Filter type NN], [MSE 0.9742], [SER 66.3862 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:12:53 2022]
+[Filter type NN], [MSE 0.9818], [SER 67.4279 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:23:54 2022]
+[Filter type NN], [MSE 1.0056], [SER 69.6715 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:30:58 2022]
+[Filter type NN], [MSE 1.0112], [SER 70.0521 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:38:22 2022]
+[Filter type NN], [MSE 0.9757], [SER 66.7869 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:39:10 2022]
+[Filter type NN], [MSE 1.0040], [SER 69.0104 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:39:41 2022]
+[Filter type NN], [MSE 0.9991], [SER 69.3309 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:40:12 2022]
+[Filter type NN], [MSE 1.0559], [SER 72.7564 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:42:46 2022]
+[Filter type NN], [MSE 1.0163], [SER 70.1122 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:43:15 2022]
+[Filter type NN], [MSE 1.0078], [SER 69.3910 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:43:43 2022]
+[Filter type NN], [MSE 1.0001], [SER 69.0304 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:45:04 2022]
+[Filter type NN], [MSE 1.0035], [SER 69.0304 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:45:35 2022]
+[Filter type NN], [MSE 1.0187], [SER 70.4728 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:47:04 2022]
+[Filter type NN], [MSE 1.0221], [SER 70.9135 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:47:46 2022]
+[Filter type NN], [MSE 1.0413], [SER 70.8133 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:48:54 2022]
+[Filter type NN], [MSE 1.0485], [SER 70.2524 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:50:43 2022]
+[Filter type NN], [MSE 1.0392], [SER 70.9335 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:51:52 2022]
+[Filter type NN], [MSE 1.0202], [SER 70.5929 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 14:59:05 2022]
+[Filter type NN], [MSE 1.0147], [SER 68.4696 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 15:03:48 2022]
+[Filter type NN], [MSE 0.2905], [SER 12.9607 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 21], [Total taps 8], [Date Tue Apr 26 15:07:48 2022]
+[Filter type NN], [MSE 1.7818], [SER 72.3958 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 16:55:43 2022]
+[Filter type NN], [MSE 1.0005], [SER 74.2588 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 16:58:02 2022]
+[Filter type NN], [MSE 1.2787], [SER 71.9752 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 16:58:53 2022]
+[Filter type NN], [MSE 1.6190], [SER 73.5577 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 16:59:55 2022]
+[Filter type NN], [MSE 1.6264], [SER 72.2957 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:00:22 2022]
+[Filter type NN], [MSE 1.0470], [SER 72.0353 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:01:47 2022]
+[Filter type NN], [MSE 1.4191], [SER 72.9567 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:02:18 2022]
+[Filter type NN], [MSE 1.5381], [SER 73.6579 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:03:03 2022]
+[Filter type NN], [MSE 0.9992], [SER 73.8982 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:04:51 2022]
+[Filter type NN], [MSE 0.9975], [SER 72.5160 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:05:44 2022]
+[Filter type NN], [MSE 1.6435], [SER 72.5160 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:08:05 2022]
+[Filter type NN], [MSE 1.1484], [SER 71.2740 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:08:45 2022]
+[Filter type NN], [MSE 1.0000], [SER 74.2588 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:10:20 2022]
+[Filter type NN], [MSE 1.3111], [SER 71.2740 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:12:04 2022]
+[Filter type NN], [MSE 0.9721], [SER 67.0272 (%)], [Channel [ 0.18495999+0.25657244j -0.47468566+0.39207639j  0.45539846+0.34621361j
+  0.36217158+0.46120798j -0.23519094+0.25295438j  0.30906778-0.06035437j
+ -0.07406494+0.25053792j -0.15303609+0.09474211j]], [Filter size 80], [Decision delay 0], [Total taps 8], [Date Tue Apr 26 17:13:33 2022]

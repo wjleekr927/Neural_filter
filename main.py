@@ -58,7 +58,7 @@ if __name__ == '__main__':
     L = args.filter_size + args.total_taps - 1
 
     # Seed 1111 => easy case, 2077 => default
-    channel_seed = 2077
+    channel_seed = 3468
     channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = channel_seed)
     
     train_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
@@ -101,21 +101,30 @@ if __name__ == '__main__':
 
     if args.filter_type == 'NN':
         # Build custom dataset (for train and test)
-        train_dataset = CustomDataset(train_symb_len, L, args.filter_size, args.mod_scheme, args.rand_seed_train)
-        test_dataset = CustomDataset(test_symb_len, L, args.filter_size, args.mod_scheme, args.rand_seed_test, test = True)
+        train_dataset = CustomDataset(train_symb_len, L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
+        test_dataset = CustomDataset(test_symb_len, L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test, test = True)
 
         train_dataloader = DataLoader(train_dataset, batch_size = args.bs, drop_last = True, shuffle = False )
         test_dataloader = DataLoader(test_dataset, batch_size = args.bs, drop_last = True, shuffle = False)
         print("\n-------------------------------")
         print("Neural filter is used")
-        
+
+        def init_weights(m):
+            if isinstance(m, nn.Conv1d):
+                nn.init.kaiming_normal_(m.weight)
+            elif isinstance(m, nn.Linear):
+                nn.init.kaiming_normal_(m.weight) 
+                #m.bias.data.fill_(.01)
+
         # Parameters are needed to be revised
         model = NF(args.filter_size).to(args.device)
+        model.apply(init_weights)
         
         # Loss and optimizer setting
         loss_fn = nn.MSELoss()
         #optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
         optimizer = torch.optim.AdamW(model.parameters(), lr = args.lr)
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size = (args.epochs // 4 + 1), gamma = 0.9)
     
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
@@ -151,6 +160,10 @@ if __name__ == '__main__':
                 optimizer.step()
 
                 epoch_loss += loss.item()
+
+            # Scheduler should be applied following each epoch
+            scheduler.step()
+            #print("LR: {}".format(optimizer.param_groups[0]['lr']))
 
             epoch_loss = epoch_loss / (batch+1)
             print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, 2 * epoch_loss))
@@ -204,11 +217,11 @@ if __name__ == '__main__':
         print("\nAverage test loss (per single symbol) = {:.4f}".format(2*test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Epochs {}], [Batch size {}], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Epochs {}], [Batch size {}], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
             .format(args.filter_type, 2*test_loss, 100*SER, args.epochs, args.bs, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
             .format(args.filter_type, 2*test_loss, 100*SER, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
 
     else:
@@ -261,11 +274,11 @@ if __name__ == '__main__':
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Filter size {}], [Decision delay {}], [Total taps {}], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.total_taps, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.2f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
             .format(args.filter_type, opt_test_MSE, 100 * SER, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
         
     # tensorboard --logdir=runs

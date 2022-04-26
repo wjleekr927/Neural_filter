@@ -24,3 +24,6 @@
 - Channel 복소수 성분 넣어봐도 (한 성분으로), 잘 되는데 이게 맞는 결과 혹은 식이 틀렸을듯
 (04/17)
 - Loss 수정하고 (2배), LMMSE가 경향성이 없는 것을 확인함
+(04/26)
+- Residual connection + Non-local block?
+- GELU보다 ELU가 더 좋은데?
