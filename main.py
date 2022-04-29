@@ -58,7 +58,7 @@ if __name__ == '__main__':
     L = args.filter_size + args.total_taps - 1
 
     # Seed 1111 => easy case, 2077 => default
-    channel_seed = 3468
+    channel_seed = args.rand_seed_channel
     channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = channel_seed)
     
     train_original_file_name = 'symb_len_{}_mod_{}_S_{}'.format(train_symb_len, args.mod_scheme, args.rand_seed_train)
@@ -112,8 +112,14 @@ if __name__ == '__main__':
         def init_weights(m):
             if isinstance(m, nn.Conv1d):
                 nn.init.kaiming_normal_(m.weight)
+                #nn.init.kaiming_uniform_(m.weight)
+                #nn.init.xavier_normal_(m.weight)
+                #nn.init.xavier_uniform_(m.weight)
             elif isinstance(m, nn.Linear):
-                nn.init.kaiming_normal_(m.weight) 
+                nn.init.kaiming_normal_(m.weight)
+                #nn.init.kaiming_uniform_(m.weight) 
+                #nn.init.xavier_normal_(m.weight) 
+                #nn.init.xavier_uniform_(m.weight)  
                 #m.bias.data.fill_(.01)
 
         # Parameters are needed to be revised
@@ -124,7 +130,79 @@ if __name__ == '__main__':
         loss_fn = nn.MSELoss()
         #optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
         optimizer = torch.optim.AdamW(model.parameters(), lr = args.lr)
-        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size = (args.epochs // 4 + 1), gamma = 0.9)
+
+        ###############################################
+        import math
+        from torch.optim.lr_scheduler import _LRScheduler
+
+        class CosineAnnealingWarmUpRestarts(_LRScheduler):
+            def __init__(self, optimizer, T_0, T_mult=1, eta_max=0.1, T_up=0, gamma=1., last_epoch=-1):
+                if T_0 <= 0 or not isinstance(T_0, int):
+                    raise ValueError("Expected positive integer T_0, but got {}".format(T_0))
+                if T_mult < 1 or not isinstance(T_mult, int):
+                    raise ValueError("Expected integer T_mult >= 1, but got {}".format(T_mult))
+                if T_up < 0 or not isinstance(T_up, int):
+                    raise ValueError("Expected positive integer T_up, but got {}".format(T_up))
+                self.T_0 = T_0
+                self.T_mult = T_mult
+                self.base_eta_max = eta_max
+                self.eta_max = eta_max
+                self.T_up = T_up
+                self.T_i = T_0
+                self.gamma = gamma
+                self.cycle = 0
+                self.T_cur = last_epoch
+                super(CosineAnnealingWarmUpRestarts, self).__init__(optimizer, last_epoch)
+            
+            def get_lr(self):
+                if self.T_cur == -1:
+                    return self.base_lrs
+                elif self.T_cur < self.T_up:
+                    return [(self.eta_max - base_lr)*self.T_cur / self.T_up + base_lr for base_lr in self.base_lrs]
+                else:
+                    return [base_lr + (self.eta_max - base_lr) * (1 + math.cos(math.pi * (self.T_cur-self.T_up) / (self.T_i - self.T_up))) / 2
+                            for base_lr in self.base_lrs]
+
+            def step(self, epoch=None):
+                if epoch is None:
+                    epoch = self.last_epoch + 1
+                    self.T_cur = self.T_cur + 1
+                    if self.T_cur >= self.T_i:
+                        self.cycle += 1
+                        self.T_cur = self.T_cur - self.T_i
+                        self.T_i = (self.T_i - self.T_up) * self.T_mult + self.T_up
+                else:
+                    if epoch >= self.T_0:
+                        if self.T_mult == 1:
+                            self.T_cur = epoch % self.T_0
+                            self.cycle = epoch // self.T_0
+                        else:
+                            n = int(math.log((epoch / self.T_0 * (self.T_mult - 1) + 1), self.T_mult))
+                            self.cycle = n
+                            self.T_cur = epoch - self.T_0 * (self.T_mult ** n - 1) / (self.T_mult - 1)
+                            self.T_i = self.T_0 * self.T_mult ** (n)
+                    else:
+                        self.T_i = self.T_0
+                        self.T_cur = epoch
+                        
+                self.eta_max = self.base_eta_max * (self.gamma**self.cycle)
+                self.last_epoch = math.floor(epoch)
+                for param_group, lr in zip(self.optimizer.param_groups, self.get_lr()):
+                    param_group['lr'] = lr
+        ###############################################
+        
+        scheduler_gamma = 0.2
+        #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size = (args.epochs // 4 + 1), gamma = scheduler_gamma)
+        #scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma = scheduler_gamma)
+        # T_0 : 초기 설정하는 주기, T_mult : 그 이후로 얼마나 주기를 늘릴 것인지, eta_min : minimum learning rate
+        # 그냥 일단 gamma 변수를 쓰는 중 (eta_min 으로)
+        
+        #scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0 = args.epochs // 8, T_mult = 3, eta_min = scheduler_gamma)
+        #scheduler_type = type(scheduler).__name__
+
+        # Set small LR to make warm up
+        scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0 = args.epochs // 8, T_mult = 2, eta_max = 1e-2, T_up = 5, gamma = scheduler_gamma)
+        scheduler_type = "Custom Cosine"
     
     elif args.filter_type == 'Linear':
         print("\n-------------------------------")
@@ -217,12 +295,12 @@ if __name__ == '__main__':
         print("\nAverage test loss (per single symbol) = {:.4f}".format(2*test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Epochs {}], [Batch size {}], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, 2*test_loss, 100*SER, args.epochs, args.bs, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Epochs {}], [Batch size {}], [Filter size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Channel) {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, 2*test_loss, 100*SER, args.epochs, args.bs, args.filter_size, args.lr, scheduler_type, scheduler_gamma, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
-            .format(args.filter_type, 2*test_loss, 100*SER, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Random seed (Channel) {}], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
+            .format(args.filter_type, 2*test_loss, 100*SER, args.rand_seed_channel, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
 
     else:
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
@@ -274,12 +352,12 @@ if __name__ == '__main__':
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Channel) {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, 100 * SER, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Random seed (Channel) {}], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, 100 * SER, args.rand_seed_channel, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
         
     # tensorboard --logdir=runs
     # tensorboard --inspect --event_file=myevents.out --tag=loss

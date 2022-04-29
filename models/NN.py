@@ -13,20 +13,31 @@ class NF(nn.Module):
             nn.Linear(filter_size, 1),
             nn.ELU(),
         )
-        
+
         self.FC_stacks = nn.Sequential(
-            nn.Conv1d(2, 2, kernel_size = filter_size // 16, stride = filter_size // 16),
+            nn.Conv1d(2, 40, kernel_size = 1),
+            nn.BatchNorm1d(40),
             nn.ELU(),
             nn.Dropout(p = 0.3),
+            #nn.MaxPool1d(2, stride = 1),
             # nn.Conv1d(2, 2, kernel_size = 8, stride = 1)
-            nn.Linear(16, 16),
+            nn.Linear(filter_size, filter_size // 2),
+            nn.BatchNorm1d(40),
             nn.ELU(),
-            nn.Linear(16, 1)
+            nn.Dropout(p = 0.4),
+            nn.Linear(filter_size // 2, 1),
+            nn.BatchNorm1d(40),
+            nn.ELU(),
+            nn.Dropout(p = 0.2),
+            nn.Conv1d(40, 2, kernel_size = 1),
+            nn.BatchNorm1d(2)
             # nn.GELU(),
             # nn.Dropout(p = 0.3),
         )
         self.linear_embedding = nn.Sequential(
-            nn.Linear(filter_size, 1)
+            nn.Conv1d(2, 2, kernel_size = filter_size),
+            nn.BatchNorm1d(2)
+            #nn.Linear(filter_size, 1)
         )
         self.activ = nn.ELU()
 

@@ -20,6 +20,7 @@ def args_parser():
 
     parser.add_argument('--rand_seed_train', type= int, default= 9999, help="Random seed setting for training set")
     parser.add_argument('--rand_seed_test', type= int, default= 4999, help="Random seed setting for test set")
+    parser.add_argument('--rand_seed_channel', type= int, default= 2077, help="Random seed setting for channel taps")
     parser.add_argument('--data_gen_type', type= str, default= 'train', help="Type of data to be generated: 'train' or 'test'")
     parser.add_argument('--gpu', type=int, default=0, help="GPU index setting, -1 for CPU")
     
