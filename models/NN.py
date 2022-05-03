@@ -14,37 +14,77 @@ class NF(nn.Module):
             nn.ELU(),
         )
 
-        self.FC_stacks = nn.Sequential(
-            nn.Conv1d(2, 40, kernel_size = 1),
-            nn.BatchNorm1d(40),
-            nn.ELU(),
-            nn.Dropout(p = 0.3),
-            #nn.MaxPool1d(2, stride = 1),
+        self.FC_stacks_1 = nn.Sequential(
+            nn.Conv1d(2, 2, kernel_size = 1),
+            nn.BatchNorm1d(2),
+            nn.GELU(),
+            nn.Dropout(p=0.2),
+            nn.Conv1d(2, 20, kernel_size = 1),
+            nn.BatchNorm1d(20),
+            nn.Dropout(p = 0.2)
             # nn.Conv1d(2, 2, kernel_size = 8, stride = 1)
+            #nn.BatchNorm1d(2)
+            #nn.GELU(),
+            #nn.Dropout(p = 0.1) 
+        )
+
+        self.FC_stacks_2 = nn.Sequential(
             nn.Linear(filter_size, filter_size // 2),
-            nn.BatchNorm1d(40),
-            nn.ELU(),
-            nn.Dropout(p = 0.4),
-            nn.Linear(filter_size // 2, 1),
-            nn.BatchNorm1d(40),
-            nn.ELU(),
+            nn.BatchNorm1d(20),
+            nn.GELU(),
             nn.Dropout(p = 0.2),
-            nn.Conv1d(40, 2, kernel_size = 1),
-            nn.BatchNorm1d(2)
-            # nn.GELU(),
-            # nn.Dropout(p = 0.3),
+            nn.Conv1d(20, 10, kernel_size = 1),
+            nn.BatchNorm1d(10),
+            nn.Dropout(p = 0.2)
+        ) 
+
+        self.FC_stacks_3 = nn.Sequential(
+            nn.Linear(filter_size // 2, filter_size // 4),
+            nn.BatchNorm1d(10),
+            nn.GELU(),
+            nn.Dropout(p = 0.2),
+            nn.Conv1d(10, 2, kernel_size = 1),
+            nn.BatchNorm1d(2),
+            nn.Dropout(p = 0.2)
         )
-        self.linear_embedding = nn.Sequential(
-            nn.Conv1d(2, 2, kernel_size = filter_size),
-            nn.BatchNorm1d(2)
-            #nn.Linear(filter_size, 1)
+
+        self.linear_embedding_1 = nn.Sequential(
+            nn.Conv1d(2, 20, kernel_size = 1)
         )
+
+        self.linear_embedding_2 = nn.Sequential(
+            nn.Conv1d(20, 10, kernel_size = 2, stride = 2)
+        )
+
+        self.linear_embedding_3 = nn.Sequential(
+            nn.Conv1d(10, 2,  kernel_size = 2, stride = 2)
+        )
+
+        self.FC_fin = nn.Sequential(
+            nn.Linear(filter_size // 4, 1),
+            nn.ELU()
+        )
+
         self.activ = nn.ELU()
+
+    # ResNet을 소분하고,
+    # Dimension을 조정하기
 
     def forward(self, x):
         # rst = self.TF_enc(x)
         # rst = self.FC_dec(rst)
-        rst = self.FC_stacks(x)
-        short_cut = self.linear_embedding(x)
-        rst = self.activ(short_cut + rst)  
-        return rst
+        rst_1 = self.FC_stacks_1(x)
+        short_cut_1 = self.linear_embedding_1(x)
+        rst_1 = self.activ(short_cut_1 + rst_1)
+
+        rst_2 = self.FC_stacks_2(rst_1)
+        short_cut_2 = self.linear_embedding_2(rst_1)
+        rst_2 = self.activ(short_cut_2 + rst_2)
+
+        rst_fin = self.FC_stacks_3(rst_2)
+        short_cut_3 = self.linear_embedding_3(rst_2)
+        rst_fin = self.activ(short_cut_3 + rst_fin) 
+
+        rst_fin = self.FC_fin(rst_fin)
+
+        return rst_fin

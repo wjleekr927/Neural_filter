@@ -3,6 +3,7 @@ import errno # Package to raise an error message
 import sys
 import time
 import torch
+import torch.nn.functional as F
 import numpy as np
 import os
 import os.path
@@ -51,6 +52,10 @@ if __name__ == '__main__':
         bits_per_symb = 2
         train_symb_len = args.train_seq_len // bits_per_symb
         test_symb_len = args.test_seq_len // bits_per_symb
+        
+        norm_cof = np.round(1 / np.sqrt(2), 4)
+        QPSK_label_GT_list = [[[norm_cof], [norm_cof]], [[norm_cof], [- norm_cof]], [[-norm_cof], [+norm_cof]], [[-norm_cof], [-norm_cof]]]
+
     else:
         pass
         
@@ -122,12 +127,21 @@ if __name__ == '__main__':
                 #nn.init.xavier_uniform_(m.weight)  
                 #m.bias.data.fill_(.01)
 
+        def one_hot_label_return(origin_tensor):
+            rst = torch.where(torch.logical_and(origin_tensor[:,0] > 0, origin_tensor[:,1] > 0), 0, 0)
+            init = torch.zeros_like(rst)
+            rst += torch.where(torch.logical_and(origin_tensor[:,0] > 0, origin_tensor[:,1] < 0), 1, init)
+            rst += torch.where(torch.logical_and(origin_tensor[:,0] < 0, origin_tensor[:,1] > 0), 2, init)
+            rst += torch.where(torch.logical_and(origin_tensor[:,0] < 0, origin_tensor[:,1] < 0), 3, init)
+            return rst
+
         # Parameters are needed to be revised
         model = NF(args.filter_size).to(args.device)
         model.apply(init_weights)
         
         # Loss and optimizer setting
-        loss_fn = nn.MSELoss()
+        loss_fn_MSE = nn.MSELoss()
+        loss_fn_CE = nn.CrossEntropyLoss()
         #optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
         optimizer = torch.optim.AdamW(model.parameters(), lr = args.lr)
 
@@ -191,7 +205,7 @@ if __name__ == '__main__':
                     param_group['lr'] = lr
         ###############################################
         
-        scheduler_gamma = 0.2
+        scheduler_gamma = 0.1
         #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size = (args.epochs // 4 + 1), gamma = scheduler_gamma)
         #scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma = scheduler_gamma)
         # T_0 : 초기 설정하는 주기, T_mult : 그 이후로 얼마나 주기를 늘릴 것인지, eta_min : minimum learning rate
@@ -201,7 +215,7 @@ if __name__ == '__main__':
         #scheduler_type = type(scheduler).__name__
 
         # Set small LR to make warm up
-        scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0 = args.epochs // 8, T_mult = 2, eta_max = 1e-2, T_up = 5, gamma = scheduler_gamma)
+        scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0 = args.epochs // 8, T_mult = 2, eta_max = 1e-2, T_up = 8, gamma = scheduler_gamma)
         scheduler_type = "Custom Cosine"
     
     elif args.filter_type == 'Linear':
@@ -230,7 +244,31 @@ if __name__ == '__main__':
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 # Channel taps already applied to pred
                 pred = model(X)
-                loss = loss_fn(pred,y)
+                
+                # Add detection loss
+                if args.mod_scheme == 'QPSK':
+                    num_classes = 4
+                    pred_softmax = torch.tensor(()).to(args.device)
+
+
+                for idx, symb_GT in enumerate(QPSK_label_GT_list):
+                    QPSK_label_GT = torch.tensor(symb_GT).expand(args.bs, -1, -1).to(args.device)
+
+                    # Distance calculation
+                    L2_distance = torch.sqrt(torch.square(pred-QPSK_label_GT).sum(dim = 1))
+                    pred_softmax = torch.cat((pred_softmax, torch.exp(-L2_distance)), dim = 1)
+
+                # Normalize like softmax function
+                pred_softmax = pred_softmax / pred_softmax.sum(dim = 1).reshape(-1,1)
+                
+                y_one_hot = F.one_hot(one_hot_label_return(y), num_classes = num_classes).float()
+                pred_one_hot = F.one_hot(one_hot_label_return(pred), num_classes = num_classes).float()
+
+                one_hot_loss_weight = 0
+                distance_loss_weight = 2
+
+                loss = loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_MSE(pred_one_hot, y_one_hot) \
+                + distance_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze())
 
                 # Backpropagation
                 optimizer.zero_grad()
@@ -280,7 +318,7 @@ if __name__ == '__main__':
             for batch, (X,y) in enumerate(test_dataloader):
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 pred = model(X)
-                loss = loss_fn(pred,y)
+                loss = loss_fn_MSE(pred,y)
                 # Complex sign is equal => 1 + 1 = 2, and count this
                 correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
                 test_loss += loss.item()
