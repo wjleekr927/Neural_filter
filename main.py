@@ -11,6 +11,7 @@ import os.path
 from utils.options import args_parser
 
 from torch import nn
+from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter 
 from torchvision import datasets
@@ -54,7 +55,7 @@ if __name__ == '__main__':
         test_symb_len = args.test_seq_len // bits_per_symb
         
         norm_cof = np.round(1 / np.sqrt(2), 4)
-        QPSK_label_GT_list = [[[norm_cof], [norm_cof]], [[norm_cof], [- norm_cof]], [[-norm_cof], [+norm_cof]], [[-norm_cof], [-norm_cof]]]
+        QPSK_label_GT_list = [[[+norm_cof], [+norm_cof]], [[+norm_cof], [-norm_cof]], [[-norm_cof], [+norm_cof]], [[-norm_cof], [-norm_cof]]]
 
     else:
         pass
@@ -142,8 +143,11 @@ if __name__ == '__main__':
         # Loss and optimizer setting
         loss_fn_MSE = nn.MSELoss()
         loss_fn_CE = nn.CrossEntropyLoss()
+        loss_fn_MRL = nn.MarginRankingLoss()
+        loss_fn_TML = nn.TripletMarginLoss()
+
         #optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
-        optimizer = torch.optim.AdamW(model.parameters(), lr = args.lr)
+        optimizer = torch.optim.AdamW(model.parameters(), lr = args.lr, weight_decay = 0.02)
 
         ###############################################
         import math
@@ -205,7 +209,7 @@ if __name__ == '__main__':
                     param_group['lr'] = lr
         ###############################################
         
-        scheduler_gamma = 0.1
+        scheduler_gamma = 0.7
         #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size = (args.epochs // 4 + 1), gamma = scheduler_gamma)
         #scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma = scheduler_gamma)
         # T_0 : 초기 설정하는 주기, T_mult : 그 이후로 얼마나 주기를 늘릴 것인지, eta_min : minimum learning rate
@@ -215,7 +219,7 @@ if __name__ == '__main__':
         #scheduler_type = type(scheduler).__name__
 
         # Set small LR to make warm up
-        scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0 = args.epochs // 8, T_mult = 2, eta_max = 1e-2, T_up = 8, gamma = scheduler_gamma)
+        scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0 = args.epochs // 9, T_mult = 1, eta_max = 1e-2, T_up = 10, gamma = scheduler_gamma)
         scheduler_type = "Custom Cosine"
     
     elif args.filter_type == 'Linear':
@@ -248,7 +252,7 @@ if __name__ == '__main__':
                 # Add detection loss
                 if args.mod_scheme == 'QPSK':
                     num_classes = 4
-                    pred_softmax = torch.tensor(()).to(args.device)
+                    pred_softmax = torch.tensor([]).to(args.device)
 
 
                 for idx, symb_GT in enumerate(QPSK_label_GT_list):
@@ -259,16 +263,32 @@ if __name__ == '__main__':
                     pred_softmax = torch.cat((pred_softmax, torch.exp(-L2_distance)), dim = 1)
 
                 # Normalize like softmax function
-                pred_softmax = pred_softmax / pred_softmax.sum(dim = 1).reshape(-1,1)
+                # pred_softmax = pred_softmax / pred_softmax.sum(dim = 1).reshape(-1,1)
+
+                # base_constraint = torch.exp(-4 * torch.ones_like(pred_softmax)).to(args.device)
+
+                base_constraint = 3 * norm_cof * torch.ones_like(pred).to(args.device)
                 
                 y_one_hot = F.one_hot(one_hot_label_return(y), num_classes = num_classes).float()
                 pred_one_hot = F.one_hot(one_hot_label_return(pred), num_classes = num_classes).float()
 
-                one_hot_loss_weight = 0
-                distance_loss_weight = 2
+                one_hot_loss_weight = 7.5
+                distance_loss_weight = 0
 
-                loss = loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_MSE(pred_one_hot, y_one_hot) \
-                + distance_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze())
+                # pred 크기 조절
+
+                loss =  1.5 * loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
+                + loss_fn_MSE(torch.square(pred).sum(dim = 1).to(args.device), torch.ones_like(pred.sum(dim = 1)).to(args.device))
+
+                # loss_fn_TML(y, pred, -pred) --> 위에꺼 되면 추가하기
+                # loss = 40 * loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
+                # + 0.5 * loss_fn_MRL(pred, -base_constraint, torch.tensor([+1]).to(args.device)) + 0.5 * loss_fn_MRL(pred, base_constraint, torch.tensor([-1]).to(args.device))
+                # loss = loss_fn_MSE(pred,y) + loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
+                # + loss_fn_MRL(pred_softmax, base_constraint ,torch.tensor([+1]).to(args.device))
+
+                if epoch == 200:
+                    pass
+                    #import ipdb; ipdb.set_trace()
 
                 # Backpropagation
                 optimizer.zero_grad()
@@ -319,6 +339,7 @@ if __name__ == '__main__':
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 pred = model(X)
                 loss = loss_fn_MSE(pred,y)
+                # import ipdb; ipdb.set_trace()
                 # Complex sign is equal => 1 + 1 = 2, and count this
                 correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
                 test_loss += loss.item()

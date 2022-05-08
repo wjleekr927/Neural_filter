@@ -91,16 +91,78 @@
 
 
 ######################### 8 taps #########################
-# python main.py --epochs 20 --lr 1e-4 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 30000 --test_seq_len 150000 --bs 8
-# python main.py --epochs 20 --lr 1e-4 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 46000 --test_seq_len 230000 --bs 8
-# python main.py --epochs 20 --lr 1e-4 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 94000 --test_seq_len 470000 --bs 8
-# python main.py --epochs 80 --lr 1e-3 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 174000 --test_seq_len 870000 --bs 16
-#python main.py --epochs 500 --lr 1e-6 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -20 --rand_seed_channel 3451 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 1740000 --test_seq_len 870000 --bs 512
-#python main.py --epochs 500 --lr 1e-6 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 3451 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 1740000 --test_seq_len 870000 --bs 512
-#python main.py --epochs 400 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -10 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 4096
-#python main.py --epochs 400 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 30 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 4096
 
-python main.py --epochs 600 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 4096
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 1500000 --test_seq_len 1500000
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 2300000 --test_seq_len 2300000
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 4700000 --test_seq_len 4700000
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 16700000 --test_seq_len 16700000
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 40700000 --test_seq_len 40700000
+python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 80700000 --test_seq_len 80700000
+
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 1500000 --test_seq_len 1500000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 2300000 --test_seq_len 2300000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 4700000 --test_seq_len 4700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 16700000 --test_seq_len 16700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 40700000 --test_seq_len 40700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 80700000 --test_seq_len 80700000 --bs 1024
+
+
+
+python main.py --filter_type "LMMSE" --decision_delay 3 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 1500000 --test_seq_len 1500000
+python main.py --filter_type "LMMSE" --decision_delay 5 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 2300000 --test_seq_len 2300000
+python main.py --filter_type "LMMSE" --decision_delay 11 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 4700000 --test_seq_len 4700000
+python main.py --filter_type "LMMSE" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+python main.py --filter_type "LMMSE" --decision_delay 41 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 16700000 --test_seq_len 16700000
+python main.py --filter_type "LMMSE" --decision_delay 101 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 40700000 --test_seq_len 40700000
+python main.py --filter_type "LMMSE" --decision_delay 201 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 80700000 --test_seq_len 80700000
+
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 3 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 1500000 --test_seq_len 1500000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 5 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 2300000 --test_seq_len 2300000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 11 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 4700000 --test_seq_len 4700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 41 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 16700000 --test_seq_len 16700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 101 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 40700000 --test_seq_len 40700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 201 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 80700000 --test_seq_len 80700000 --bs 1024
+
+
+
+python main.py --filter_type "LMMSE" --decision_delay 7 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 1500000 --test_seq_len 1500000
+python main.py --filter_type "LMMSE" --decision_delay 11 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 2300000 --test_seq_len 2300000
+python main.py --filter_type "LMMSE" --decision_delay 23 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 4700000 --test_seq_len 4700000
+python main.py --filter_type "LMMSE" --decision_delay 43 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+python main.py --filter_type "LMMSE" --decision_delay 83 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 16700000 --test_seq_len 16700000
+python main.py --filter_type "LMMSE" --decision_delay 203 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 40700000 --test_seq_len 40700000
+python main.py --filter_type "LMMSE" --decision_delay 403 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 80700000 --test_seq_len 80700000
+
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 7 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 1500000 --test_seq_len 1500000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 11 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 2300000 --test_seq_len 2300000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 23 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 4700000 --test_seq_len 4700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 43 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 83 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 16700000 --test_seq_len 16700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 203 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 40700000 --test_seq_len 40700000 --bs 1024
+python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 403 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 80700000 --test_seq_len 80700000 --bs 1024
+
+
+###################
+# python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+# python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 10 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+# python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+# python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+# python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 10 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+# python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+
+
+# python main.py --filter_type "LMMSE" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+# python main.py --filter_type "LMMSE" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 10 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+# python main.py --filter_type "LMMSE" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000
+# python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+# python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 10 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+# python main.py --epochs 300 --lr 1e-8 --filter_type "NN" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 5551 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
+###################
+
+
 #python main.py --epochs 1000 --lr 1e-8 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 4572 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 4096
 
 #python main.py --epochs 800 --lr 1e-6 --filter_type "NN" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 30 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 8700000 --test_seq_len 8700000 --bs 1024
@@ -127,38 +189,14 @@ python main.py --epochs 600 --lr 1e-8 --filter_type "NN" --decision_delay 0 --to
 
 # python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -20 --rand_seed_channel 3451 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 87000 --test_seq_len 870000
 # python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 3451 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 87000 --test_seq_len 870000
-#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -10 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
-#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
-#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 4572 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
 
+#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -10 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
+#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
+#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 10 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
+#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
+#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 30 --rand_seed_channel 7245 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
 
 # python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -20 --rand_seed_channel 1211 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 87000 --test_seq_len 870000
 # python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 0 --rand_seed_channel 1211 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 87000 --test_seq_len 870000
-#python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR -10 --rand_seed_channel 4375 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
 #python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 80 --SNR 30 --rand_seed_channel 4375 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 3480000 --test_seq_len 8700000
 
-
-# python main.py --filter_type "LMMSE" --decision_delay 5 --total_taps 8 --filter_size 16 --SNR -20 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 23000 --test_seq_len 230000
-# python main.py --filter_type "LMMSE" --decision_delay 5 --total_taps 8 --filter_size 16 --SNR 0 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 23000 --test_seq_len 230000
-# python main.py --filter_type "LMMSE" --decision_delay 5 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 23000 --test_seq_len 230000
-# python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 167000 --test_seq_len 1670000
-# python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 407000 --test_seq_len 4070000
-# python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 807000 --test_seq_len 8070000
-
-
-# python main.py --filter_type "LMMSE" --decision_delay 3 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 15000 --test_seq_len 150000
-# python main.py --filter_type "LMMSE" --decision_delay 5 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 23000 --test_seq_len 230000
-# python main.py --filter_type "LMMSE" --decision_delay 11 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 47000 --test_seq_len 470000
-# python main.py --filter_type "LMMSE" --decision_delay 21 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 87000 --test_seq_len 870000
-# python main.py --filter_type "LMMSE" --decision_delay 41 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 167000 --test_seq_len 1670000
-# python main.py --filter_type "LMMSE" --decision_delay 101 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 407000 --test_seq_len 4070000
-# python main.py --filter_type "LMMSE" --decision_delay 201 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 807000 --test_seq_len 8070000
-
-
-# python main.py --filter_type "LMMSE" --decision_delay 7 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 15000 --test_seq_len 150000
-# python main.py --filter_type "LMMSE" --decision_delay 11 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 23000 --test_seq_len 230000
-# python main.py --filter_type "LMMSE" --decision_delay 23 --total_taps 8 --filter_size 40 --SNR 20 --rand_seed_train 9005 --rand_seed_test 4005 --train_seq_len 47000 --test_seq_len 470000
-# python main.py --filter_type "LMMSE" --decision_delay 43 --total_taps 8 --filter_size 80 --SNR 20 --rand_seed_train 9010 --rand_seed_test 4010 --train_seq_len 87000 --test_seq_len 870000
-# python main.py --filter_type "LMMSE" --decision_delay 83 --total_taps 8 --filter_size 160 --SNR 20 --rand_seed_train 9020 --rand_seed_test 4020 --train_seq_len 167000 --test_seq_len 1670000
-# python main.py --filter_type "LMMSE" --decision_delay 203 --total_taps 8 --filter_size 400 --SNR 20 --rand_seed_train 9050 --rand_seed_test 4050 --train_seq_len 407000 --test_seq_len 4070000
-# python main.py --filter_type "LMMSE" --decision_delay 403 --total_taps 8 --filter_size 800 --SNR 20 --rand_seed_train 9100 --rand_seed_test 4100 --train_seq_len 807000 --test_seq_len 8070000
