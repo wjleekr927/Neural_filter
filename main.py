@@ -272,23 +272,21 @@ if __name__ == '__main__':
                 y_one_hot = F.one_hot(one_hot_label_return(y), num_classes = num_classes).float()
                 pred_one_hot = F.one_hot(one_hot_label_return(pred), num_classes = num_classes).float()
 
-                one_hot_loss_weight = 7.5
+                one_hot_loss_weight = 7
                 distance_loss_weight = 0
 
-                # pred 크기 조절
-
-                loss =  1.5 * loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
-                + loss_fn_MSE(torch.square(pred).sum(dim = 1).to(args.device), torch.ones_like(pred.sum(dim = 1)).to(args.device))
+                loss = 3 * loss_fn_MSE(pred, y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
+                + loss_fn_MSE(torch.square(pred).sum(dim = 1).to(args.device), torch.ones_like(pred.sum(dim = 1)).to(args.device)) + loss_fn_TML(y, pred, -pred)
+                
+                #+ loss_fn_TML(y, pred, -pred)
+                
+                # loss =  loss_fn_MSE(pred,y)
 
                 # loss_fn_TML(y, pred, -pred) --> 위에꺼 되면 추가하기
                 # loss = 40 * loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
                 # + 0.5 * loss_fn_MRL(pred, -base_constraint, torch.tensor([+1]).to(args.device)) + 0.5 * loss_fn_MRL(pred, base_constraint, torch.tensor([-1]).to(args.device))
                 # loss = loss_fn_MSE(pred,y) + loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
                 # + loss_fn_MRL(pred_softmax, base_constraint ,torch.tensor([+1]).to(args.device))
-
-                if epoch == 200:
-                    pass
-                    #import ipdb; ipdb.set_trace()
 
                 # Backpropagation
                 optimizer.zero_grad()

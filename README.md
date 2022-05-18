@@ -16,14 +16,11 @@
 
 (04/12) 상우형 feedback 따라서 간단한 channel 만들어보기
 - Noise 안 넣고, channel tap 하나만 썼을 때 결과 잘 나옴
-- Channel 크기와 noise 크기가 너무 차이나는거 아닐까?
-
-- 그냥 decoding을 해보자! BER check (04/14)
-- Noise 없이 + channel 간단하게 하면 BER 그냥 0 나옴
 - Noise 섞는 순간 성능 망가짐 + W에 있는 SNR term 살려도 성능 안좋음
-- Channel 복소수 성분 넣어봐도 (한 성분으로), 잘 되는데 이게 맞는 결과 혹은 식이 틀렸을듯
 (04/17)
-- Loss 수정하고 (2배), LMMSE가 경향성이 없는 것을 확인함
+- ~~Loss 수정하고 (2배), LMMSE가 경향성이 없는 것을 확인함~~
 (04/26)
 - Residual connection + Non-local block?
 - GELU보다 ELU가 더 좋은데?
+(05/18)
+- NF가 더 유리한 상황 찾기, channel taps는 8로 고정!
