@@ -9,6 +9,7 @@ import os
 import os.path
 
 from utils.options import args_parser
+from utils.R_corr import R_calc
 
 from torch import nn
 from torch.autograd import Variable
@@ -45,6 +46,9 @@ if __name__ == '__main__':
         print("\t[Package {}], [Filter type {}], [Filter size {}], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format("CVXPY", args.filter_type, args.filter_size, args.rand_seed_train, args.rand_seed_test))
     elif args.filter_type == 'LMMSE':
+        print("\t[Filter type {}], [Filter size {}], [Decision delay {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
+        format(args.filter_type, args.filter_size, args.decision_delay, args.SNR, args.rand_seed_train, args.rand_seed_test))
+    elif args.filter_type == 'LS':
         print("\t[Filter type {}], [Filter size {}], [Decision delay {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format(args.filter_type, args.filter_size, args.decision_delay, args.SNR, args.rand_seed_train, args.rand_seed_test))
 
@@ -85,7 +89,7 @@ if __name__ == '__main__':
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_original_file_name)
 
     # Revised to be applied for all cases
-    if args.filter_type == "NN" or args.filter_type == "Linear" or args.filter_type == "LMMSE":
+    if args.filter_type == "NN" or args.filter_type == "Linear" or args.filter_type == "LMMSE" or args.filter_type == "LS":
         train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
         train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
@@ -137,7 +141,7 @@ if __name__ == '__main__':
             return rst
 
         # Parameters are needed to be revised
-        model = NF(args.filter_size).to(args.device)
+        model = NF(args.total_taps, args.filter_size).to(args.device)
         model.apply(init_weights)
         
         # Loss and optimizer setting
@@ -230,20 +234,26 @@ if __name__ == '__main__':
         print("\n-------------------------------")
         print("LMMSE filter is used")
 
+    elif args.filter_type == 'LS':
+        print("\n-------------------------------")
+        print("LS filter is used")
+
     else:
         raise Exception("Filter type should be 'NN' or 'Linear' or 'LMMSE'")
-
-    # To save a best model
-    best_test_loss = float('inf')
 
     #################
     # Training part #
     ################# 
     if args.filter_type == 'NN':
         model.train()
+
+        best_train_model_name = 'model_state_dict.pt'
+        best_train_model_PATH = './models/params/' + best_train_model_name
+        best_epoch, best_epoch_loss = 0, float('inf')
+
         for epoch in range(args.epochs):
             epoch_loss = 0
-
+            
             for batch, (X,y) in enumerate(train_dataloader):
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 # Channel taps already applied to pred
@@ -272,15 +282,17 @@ if __name__ == '__main__':
                 y_one_hot = F.one_hot(one_hot_label_return(y), num_classes = num_classes).float()
                 pred_one_hot = F.one_hot(one_hot_label_return(pred), num_classes = num_classes).float()
 
-                one_hot_loss_weight = 7
-                distance_loss_weight = 0
+                # one_hot_loss_weight = 5
+                # distance_loss_weight = 0
 
-                loss = 3 * loss_fn_MSE(pred, y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
-                + loss_fn_MSE(torch.square(pred).sum(dim = 1).to(args.device), torch.ones_like(pred.sum(dim = 1)).to(args.device)) + loss_fn_TML(y, pred, -pred)
-                
                 #+ loss_fn_TML(y, pred, -pred)
                 
-                # loss =  loss_fn_MSE(pred,y)
+                # ONLY MSE loss is used!
+                loss =  loss_fn_MSE(pred,y)
+
+                # Proposed loss is used!
+                # loss = 3 * loss_fn_MSE(pred, y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
+                # + loss_fn_MSE(torch.square(pred).sum(dim = 1).to(args.device), torch.ones_like(pred.sum(dim = 1)).to(args.device)) + loss_fn_TML(y, pred, -pred)
 
                 # loss_fn_TML(y, pred, -pred) --> 위에꺼 되면 추가하기
                 # loss = 40 * loss_fn_MSE(pred,y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) \
@@ -300,7 +312,16 @@ if __name__ == '__main__':
             #print("LR: {}".format(optimizer.param_groups[0]['lr']))
 
             epoch_loss = epoch_loss / (batch+1)
+
+            if epoch_loss < best_epoch_loss:
+                best_epoch_loss = epoch_loss
+                best_epoch = epoch + 1
+                torch.save(model.state_dict(), best_train_model_PATH)
+                print("\nBest one so far: [Epoch {:>2}] [Loss {:.4f}]\n".format(best_epoch, 2 * best_epoch_loss))
+
             print("[Epoch {:>2}] Average loss per epoch = {:.4f}".format(epoch+1, 2 * epoch_loss))
+        
+        print("\nBest train loss: [Epoch {:>2}] [Loss {:.4f}]\n".format(best_epoch, 2 * best_epoch_loss))
 
     elif args.filter_type == 'Linear':
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.decision_delay ,args.rand_seed_train)
@@ -323,15 +344,46 @@ if __name__ == '__main__':
         opt_MSE_value = optimized_rst / total_symb_num
         print("Optimal train MSE value: {:.4f}".format(opt_MSE_value))
 
+
+    elif args.filter_type == 'LS':
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
+        input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
+
+        target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
+        target_file_PATH = './data/symbol_tensor/train_data/' + target_file_name + '.npy'    
+
+        if os.path.isfile(target_file_PATH) and os.path.isfile(input_file_PATH):
+            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
+        
+        p_hat = np.zeros((args.filter_size, 1), dtype = np.complex_)
+        R_hat = np.zeros((args.filter_size, args.filter_size), dtype = np.complex_)
+
+        for set_idx in range(RX_test_symb.shape[0]):
+            p_hat += np.conj(target_symb[set_idx]) * RX_test_symb[set_idx].reshape(-1,1)
+            R_hat += R_calc(RX_test_symb[set_idx])
+
+        p_hat /= RX_test_symb.shape[0]
+        R_hat /= RX_test_symb.shape[0] 
+
+        w_LS = np.linalg.inv(R_hat) @ p_hat
+        
+        # print("p: {}, R: {}, w: {}".format(p_hat, R_hat, w_LS))
+        
+
     ################
     # Testing part # 
     # LMMSE is implemented only here
     ################
     
     if args.filter_type == 'NN':
+        model = NF(args.total_taps, args.filter_size).to(args.device)
+        model.load_state_dict(torch.load(best_train_model_PATH))
         model.eval()
+
         test_loss = 0
         correct = 0
+        
         with torch.no_grad():
             for batch, (X,y) in enumerate(test_dataloader):
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
@@ -365,7 +417,7 @@ if __name__ == '__main__':
 
         if args.filter_type == 'Linear':
             target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
-        elif args.filter_type == 'LMMSE':
+        elif args.filter_type == 'LMMSE' or args.filter_type == 'LS':
             target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
 
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
@@ -378,24 +430,29 @@ if __name__ == '__main__':
             total_symb_num = RX_test_symb.shape[0]
             opt_test_MSE = np.square(np.abs(np.matmul(RX_test_symb, LF_weight).T - target_symb.reshape(1,-1))).mean()
         
-        elif os.path.isfile(input_file_PATH) and args.filter_type == 'LMMSE':
-            SNR_ratio = 10**(args.SNR / 10)
+        elif os.path.isfile(input_file_PATH) and (args.filter_type == 'LMMSE' or args.filter_type == 'LS'):
             # Solve by matrix calculation
             RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
-            channel_col = channel_matrix[:,args.decision_delay].reshape(-1,1)
+            if args.filter_type == 'LMMSE':
+                SNR_ratio = 10**(args.SNR / 10)
+                channel_col = channel_matrix[:,args.decision_delay].reshape(-1,1)
+                
+                # LMMSE weight vector // C @ np.conj(C).T = Hermitian & np.linalg.inv(C) = inverse matrix
+                # w_LMMSE.shape is (filter_size, 1)
+                # w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T) @ channel_col
+                
+                w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T + 1/SNR_ratio * np.eye(args.filter_size)) @ channel_col
+                w_linear = w_LMMSE
 
-            # LMMSE weight vector // C @ np.conj(C).T = Hermitian & np.linalg.inv(C) = inverse matrix
-            # w_LMMSE.shape is (filter_size, 1)
-            # w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T) @ channel_col
-
-            w_LMMSE = np.linalg.inv(channel_matrix @ np.conj(channel_matrix).T + 1/SNR_ratio * np.eye(args.filter_size)) @ channel_col
-            
+            elif args.filter_type == 'LS':
+                w_linear = w_LS
+    
             opt_test_MSE = 0
 
             correct = 0
             
             for set_idx in range(RX_test_symb.shape[0]):
-                pred_symb = np.conj(w_LMMSE).T @ RX_test_symb[set_idx].reshape(-1,1)  
+                pred_symb = np.conj(w_linear).T @ RX_test_symb[set_idx].reshape(-1,1)
                 if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):
                     correct += 1
                 opt_test_MSE += np.square(np.abs(target_symb[set_idx] - pred_symb)).mean()

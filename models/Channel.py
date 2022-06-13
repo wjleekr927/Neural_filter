@@ -76,7 +76,7 @@ def apply_channel(channel_taps, filter_size, filter_type, train_symbol_tensor, t
         test_applied.append(channel_matrix @ np.flip(test_symbol_tensor[set_idx*L : (set_idx+1)*L]) + noise_vec)
 
     # Implement filter train / test data
-    if args.filter_type == 'NN' or args.filter_type == 'Linear' or args.filter_type == 'LMMSE':
+    if args.filter_type == 'NN' or args.filter_type == 'Linear' or args.filter_type == 'LMMSE' or args.filter_type == 'LS':
         train_filter_input_np, test_filter_input_np = np.asarray(train_applied).squeeze(-1), np.asarray(test_applied).squeeze(-1)
 
         # To make two channels, expand the dimensions
