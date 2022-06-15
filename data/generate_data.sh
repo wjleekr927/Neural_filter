@@ -106,9 +106,16 @@
 # python symbol_make.py --total_taps 8 --decision_delay 0 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 1500000 --data_gen_type 'test' --rand_seed_test 4001
 # python symbol_make.py --total_taps 8 --decision_delay 3 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 1500000 --data_gen_type 'train' --rand_seed_train 9001
 # python symbol_make.py --total_taps 8 --decision_delay 3 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 1500000 --data_gen_type 'test' --rand_seed_test 4001
-python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 4500000 --data_gen_type 'train' --rand_seed_train 9001
-#python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 6000000  --data_gen_type 'train' --rand_seed_train 9001
+
+python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 15000 --data_gen_type 'train' --rand_seed_train 9001
+python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 30000 --data_gen_type 'train' --rand_seed_train 9001
+python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 45000 --data_gen_type 'train' --rand_seed_train 9001
+python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 60000 --data_gen_type 'train' --rand_seed_train 9001
+python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 90000 --data_gen_type 'train' --rand_seed_train 9001
+# python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 1500000 --data_gen_type 'train' --rand_seed_train 9001
 # python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 3000000 --data_gen_type 'train' --rand_seed_train 9001
+# python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 4500000 --data_gen_type 'train' --rand_seed_train 9001
+# python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 6000000 --data_gen_type 'train' --rand_seed_train 9001
 # python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 9000000 --data_gen_type 'train' --rand_seed_train 9001
 # python symbol_make.py --total_taps 8 --decision_delay 7 --filter_size 8 --mod_scheme "QPSK" --gen_seq_len 9000000 --data_gen_type 'test' --rand_seed_test 4001
 

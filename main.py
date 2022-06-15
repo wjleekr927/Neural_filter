@@ -346,25 +346,25 @@ if __name__ == '__main__':
 
 
     elif args.filter_type == 'LS':
-        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
+        input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
         input_file_PATH = './data/symbol_tensor/train_data/' + input_file_name + '.npy'
 
-        target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
+        target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
         target_file_PATH = './data/symbol_tensor/train_data/' + target_file_name + '.npy'    
 
         if os.path.isfile(target_file_PATH) and os.path.isfile(input_file_PATH):
-            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            RX_train_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
             target_symb = np.load(target_file_PATH)[:,0] + 1j * np.load(target_file_PATH)[:,1]
         
         p_hat = np.zeros((args.filter_size, 1), dtype = np.complex_)
         R_hat = np.zeros((args.filter_size, args.filter_size), dtype = np.complex_)
 
-        for set_idx in range(RX_test_symb.shape[0]):
-            p_hat += np.conj(target_symb[set_idx]) * RX_test_symb[set_idx].reshape(-1,1)
-            R_hat += R_calc(RX_test_symb[set_idx])
+        for set_idx in range(RX_train_symb.shape[0]):
+            p_hat += np.conj(target_symb[set_idx]) * RX_train_symb[set_idx].reshape(-1,1)
+            R_hat += R_calc(RX_train_symb[set_idx])
 
-        p_hat /= RX_test_symb.shape[0]
-        R_hat /= RX_test_symb.shape[0] 
+        p_hat /= RX_train_symb.shape[0]
+        R_hat /= RX_train_symb.shape[0] 
 
         w_LS = np.linalg.inv(R_hat) @ p_hat
         
