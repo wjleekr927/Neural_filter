@@ -13,7 +13,7 @@ Neural_filter
 
 Requirement (environment)
 -----------------
-Refer to [requirements.txt](./requirments.txt)
+Refer to [requirements.txt](./requirements.txt)
 
 
 Usage (run)
@@ -25,9 +25,14 @@ Move to `data` and check the arguments option:
 $ python symbol_make.py --help
 ```
 
-Execute bash file:
+Execute following bash file:
 ```bash
 $ bash generate_data.sh
 ```
 
 __1. Execute an equalizer__
+
+Execute following bash file:
+```bash
+$ bash execute_main.sh
+```
