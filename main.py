@@ -67,7 +67,6 @@ if __name__ == '__main__':
     # channel_taps: shape = (Nc,1) => Follows fixed random seed
     L = args.filter_size + args.total_taps - 1
 
-    # Seed 1111 => easy case, 2077 => default
     channel_seed = args.rand_seed_channel
     channel_taps = channel_gen(args.total_taps, args.decay_factor, seed = channel_seed)
     
@@ -391,10 +390,15 @@ if __name__ == '__main__':
                 loss = loss_fn_MSE(pred,y)
                 if args.scatter_plot is True:
                     with open('./results/scatter/NN.txt','a') as f:
-                        pred_symbs = (pred[:,0] + pred[:,1] * 1j).cpu()
-                        target_symbs = (y[:,0] + y[:,1] * 1j).cpu()
-                        symbs_set = np.concatenate((pred_symbs.numpy(), target_symbs.numpy()),axis =1)
-                        np.savetxt(f, symbs_set, delimiter = ',' ,newline = '\n')
+                        if batch == 0:
+                            f.write("\n[Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
+                            .format(args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
+                        # pred[:,0]: Real, pred[:,1]: Imaginary
+                        # y[:,0]: Real, y[:,1]: Imaginary
+                        pred_symbs = (pred[:,0] + pred[:,1] * 1j).cpu().numpy()
+                        target_symbs = (y[:,0] + y[:,1] * 1j).cpu().numpy()
+                        symbs_set = np.concatenate((np.real(pred_symbs), np.imag(pred_symbs), np.real(target_symbs), np.imag(target_symbs)), axis =1)
+                        np.savetxt(f, symbs_set, delimiter = ',' , newline = '\n')
                 # If complex sign is equal => 1 + 1 = 2, and count this
                 correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
                 test_loss += loss.item()
@@ -461,12 +465,18 @@ if __name__ == '__main__':
                 if args.scatter_plot is True:
                     if args.filter_type == 'LMMSE':
                         with open('./results/scatter/LMMSE.txt','a') as f:
-                            symb_set = np.concatenate((pred_symb[0], [target_symb[set_idx]]))
+                            if set_idx == 0:
+                                f.write("\n[Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
+                                .format(args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
+                            symb_set = np.array((np.real(pred_symb.item()), np.imag(pred_symb.item()), np.real(target_symb[set_idx]), np.imag(target_symb[set_idx])))
                             np.savetxt(f, np.expand_dims(symb_set, axis = 0), delimiter = ',' , newline = '\n')
 
                     elif args.filter_type == 'LS':
                         with open('./results/scatter/LS.txt','a') as f:
-                            symb_set = np.concatenate((pred_symb[0], [target_symb[set_idx]]))
+                            if set_idx == 0:
+                                f.write("\n[Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
+                                .format(args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
+                            symb_set = np.array((np.real(pred_symb.item()), np.imag(pred_symb.item()), np.real(target_symb[set_idx]), np.imag(target_symb[set_idx])))
                             np.savetxt(f, np.expand_dims(symb_set, axis = 0), delimiter = ',' , newline = '\n')
 
                 if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):
