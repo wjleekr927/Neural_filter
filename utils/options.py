@@ -16,6 +16,7 @@ def args_parser():
     parser.add_argument('--decision_delay', type=int, default= 0, help = "Decision delay tau")
     parser.add_argument('--decay_factor', type=float, default= 0, help="Exponential tap decay factor k: exp(-k)")
     parser.add_argument('--mod_scheme', type= str, default= 'QPSK', help="Modulation scheme")
+    parser.add_argument('--scatter_plot', action= 'store_true', help="Use this option if you want to plot the constellation scatter. Default: not draw")
     # parser.add_argument('--train_ratio', type= float, default= .7, help="Ratio of training set (0<=R<=1)")
 
     parser.add_argument('--rand_seed_train', type= int, default= 9999, help="Random seed setting for training set")

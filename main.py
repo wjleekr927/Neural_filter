@@ -143,7 +143,7 @@ if __name__ == '__main__':
         # Parameters are needed to be revised
         model = NF(args.total_taps, args.filter_size).to(args.device)
         model.apply(init_weights)
-        
+
         # Loss and optimizer setting
         loss_fn_MSE = nn.MSELoss()
         loss_fn_CE = nn.CrossEntropyLoss()
@@ -389,11 +389,16 @@ if __name__ == '__main__':
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 pred = model(X)
                 loss = loss_fn_MSE(pred,y)
-                # import ipdb; ipdb.set_trace()
-                # Complex sign is equal => 1 + 1 = 2, and count this
+                if args.scatter_plot is True:
+                    with open('./results/scatter/NN.txt','a') as f:
+                        pred_symbs = (pred[:,0] + pred[:,1] * 1j).cpu()
+                        target_symbs = (y[:,0] + y[:,1] * 1j).cpu()
+                        symbs_set = np.concatenate((pred_symbs.numpy(), target_symbs.numpy()),axis =1)
+                        np.savetxt(f, symbs_set, delimiter = ',' ,newline = '\n')
+                # If complex sign is equal => 1 + 1 = 2, and count this
                 correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
                 test_loss += loss.item()
-        
+    
         # y.shape[0] is batch size
         correct_rate = correct / ((batch+1) * y.shape[0])
         SER = 1 - correct_rate
@@ -404,12 +409,12 @@ if __name__ == '__main__':
         print("\nAverage test loss (per single symbol) = {:.4f}".format(2*test_loss))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Epochs {}], [Batch size {}], [Filter size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Channel) {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, 2*test_loss, 100*SER, args.epochs, args.bs, args.filter_size, args.lr, scheduler_type, scheduler_gamma, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Random seed (Channel) {}], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
-            .format(args.filter_type, 2*test_loss, 100*SER, args.rand_seed_channel, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
+            .format(args.filter_type, 2 * test_loss, 100 * SER, args.rand_seed_channel, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
 
     else:
         input_file_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
@@ -453,6 +458,17 @@ if __name__ == '__main__':
             
             for set_idx in range(RX_test_symb.shape[0]):
                 pred_symb = np.conj(w_linear).T @ RX_test_symb[set_idx].reshape(-1,1)
+                if args.scatter_plot is True:
+                    if args.filter_type == 'LMMSE':
+                        with open('./results/scatter/LMMSE.txt','a') as f:
+                            symb_set = np.concatenate((pred_symb[0], [target_symb[set_idx]]))
+                            np.savetxt(f, np.expand_dims(symb_set, axis = 0), delimiter = ',' , newline = '\n')
+
+                    elif args.filter_type == 'LS':
+                        with open('./results/scatter/LS.txt','a') as f:
+                            symb_set = np.concatenate((pred_symb[0], [target_symb[set_idx]]))
+                            np.savetxt(f, np.expand_dims(symb_set, axis = 0), delimiter = ',' , newline = '\n')
+
                 if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):
                     correct += 1
                 opt_test_MSE += np.square(np.abs(target_symb[set_idx] - pred_symb)).mean()
@@ -466,8 +482,8 @@ if __name__ == '__main__':
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
 
         with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Total taps {}], [SNR {} (dB)], [Train/test seq length {}/{}], [Random seed (Channel) {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.total_taps, args.SNR, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Random seed (Channel) {}], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\

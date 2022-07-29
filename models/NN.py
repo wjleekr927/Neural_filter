@@ -104,7 +104,7 @@ class NF(nn.Module):
         #     nn.Linear(2, 1)
         # )
 
-        self.activ = nn.ELU()
+        # self.activ = nn.ELU()
 
     def forward(self, x):
         # Transformer
