@@ -313,6 +313,16 @@ if __name__ == '__main__':
             epoch_loss = epoch_loss / (batch+1)
 
             if epoch_loss < best_epoch_loss:
+                if (args.scatter_plot is True) and (epoch > 0.6 * args.epochs):
+                    with open('./results/scatter/NN_train.txt','a') as f:
+                        f.write("\n[Epoch {}], [Batch size {}], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
+                        .format(epoch + 1, args.bs, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
+                        # pred[:,0]: Real, pred[:,1]: Imaginary
+                        # y[:,0]: Real, y[:,1]: Imaginary
+                        pred_symbs = (pred[:,0] + pred[:,1] * 1j).cpu().detach().numpy()
+                        target_symbs = (y[:,0] + y[:,1] * 1j).cpu().detach().numpy()
+                        symbs_set = np.concatenate((np.real(pred_symbs), np.imag(pred_symbs), np.real(target_symbs), np.imag(target_symbs)), axis =1)
+                        np.savetxt(f, symbs_set, delimiter = ',' , newline = '\n')
                 best_epoch_loss = epoch_loss
                 best_epoch = epoch + 1
                 torch.save(model.state_dict(), best_train_model_PATH)
@@ -389,7 +399,7 @@ if __name__ == '__main__':
                 pred = model(X)
                 loss = loss_fn_MSE(pred,y)
                 if args.scatter_plot is True:
-                    with open('./results/scatter/NN.txt','a') as f:
+                    with open('./results/scatter/NN_test.txt','a') as f:
                         if batch == 0:
                             f.write("\n[Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
                             .format(args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
@@ -459,12 +469,12 @@ if __name__ == '__main__':
             opt_test_MSE = 0
 
             correct = 0
-            
+
             for set_idx in range(RX_test_symb.shape[0]):
                 pred_symb = np.conj(w_linear).T @ RX_test_symb[set_idx].reshape(-1,1)
                 if args.scatter_plot is True:
                     if args.filter_type == 'LMMSE':
-                        with open('./results/scatter/LMMSE.txt','a') as f:
+                        with open('./results/scatter/LMMSE_test.txt','a') as f:
                             if set_idx == 0:
                                 f.write("\n[Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
                                 .format(args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
@@ -472,7 +482,7 @@ if __name__ == '__main__':
                             np.savetxt(f, np.expand_dims(symb_set, axis = 0), delimiter = ',' , newline = '\n')
 
                     elif args.filter_type == 'LS':
-                        with open('./results/scatter/LS.txt','a') as f:
+                        with open('./results/scatter/LS_test.txt','a') as f:
                             if set_idx == 0:
                                 f.write("\n[Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
                                 .format(args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
