@@ -23,12 +23,15 @@ def args_parser():
     parser.add_argument('--rand_seed_test', type= int, default= 4999, help="Random seed setting for test set")
     parser.add_argument('--rand_seed_channel', type= int, default= 2077, help="Random seed setting for channel taps")
     parser.add_argument('--data_gen_type', type= str, default= 'train', help="Type of data to be generated: 'train' or 'test'")
-    parser.add_argument('--gpu', type=int, default=0, help="GPU index setting, -1 for CPU")
+    parser.add_argument('--gpu', type=int, default=1, help="GPU index setting, -1 for CPU")
     
     # Training arguments
     parser.add_argument('--epochs', type=int, default=80, help="Number of epochs")
     parser.add_argument('--bs', type=int, default=256, help="Size of batch")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
+
+    # Additional for conference
+    parser.add_argument('--exp_num', type=int, default=0, help="Exp_num")
 
     # parser.add_argument('--output_dir', type=str, default='./output')
     # parser.add_argument('--summary_grad', action='store_true')

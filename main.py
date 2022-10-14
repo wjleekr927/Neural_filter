@@ -51,6 +51,9 @@ if __name__ == '__main__':
     elif args.filter_type == 'LS':
         print("\t[Filter type {}], [Filter size {}], [Decision delay {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
         format(args.filter_type, args.filter_size, args.decision_delay, args.SNR, args.rand_seed_train, args.rand_seed_test))
+    elif args.filter_type == 'Viterbi':
+        print("\t[Filter type {}], [Filter size {}], [Decision delay {}], [SNR {} (dB)], [Random seed (Train) {}], [Random seed (Test) {}]".\
+        format(args.filter_type, args.filter_size, args.decision_delay, args.SNR, args.rand_seed_train, args.rand_seed_test))
 
     if args.mod_scheme == 'QPSK':
         # 2 bits for one symbol in QPSK
@@ -246,7 +249,18 @@ if __name__ == '__main__':
     if args.filter_type == 'NN':
         model.train()
 
-        best_train_model_name = 'model_state_dict.pt'
+        # best_train_model_name = 'model_state_dict.pt'
+        if args.exp_num == 1:
+            best_train_model_name = 'model_state_dict_1.pt'
+        elif args.exp_num == 2:
+            best_train_model_name = 'model_state_dict_2.pt'
+        elif args.exp_num == 3:
+            best_train_model_name = 'model_state_dict_3.pt'
+        elif args.exp_num == 4:
+            best_train_model_name = 'model_state_dict_4.pt'
+        elif args.exp_num == 5:
+            best_train_model_name = 'model_state_dict.pt'
+
         best_train_model_PATH = './models/params/' + best_train_model_name
         best_epoch, best_epoch_loss = 0, float('inf')
 
@@ -313,7 +327,7 @@ if __name__ == '__main__':
             epoch_loss = epoch_loss / (batch+1)
 
             if epoch_loss < best_epoch_loss:
-                if (args.scatter_plot is True) and (epoch > 0.6 * args.epochs):
+                if (args.scatter_plot is True) and (epoch > 0.5 * args.epochs):
                     with open('./results/scatter/NN_train.txt','a') as f:
                         f.write("\n[Epoch {}], [Batch size {}], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)]\n"\
                         .format(epoch + 1, args.bs, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR))
@@ -422,10 +436,32 @@ if __name__ == '__main__':
         # Consider that this is complex loss (multiply 2)
         print("\nAverage test loss (per single symbol) = {:.4f}".format(2*test_loss))
 
-        with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
-            
+        if args.exp_num == 1:
+            with open('./results/MSE_test_results_1.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+        
+        elif args.exp_num == 2:
+            with open('./results/MSE_test_results_2.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+        
+        elif args.exp_num == 3:
+            with open('./results/MSE_test_results_3.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+        
+        elif args.exp_num == 4:
+            with open('./results/MSE_test_results_4.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))                 
+
+        elif args.exp_num == 5:
+            with open('./results/MSE_test_results.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Epochs {}], [Batch size {}], [LR {}], [Scheduler type {}], [Scheduler gamma {}], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, 2 * test_loss, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.epochs, args.bs, args.lr, scheduler_type, scheduler_gamma, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))                 
+
+
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Random seed (Channel) {}], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
             .format(args.filter_type, 2 * test_loss, 100 * SER, args.rand_seed_channel, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
@@ -501,10 +537,32 @@ if __name__ == '__main__':
         # MSE for a single symbol
         print("\nOptimal test MSE value (per single symbol): {:.4f}".format(opt_test_MSE))
 
-        with open('./results/MSE_test_results.txt','a') as f:
-            f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
-            .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+        if args.exp_num == 1:
+            with open('./results/MSE_test_results_1.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+        
+        elif args.exp_num == 2:
+            with open('./results/MSE_test_results_2.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
             
+        elif args.exp_num == 3:
+            with open('./results/MSE_test_results_3.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+             
+        elif args.exp_num == 4:
+            with open('./results/MSE_test_results_4.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+
+        elif args.exp_num == 5:
+            with open('./results/MSE_test_results.txt','a') as f:
+                f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Filter size {}], [Decision delay {}], [Train/test seq length {}/{}], [Random seed (Channel) {}], [SNR {} (dB)], [Total taps {}], [Random seed (Train) {}], [Random seed (Test) {}], [Date {}]"\
+                .format(args.filter_type, opt_test_MSE, 100 * SER, args.filter_size, args.decision_delay, args.train_seq_len, args.test_seq_len, args.rand_seed_channel, args.SNR, args.total_taps, args.rand_seed_train, args.rand_seed_test, time.ctime()))
+                  
+
         with open('./results/channel_MSE.txt','a') as f:
             f.write("\n[Filter type {}], [MSE {:.4f}], [SER {:.4f} (%)], [Random seed (Channel) {}], [Channel {}], [Filter size {}], [Decision delay {}], [Total taps {}], [Date {}]"\
             .format(args.filter_type, opt_test_MSE, 100 * SER, args.rand_seed_channel, channel_taps.T[0], args.filter_size, args.decision_delay, args.total_taps, time.ctime()))
