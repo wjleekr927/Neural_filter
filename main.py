@@ -27,6 +27,7 @@ from data.custom_set import CustomDataset
 from models.NN import NF 
 from models.Linear import LF
 
+from models.Viterbi import Viterbi_decoding
 from models.Channel import channel_gen
 from models.Channel import apply_channel
 
@@ -64,7 +65,7 @@ if __name__ == '__main__':
         norm_cof = np.round(1 / np.sqrt(2), 4)
         QPSK_label_GT_list = [[[+norm_cof], [+norm_cof]], [[+norm_cof], [-norm_cof]], [[-norm_cof], [+norm_cof]], [[-norm_cof], [-norm_cof]]]
 
-    else:
+    elif args.mod_scheme == '16QAM':
         pass
         
     # channel_taps: shape = (Nc,1) => Follows fixed random seed
@@ -91,7 +92,7 @@ if __name__ == '__main__':
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), test_original_file_name)
 
     # Revised to be applied for all cases
-    if args.filter_type == "NN" or args.filter_type == "Linear" or args.filter_type == "LMMSE" or args.filter_type == "LS":
+    if args.filter_type == "NN" or args.filter_type == "Linear" or args.filter_type == "LMMSE" or args.filter_type == "LS" or args.filter_type == "Viterbi":
         train_input_file_name = '/filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(train_symb_len, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_train)
         train_input_file_PATH = './data/symbol_tensor/train_data/' + train_input_file_name + '.npy'        
 
@@ -239,9 +240,13 @@ if __name__ == '__main__':
     elif args.filter_type == 'LS':
         print("\n-------------------------------")
         print("LS filter is used")
+            
+    elif args.filter_type == 'Viterbi':
+        print("\n-------------------------------")
+        print("Viterbi decoding is used")
 
     else:
-        raise Exception("Filter type should be 'NN' or 'Linear' or 'LMMSE'")
+        raise Exception("Filter type should be 'NN' or 'Linear' or 'LMMSE' or 'Viterbi'")
 
     #################
     # Training part #
@@ -396,7 +401,7 @@ if __name__ == '__main__':
 
     ################
     # Testing part # 
-    # LMMSE is implemented only here
+    # LMMSE and Viterbi are implemented only here
     ################
     
     if args.filter_type == 'NN':
@@ -472,7 +477,7 @@ if __name__ == '__main__':
 
         if args.filter_type == 'Linear':
             target_file_name = 'symb_len_{}_mod_{}_S_{}'.format(test_symb_len, args.mod_scheme, args.rand_seed_test)
-        elif args.filter_type == 'LMMSE' or args.filter_type == 'LS':
+        elif args.filter_type == 'LMMSE' or args.filter_type == 'LS' or args.filter_type == 'Viterbi':
             target_file_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(test_symb_len // L, args.filter_size, args.mod_scheme, args.decision_delay, args.rand_seed_test)
 
         target_file_PATH = './data/symbol_tensor/test_data/' + target_file_name + '.npy'        
@@ -502,10 +507,8 @@ if __name__ == '__main__':
             elif args.filter_type == 'LS':
                 w_linear = w_LS
     
-            opt_test_MSE = 0
-
-            correct = 0
-
+            opt_test_MSE, correct = 0, 0
+            
             for set_idx in range(RX_test_symb.shape[0]):
                 pred_symb = np.conj(w_linear).T @ RX_test_symb[set_idx].reshape(-1,1)
                 if args.scatter_plot is True:
@@ -532,6 +535,30 @@ if __name__ == '__main__':
             SER = (RX_test_symb.shape[0] - correct) / RX_test_symb.shape[0] 
             print("\nSymbol error rate (SER): {:.2f} %".format(100 * SER))
             
+            opt_test_MSE /= RX_test_symb.shape[0]
+        
+        elif os.path.isfile(input_file_PATH) and args.filter_type == 'Viterbi':
+            # Solve by Viterbi decoding
+            RX_test_symb = np.load(input_file_PATH)[:,0] + 1j * np.load(input_file_PATH)[:,1]
+            
+            # Load channel vectors
+            channel_tap_vector_PATH = './models/channel_tap_vector/' + 'channel_{}_taps_S_{}'.format(args.total_taps, channel_seed) + '.npy'
+            channel_vector = np.load(channel_tap_vector_PATH)
+            
+            # RX_test_symb <= (300000, 8), target_symb <= (300000, )
+            
+            opt_test_MSE, correct = 0, 0
+            
+            for set_idx in tqdm(range(RX_test_symb.shape[0]), desc = "Viterbi decoding process"):
+                pred_symb = Viterbi_decoding(RX_test_symb[set_idx].reshape(-1,1), channel_vector, args.decision_delay, args.mod_scheme)
+                if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):
+                    correct += 1
+                opt_test_MSE += np.square(np.abs(target_symb[set_idx] - pred_symb)).mean()
+ 
+            SER = (RX_test_symb.shape[0] - correct) / RX_test_symb.shape[0]
+            
+            print("\nSymbol error rate (SER): {:.2f} %".format(100 * SER))
+                        
             opt_test_MSE /= RX_test_symb.shape[0]
 
         # MSE for a single symbol

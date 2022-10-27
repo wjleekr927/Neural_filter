@@ -29,7 +29,7 @@ def Viterbi_decoding(received_y, channel_vec, decision_delay, scheme):
     
     y_idx = 0
 
-    while y_idx < (L - decision_delay):
+    while y_idx < len(received_y):
         target_y = received_y[y_idx]
         if y_idx == 0:
             for idx, elem in enumerate(all_permutation_idx):
@@ -38,30 +38,38 @@ def Viterbi_decoding(received_y, channel_vec, decision_delay, scheme):
                 
                 pred_y = channel_vec.reshape(1,-1) @ np.flip(ref_x_IQ)
                 full_cost_dict[elem] = float(abs(target_y - pred_y))
-                
-            min_cost_idx_tuple = min(full_cost_dict, key = full_cost_dict.get)
-            determined_x_idx_list.append(min_cost_idx_tuple[0])
-            
-            # To check idx permutation except first element
-            sub_permutation_idx = list(itertools.product(range(total_symb_types), repeat = channel_taps - 1))
 
-            #import ipdb; ipdb.set_trace()
-            
-            for elem in sub_permutation_idx:
-                # Set to sufficiently large number: 99
-                min_val = 99
-                for symb_idx in range(total_symb_types):
-                    full_idx = (symb_idx, ) + elem
-                    if min_val > full_cost_dict[full_idx]:
-                        min_val = full_cost_dict[full_idx]
-                sub_cost_dict[elem] = min_val
-                                
         else:
-            for idx, elem in enumerate(sub_permutation_idx):
+             for idx, elem in enumerate(sub_permutation_idx):
                 for symb_idx in range(total_symb_types):
-                    full_idx = elem + (symb_idx,)
+                    full_idx = elem + (symb_idx, )
                     ref_x = np.squeeze(np.array([symb_GT_list[i] for i in full_idx]))
-                
+                    ref_x_IQ = (ref_x[:,0] + ref_x[:,1] * 1j).reshape(-1,1)
+                    
+                    pred_y = channel_vec.reshape(1,-1) @ np.flip(ref_x_IQ)
+                    full_cost_dict[full_idx] = sub_cost_dict[elem] + float(abs(target_y - pred_y))
+                    
+        # import ipdb; ipdb.set_trace()                 
+        min_cost_idx_tuple = min(full_cost_dict, key = full_cost_dict.get)
+        
+        if y_idx != (len(received_y) - 1):
+            determined_x_idx_list.append(min_cost_idx_tuple[0])
+        else:
+            determined_x_idx_list = determined_x_idx_list + list(min_cost_idx_tuple)
+            break
+            
+        # To check idx permutation except first element
+        sub_permutation_idx = list(itertools.product(range(total_symb_types), repeat = channel_taps - 1))
+        
+        for elem in sub_permutation_idx:
+            # Set to sufficiently large number (as 99 here)
+            min_val = 99
+            for symb_idx in range(total_symb_types):
+                full_idx = (symb_idx, ) + elem
+                if min_val > full_cost_dict[full_idx]:
+                    min_val = full_cost_dict[full_idx]
+            sub_cost_dict[elem] = min_val 
+            
         y_idx += 1
         
     pred_symb_x_idx = determined_x_idx_list[L - decision_delay - 1]
