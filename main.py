@@ -553,6 +553,7 @@ if __name__ == '__main__':
                 pred_symb = Viterbi_decoding(RX_test_symb[set_idx].reshape(-1,1), channel_vector, args.decision_delay, args.mod_scheme)
                 if (np.real(target_symb[set_idx]) * np.real(pred_symb) > 0) and (np.imag(target_symb[set_idx]) * np.imag(pred_symb) > 0):
                     correct += 1
+                print("Target: {}, Predicted: {}, Correct: {}/100".format(target_symb[set_idx], pred_symb, correct))
                 opt_test_MSE += np.square(np.abs(target_symb[set_idx] - pred_symb)).mean()
  
             SER = (RX_test_symb.shape[0] - correct) / RX_test_symb.shape[0]

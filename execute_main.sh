@@ -12,9 +12,9 @@
 # # First exp (M/N_c)
 
 # for idx in 927	7758	3722	9017	9570	7908	8422	8327	6043	7757	4604	8086	3697	5292	3790	4122	8850	8013	5554	9675	3714	6346	5973	8473	8666	4706	6678	6390	7697	8107	8403	5286	7914	7754	4548	4264	6734	9737	5705	7300	4947	8380	5150	6783	8040	9289	9734	7052	4392	4461	5166	8963	5145	8790	5075	9539	5768	4769	5124	7500	6571	5779	8898	7300	7068	9460	5350	8419	8396	5966	7186	3983	3841	6945	8562	9570	4335	7193	6545	3567	5684	4545	8660	5516	6930	4568	7408	5201	7748	7976	8360	6423	4035	4980	9435	4481	8866	405	2169	3438
-for idx in 927 6438 3438 2169 
+for idx in 6438 3438 2169 
 do
-        python main.py --filter_type "Viterbi" --decision_delay 2 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel $idx --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 300000 --test_seq_len 9000000
+        python main.py --filter_type "Viterbi" --decision_delay 2 --total_taps 8 --filter_size 8 --SNR 15 --rand_seed_channel $idx --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 300000 --test_seq_len 3000
 # #     # Tau = 0
 # #     python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel $idx --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 300000 --test_seq_len 9000000
 # #     python main.py --filter_type "LMMSE" --decision_delay 0 --total_taps 8 --filter_size 16 --SNR 20 --rand_seed_channel $idx --rand_seed_train 9002 --rand_seed_test 4002 --train_seq_len 460000 --test_seq_len 13800000
