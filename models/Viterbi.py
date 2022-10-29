@@ -20,7 +20,17 @@ def Viterbi_decoding(received_y, channel_vec, decision_delay, scheme):
         norm_cof = np.round(1 / np.sqrt(2), 4)
         symb_GT_list = [[[+norm_cof], [+norm_cof]], [[+norm_cof], [-norm_cof]], [[-norm_cof], [+norm_cof]], [[-norm_cof], [-norm_cof]]]
     elif scheme == '16QAM':
-        pass
+        # 4 bits for one symbol in 16QAM
+        bits_per_symb = 4
+        train_symb_len = args.train_seq_len // bits_per_symb
+        test_symb_len = args.test_seq_len // bits_per_symb
+        
+        # Assume same Eb energy
+        norm_cof = np.round(1 / np.sqrt(5), 4)
+        QAM16_label_GT_list = [[[+norm_cof], [+norm_cof]], [[+3*norm_cof], [+norm_cof]], [[+norm_cof], [+3*norm_cof]], [[+3*norm_cof], [+3*norm_cof]], \
+            [[+norm_cof], [-norm_cof]], [[+3*norm_cof], [-norm_cof]], [[+norm_cof], [-3*norm_cof]], [[+3*norm_cof], [-3*norm_cof]], \
+                [[-norm_cof], [+norm_cof]], [[-3*norm_cof], [+norm_cof]], [[-norm_cof], [+3*norm_cof]], [[-3*norm_cof], [+3*norm_cof]], \
+                    [[-norm_cof], [-norm_cof]], [[-3*norm_cof], [-norm_cof]], [[-norm_cof], [-3*norm_cof]], [[-3*norm_cof], [-3*norm_cof]]]
     
     total_symb_types = len(symb_GT_list)
     all_permutation_idx = list(itertools.product(range(total_symb_types), repeat = channel_taps))

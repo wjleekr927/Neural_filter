@@ -31,7 +31,7 @@ if __name__ == '__main__':
     rand_seq = np.round(np.random.random_sample(args.gen_seq_len)).astype(int)
 
     symb_list = []
-
+    
     if args.mod_scheme == 'QPSK':
         # Normalized to power = 1
         norm_cof = np.round(1 / np.sqrt(2), 4)
@@ -41,15 +41,39 @@ if __name__ == '__main__':
         # 2 bits for one symbol in QPSK
         bits_per_symb = 2
         symb_len = args.gen_seq_len // bits_per_symb
-
+        
         if symb_len % L != 0:
             # symb_len / L: number of data group to be used
             raise Exception("Total length of sequence should be divided by L")
+        
+        # Append a corresponding symbol to the list
+        for idx in range(symb_len):
+            ith_symb = symb_dic[str(rand_seq[2*idx]) + str(rand_seq[2*idx + 1])]
+            symb_list.append(ith_symb)
+    
+    elif args.mod_scheme == '16QAM':
+        # Fair comparison with respect to Es (with QPSK)
+        norm_cof = np.round(1 / np.sqrt(10), 4)
+        
+        # Fair comparison with respect to Eb (with QPSK)
+        # norm_cof = np.round(1 / np.sqrt(5), 4)
+        symb_dic = {'1101': (norm_cof + norm_cof*1j), '1001': (3*norm_cof + norm_cof*1j), '1100': (norm_cof + 3*norm_cof*1j), '1000': (3*norm_cof + 3*norm_cof*1j),\
+            '1111': (norm_cof - norm_cof*1j), '1011': (3*norm_cof - norm_cof*1j), '1110': (norm_cof - 3*norm_cof*1j), '1010': (3*norm_cof - 3*norm_cof*1j),\
+                '0111': (-norm_cof - norm_cof*1j), '0011': (-3*norm_cof - norm_cof*1j), '0110': (-norm_cof - 3*norm_cof*1j), '0010': (-3*norm_cof - 3*norm_cof*1j),\
+                    '0101': (-norm_cof + norm_cof*1j), '0001': (-3*norm_cof + norm_cof*1j), '0100': (-norm_cof + 3*norm_cof*1j), '0000': (-3*norm_cof + 3*norm_cof*1j)}
 
-    # Append a corresponding symbol to the list
-    for idx in range(symb_len):
-        ith_symb = symb_dic[str(rand_seq[2*idx]) + str(rand_seq[2*idx + 1])]
-        symb_list.append(ith_symb)
+        # 4 bits for one symbol in 16QAM
+        bits_per_symb = 4
+        symb_len = args.gen_seq_len // bits_per_symb
+        
+        if symb_len % L != 0:
+            # symb_len / L: number of data group to be used
+            raise Exception("Total length of sequence should be divided by L")
+        
+        # Append a corresponding symbol to the list
+        for idx in range(symb_len):
+            ith_symb = symb_dic[str(rand_seq[4*idx]) + str(rand_seq[4*idx + 1]) + str(rand_seq[4*idx + 2]) + str(rand_seq[4*idx + 3])]
+            symb_list.append(ith_symb)
 
     symb_np = np.array(symb_list).reshape(-1,1)
     symb_IQ_np = np.concatenate((np.real(symb_np), np.imag(symb_np)), axis = 1)
