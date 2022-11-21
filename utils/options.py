@@ -10,6 +10,7 @@ def args_parser():
     parser.add_argument('--test_seq_len', type=int, default=40000, help="Length of test data sequence")
     parser.add_argument('--filter_type', type=str, default='NN', help = "Filter type: NN or Linear or LMMSE")
     # (18,18) was default, changed to (24,10) 
+    parser.add_argument('--RX_num', type=int, default=1, help = "Number of receive antennas")
     parser.add_argument('--filter_size', type=int, default=24, help = "Size of filter")
     parser.add_argument('--total_taps', type=int, default= 10, help = "Number of channel taps")
     parser.add_argument('--SNR', type=float, default= 10, help = "Signal to noise ratio (dB scale)")

@@ -25,8 +25,8 @@ def Viterbi_decoding(received_y, channel_vec, decision_delay, scheme):
         train_symb_len = args.train_seq_len // bits_per_symb
         test_symb_len = args.test_seq_len // bits_per_symb
         
-        # Assume same Eb energy
-        norm_cof = np.round(1 / np.sqrt(5), 4)
+        # Assume same Es energy not Eb (= sqrt(5))
+        norm_cof = np.round(1 / np.sqrt(10), 4)
         QAM16_label_GT_list = [[[+norm_cof], [+norm_cof]], [[+3*norm_cof], [+norm_cof]], [[+norm_cof], [+3*norm_cof]], [[+3*norm_cof], [+3*norm_cof]], \
             [[+norm_cof], [-norm_cof]], [[+3*norm_cof], [-norm_cof]], [[+norm_cof], [-3*norm_cof]], [[+3*norm_cof], [-3*norm_cof]], \
                 [[-norm_cof], [+norm_cof]], [[-3*norm_cof], [+norm_cof]], [[-norm_cof], [+3*norm_cof]], [[-3*norm_cof], [+3*norm_cof]], \
@@ -45,7 +45,8 @@ def Viterbi_decoding(received_y, channel_vec, decision_delay, scheme):
             for idx, elem in enumerate(all_permutation_idx):
                 ref_x = np.squeeze(np.array([symb_GT_list[i] for i in elem]))
                 ref_x_IQ = (ref_x[:,0] + ref_x[:,1] * 1j).reshape(-1,1)
-                
+                # Below for single channel tap case 
+                # ref_x_IQ = (ref_x[0] + ref_x[1] * 1j).reshape(-1,1)
                 pred_y = channel_vec.reshape(1,-1) @ np.flip(ref_x_IQ)
                 full_cost_dict[elem] = float(abs(target_y - pred_y))
 
@@ -55,11 +56,11 @@ def Viterbi_decoding(received_y, channel_vec, decision_delay, scheme):
                     full_idx = elem + (symb_idx, )
                     ref_x = np.squeeze(np.array([symb_GT_list[i] for i in full_idx]))
                     ref_x_IQ = (ref_x[:,0] + ref_x[:,1] * 1j).reshape(-1,1)
-                    
+                    # Below for single channel tap case 
+                    # ref_x_IQ = (ref_x[0] + ref_x[1] * 1j).reshape(-1,1)
                     pred_y = channel_vec.reshape(1,-1) @ np.flip(ref_x_IQ)
                     full_cost_dict[full_idx] = sub_cost_dict[elem] + float(abs(target_y - pred_y))
-                    
-        # import ipdb; ipdb.set_trace()                 
+                              
         min_cost_idx_tuple = min(full_cost_dict, key = full_cost_dict.get)
         
         if y_idx != (len(received_y) - 1):
