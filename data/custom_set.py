@@ -9,17 +9,17 @@ from torch.utils.data import Dataset, dataloader
 from torch.utils.data import DataLoader
 
 class CustomDataset(Dataset):
-    def __init__(self, data_length, L, filter_size, mod_scheme, decision_delay, seed, test = False):
+    def __init__(self, data_length, L, RX_num, filter_size, mod_scheme, decision_delay, seed, test = False):
         # Set the tensor name using arg values
         if test != True:
-            input_np_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(data_length, filter_size, mod_scheme, decision_delay, seed)
+            input_np_name = 'filter_input_len_{}_RX_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(data_length, RX_num, filter_size, mod_scheme, decision_delay, seed)
             target_np_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(data_length // L, filter_size, mod_scheme, decision_delay, seed)
-
+            
             input_np_PATH = './data/symbol_tensor/train_data/' + input_np_name + '.npy'
             target_np_PATH = './data/symbol_tensor/train_data/' + target_np_name + '.npy'
 
         else:
-            input_np_name = 'filter_input_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(data_length, filter_size, mod_scheme, decision_delay, seed)
+            input_np_name = 'filter_input_len_{}_RX_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(data_length, RX_num, filter_size, mod_scheme, decision_delay, seed)
             target_np_name = 'filter_target_len_{}_filter_size_{}_mod_{}_D_{}_S_{}'.format(data_length // L, filter_size, mod_scheme, decision_delay, seed)
             
             input_np_PATH = './data/symbol_tensor/test_data/' + input_np_name + '.npy'

@@ -4,9 +4,10 @@ import math
 from torch import nn
 
 class NF(nn.Module):
-    def __init__(self, total_taps, filter_size, mod_scheme = 'QPSK'):
+    def __init__(self, total_taps, RX_num, filter_size, mod_scheme = 'QPSK'):
         super(NF, self).__init__()
         self.filter_size = filter_size
+        self.RX_num = RX_num
         self.total_taps = total_taps
         self.mod_scheme = mod_scheme
 
@@ -106,15 +107,12 @@ class NF(nn.Module):
         )
         
         self.revised_structure = nn.Sequential(
-            nn.Linear(self.filter_size, round(1.5 * (self.filter_size + self.total_taps - 1))),
-            #nn.BatchNorm1d(2),
+            nn.Linear(self.RX_num * self.filter_size, round(1.5 * (self.filter_size + self.total_taps - 1))),
             nn.GELU(),
             nn.Dropout(p=0.3),
             nn.Linear(round(1.5 * (self.filter_size + self.total_taps - 1)), self.filter_size + self.total_taps - 1),
-            #nn.BatchNorm1d(2),
             nn.GELU(),
             nn.Dropout(p=0.3),
-            # 10이 8이었고, p = 0.25 였고, round가 없었음
             nn.Conv1d(2, 20, kernel_size = self.total_taps),
             nn.GELU(),
             nn.Dropout(),
@@ -126,6 +124,36 @@ class NF(nn.Module):
             nn.GELU(),
             nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 5 + 1, 1)
         )
+        
+        ### Below is for large ratio in exp 1.
+        # nn.Sequential(
+        #     nn.Linear(self.RX_num * self.filter_size, round(0.7 * (self.filter_size + self.total_taps - 1))),
+        #     nn.BatchNorm1d(2),
+        #     nn.GELU(),
+        #     nn.Dropout(p=0.3),
+        #     nn.Linear(round(0.7 * (self.filter_size + self.total_taps - 1)), self.filter_size + self.total_taps - 1),
+        #     nn.BatchNorm1d(2),
+        #     nn.GELU(),
+        #     nn.Dropout(p=0.3),
+        #     nn.Conv1d(2, 8, kernel_size = self.total_taps),
+        #     nn.GELU(),
+        #     nn.Dropout(),
+        #     nn.Conv1d(8, 2, kernel_size = self.filter_size // self.total_taps),
+        #     nn.GELU(),
+        #     nn.Linear(math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1), (math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 2 + 1),
+        #     nn.GELU(),
+        #     nn.Dropout(),
+        #     nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 2 + 1, (math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 6 + 1),
+        #     nn.GELU(),
+        #     nn.Dropout(),
+        #     nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 6 + 1, (math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 12 + 1),
+        #     nn.GELU(),
+        #     nn.Dropout(),
+        #     nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 12 + 1, (math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 25 + 1),
+        #     nn.GELU(),
+        #     nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 25 + 1, 1)
+        # )
+        ###
         
         self.FC_fin_wp = nn.Sequential(
             nn.Linear(self.filter_size, self.filter_size),
@@ -193,10 +221,11 @@ class NF(nn.Module):
             # ResNet block with padding
             # Revised code (with padding)
             # rst_0 = self.deconv(x)
-            rst_0 = self.FC_stacks_0_wp(x)
-            rst_1 = self.FC_stacks_1_wp(rst_0)
-            rst_2 = self.FC_stacks_2_wp(rst_1)
-            rst_fin = self.FC_fin_wp(rst_2)
+            rst_fin = self.revised_structure(x)
+            # rst_0 = self.FC_stacks_0_wp(x)
+            # rst_1 = self.FC_stacks_1_wp(rst_0)
+            # rst_2 = self.FC_stacks_2_wp(rst_1)
+            # rst_fin = self.FC_fin_wp(rst_2)
             # rst_fin = None
         else:
             raise Exception("Undefined modulation type is used")
