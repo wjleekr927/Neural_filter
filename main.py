@@ -153,12 +153,64 @@ if __name__ == '__main__':
                 #nn.init.xavier_uniform_(m.weight)  
                 #m.bias.data.fill_(.01)
 
-        def one_hot_label_return(origin_tensor):
-            rst = torch.where(torch.logical_and(origin_tensor[:,0] > 0, origin_tensor[:,1] > 0), 0, 0)
-            init = torch.zeros_like(rst)
-            rst += torch.where(torch.logical_and(origin_tensor[:,0] > 0, origin_tensor[:,1] < 0), 1, init)
-            rst += torch.where(torch.logical_and(origin_tensor[:,0] < 0, origin_tensor[:,1] > 0), 2, init)
-            rst += torch.where(torch.logical_and(origin_tensor[:,0] < 0, origin_tensor[:,1] < 0), 3, init)
+        def one_hot_label_return(origin_tensor, mod_scheme = 'QPSK'):
+            if mod_scheme == 'QPSK':
+                rst = torch.where(torch.logical_and(origin_tensor[:,0] > 0, origin_tensor[:,1] > 0), 0, 0)
+                init = torch.zeros_like(rst)
+                rst += torch.where(torch.logical_and(origin_tensor[:,0] > 0, origin_tensor[:,1] < 0), 1, init)
+                rst += torch.where(torch.logical_and(origin_tensor[:,0] < 0, origin_tensor[:,1] > 0), 2, init)
+                rst += torch.where(torch.logical_and(origin_tensor[:,0] < 0, origin_tensor[:,1] < 0), 3, init)
+                
+            elif mod_scheme == '16QAM':
+                rst = torch.zeros((args.bs, 1), dtype=torch.int64).to(args.device)
+                for idx in range(args.bs):
+                    if origin_tensor[idx, 0] > 0:
+                        if origin_tensor[idx, 0] > 2 * norm_cof:
+                            if origin_tensor[idx, 1] > 0:
+                                if origin_tensor[idx, 1] > 2 * norm_cof:
+                                    rst[idx] = 3
+                                else:
+                                    rst[idx] = 1
+                            else:
+                                if origin_tensor[idx, 1] < -2 * norm_cof:
+                                    rst[idx] = 7
+                                else:
+                                    rst[idx] = 5
+                        else:
+                            if origin_tensor[idx, 1] > 0:
+                                if origin_tensor[idx, 1] > 2 * norm_cof:
+                                    rst[idx] = 2
+                                else:
+                                    rst[idx] = 0
+                            else:
+                                if origin_tensor[idx, 1] < -2 * norm_cof:
+                                    rst[idx] = 6
+                                else:
+                                    rst[idx] = 4
+                                
+                    elif origin_tensor[idx, 0] < 0:
+                        if origin_tensor[idx, 0] < -2 * norm_cof:
+                            if origin_tensor[idx, 1] > 0:
+                                if origin_tensor[idx, 1] > 2 * norm_cof:
+                                    rst[idx] = 11
+                                else:
+                                    rst[idx] = 9
+                            else:
+                                if origin_tensor[idx, 1] < -2 * norm_cof:
+                                    rst[idx] = 15
+                                else:
+                                    rst[idx] = 13
+                        else:
+                            if origin_tensor[idx, 1] > 0:
+                                if origin_tensor[idx, 1] > 2 * norm_cof:
+                                    rst[idx] = 10
+                                else:
+                                    rst[idx] = 8
+                            else:
+                                if origin_tensor[idx, 1] < -2 * norm_cof:
+                                    rst[idx] = 14
+                                else:
+                                    rst[idx] = 12
             return rst
 
         # Parameters are needed to be revised
@@ -303,9 +355,10 @@ if __name__ == '__main__':
                     for idx, symb_GT in enumerate(QPSK_label_GT_list):
                         QPSK_label_GT = torch.tensor(symb_GT).expand(args.bs, -1, -1).to(args.device)
 
-                        # Distance calculation
-                        L2_distance = torch.sqrt(torch.square(pred-QPSK_label_GT).sum(dim = 1))
-                        pred_softmax = torch.cat((pred_softmax, torch.exp(-L2_distance)), dim = 1)
+                        # For classification, if for MSE, erase below 3 lines
+                        # # Distance calculation
+                        # L2_distance = torch.sqrt(torch.square(pred-QPSK_label_GT).sum(dim = 1))
+                        # pred_softmax = torch.cat((pred_softmax, torch.exp(-L2_distance)), dim = 1)
                 
                 elif args.mod_scheme == '16QAM':
                     num_classes = 16
@@ -324,8 +377,10 @@ if __name__ == '__main__':
 
                 #+ loss_fn_TML(y, pred, -pred)
                 
-                # # ONLY MSE loss is used!
-                loss =  loss_fn_MSE(pred,y)
+                # # ONLY MSE loss is used! (Below is original - 221206)
+                #loss =  loss_fn_MSE(pred,y)
+                # For classification
+                loss = loss_fn_CE(pred, one_hot_label_return(y, args.mod_scheme).squeeze())
 
                 # Proposed loss is used!
                 #loss = loss_fn_MSE(pred, y) + one_hot_loss_weight * loss_fn_CE(pred_softmax ,one_hot_label_return(y).squeeze()) #\
@@ -436,7 +491,8 @@ if __name__ == '__main__':
             for batch, (X,y) in enumerate(test_dataloader):
                 X, y = X.to(args.device), y.unsqueeze(2).to(args.device)
                 pred = model(X)
-                loss = loss_fn_MSE(pred,y)
+                #loss = loss_fn_MSE(pred,y)
+                loss = loss_fn_CE(pred, one_hot_label_return(y, args.mod_scheme).squeeze())
                 if args.scatter_plot is True:
                     with open('./results/scatter/NN_test.txt','a') as f:
                         if batch == 0:
@@ -453,12 +509,20 @@ if __name__ == '__main__':
                 # pred: batch x 2 x 1, y: batch x 2 x 1
                 
                 if args.mod_scheme == 'QPSK':
-                    correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
+                    # For regression => 
+                    #correct += torch.sum(torch.sign(pred * y).sum(axis=1) == 2)
+                    # For classification
+                    _, predicted = torch.max(pred.data,1)
+                    correct += (predicted == one_hot_label_return(y).squeeze()).sum().item()
                 elif args.mod_scheme == '16QAM':
-                    for batch_idx in range(args.bs):
-                        pred_symb = pred[batch_idx]
-                        target_symb = y[batch_idx]
-                        correct += decision_16QAM(pred_symb, target_symb, norm_cof, args.filter_type)
+                    # For regression
+                    # for batch_idx in range(args.bs):
+                    #     pred_symb = pred[batch_idx]
+                    #     target_symb = y[batch_idx]
+                    #     correct += decision_16QAM(pred_symb, target_symb, norm_cof, args.filter_type)
+                    # For classification
+                    _, predicted = torch.max(pred.data,1)
+                    correct += (predicted == one_hot_label_return(y, args.mod_scheme).squeeze()).sum().item()
                         
                 test_loss += loss.item()
     

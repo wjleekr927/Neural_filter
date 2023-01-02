@@ -122,9 +122,50 @@ class NF(nn.Module):
             nn.GELU(),
             nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 2 + 1, (math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 5 + 1),
             nn.GELU(),
-            nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 5 + 1, 1)
+            nn.Linear((math.floor(self.filter_size - (self.filter_size // self.total_taps) + 1)) // 5 + 1, 1),
         )
         
+        self.revised_structure_manual = nn.Sequential(
+            nn.Linear(16, 24),
+            nn.GELU(),
+            #nn.Dropout(p=0.1),
+            nn.Linear(24, 24),
+            nn.GELU(),
+            nn.Dropout(p=0.2),
+            nn.Conv1d(2, 8, kernel_size = 8),
+            nn.GELU(),
+            #nn.Dropout(),
+            nn.Conv1d(8, 12, kernel_size = 4),
+            nn.GELU(),
+            nn.Conv1d(12, 16, kernel_size = 4),
+            nn.GELU(),
+            nn.Conv1d(16, 20, kernel_size = 4),
+            nn.GELU(),
+            # nn.Linear(12, 8),
+            # nn.GELU(),
+            # nn.Linear(8, 4),
+            # nn.GELU(),
+            # nn.Linear(4, 1)
+        )
+        
+        self.classifier_manual = nn.Sequential(
+            nn.Linear(160, 100),
+            nn.ReLU(),
+            nn.Linear(100, 28),
+            nn.ReLU(),
+            nn.Linear(28, 4)
+        )
+        
+        if self.mod_scheme == 'QPSK':
+            self.classifier = nn.Sequential(
+                nn.Linear(2, 4)
+            )
+            
+        elif self.mod_scheme == '16QAM':
+            self.classifier = nn.Sequential(
+                nn.Linear(2, 16)
+            )
+            
         ### Below is for large ratio in exp 1.
         # nn.Sequential(
         #     nn.Linear(self.RX_num * self.filter_size, round(0.7 * (self.filter_size + self.total_taps - 1))),
@@ -194,7 +235,17 @@ class NF(nn.Module):
             
             #아래가 최신꺼
             #rst_fin = self.only_FC_stacks(x)
-            rst_fin = self.revised_structure(x)
+            # For regression
+            # rst_fin = self.revised_structure(x)
+            #rst_fin = self.revised_structure_manual(x)
+            rst_1 = self.revised_structure_manual(x)
+            rst_2 = torch.flatten(rst_1, 1)
+            rst_fin = self.classifier_manual(rst_2)
+            
+            # For classification
+            # rst_1 = self.revised_structure(x)
+            # rst_2 = torch.flatten(rst_1, 1)
+            # rst_fin = self.classifier(rst_2)
             
             #short_cut_1 = self.linear_embedding_1(x)
             #rst_1 = self.activ(short_cut_1 + rst_1)
@@ -220,8 +271,15 @@ class NF(nn.Module):
             ##########################################
             # ResNet block with padding
             # Revised code (with padding)
-            # rst_0 = self.deconv(x)
-            rst_fin = self.revised_structure(x)
+            # # rst_0 = self.deconv(x)
+            # Original regression (221206)
+            # rst_fin = self.revised_structure(x)
+            
+            # For classification
+            rst_1 = self.revised_structure(x)
+            rst_2 = torch.flatten(rst_1, 1)
+            rst_fin = self.classifier(rst_2)
+
             # rst_0 = self.FC_stacks_0_wp(x)
             # rst_1 = self.FC_stacks_1_wp(rst_0)
             # rst_2 = self.FC_stacks_2_wp(rst_1)

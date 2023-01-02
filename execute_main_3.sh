@@ -70,7 +70,7 @@
 # Third exp (tau)
 for tau in 6 #0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 do
-    for idx in 2169 #927 3438 405 6438 2169
+    for idx in 927 #927 3438 405 6438 2169
     do
         #python main.py --filter_type "Viterbi" --decision_delay $tau --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel $idx --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 6000 --test_seq_len 6000 --exp_num 3
         #python main.py --filter_type "LMMSE" --RX_num 2 --decision_delay $tau --total_taps 8 --filter_size 8 --SNR 20 --rand_seed_channel $idx --rand_seed_train 9001 --rand_seed_test 4001 --train_seq_len 300000 --test_seq_len 9000000 --exp_num 3
